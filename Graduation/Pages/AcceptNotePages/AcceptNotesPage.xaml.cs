@@ -1,5 +1,4 @@
-﻿using Graduation.Pages.WorkOrderPages;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,18 +13,21 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Graduation.Pages
+namespace Graduation.Pages.AcceptNotePages
 {
-    public partial class AuthPage : Page
+    /// <summary>
+    /// Логика взаимодействия для AcceptNotesPage.xaml
+    /// </summary>
+    public partial class AcceptNotesPage : Page
     {
-        public AuthPage()
+        public AcceptNotesPage()
         {
             InitializeComponent();
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new WorkOrdersPage());
+            NavigationService.GoBack();
         }
     }
 }

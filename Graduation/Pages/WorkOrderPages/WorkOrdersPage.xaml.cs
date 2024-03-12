@@ -1,5 +1,4 @@
-﻿using Graduation.Pages.WorkOrderPages;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,18 +13,21 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Graduation.Pages
+namespace Graduation.Pages.WorkOrderPages
 {
-    public partial class AuthPage : Page
+    /// <summary>
+    /// Логика взаимодействия для WorkOrdersPage.xaml
+    /// </summary>
+    public partial class WorkOrdersPage : Page
     {
-        public AuthPage()
+        public WorkOrdersPage()
         {
             InitializeComponent();
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new WorkOrdersPage());
+            NavigationService.GoBack();
         }
     }
 }

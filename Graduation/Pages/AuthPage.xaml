@@ -19,7 +19,7 @@
                 <ui:TextBlock Text="ПАРОЛЬ" HorizontalAlignment="Center" Margin="0 0 0 10"/>
                 <ui:TextBox x:Name="PasswordTextBox" Height="40" Width="140"/>
             </StackPanel>
-            <ui:Button x:Name="LoginButton" Content="ВОЙТИ" HorizontalAlignment="Center" Height="30" Width="100" Margin="0 20 0 0" Click="LoginButton_Click"/>
+            <ui:Button x:Name="LoginButton" Content="ВОЙТИ" HorizontalAlignment="Center" Height="30" Width="110" Margin="0 20 0 0" Click="LoginButton_Click"/>
         </StackPanel>
     </Grid>
 </Page>
