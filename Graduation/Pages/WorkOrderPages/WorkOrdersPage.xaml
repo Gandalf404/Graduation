@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Graduation.Pages.WorkOrderPages"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       mc:Ignorable="d" 
-      d:DesignHeight="650" d:DesignWidth="1200"
+      d:DesignHeight="650" d:DesignWidth="1400"
       Title="WorkOrdersPage">
 
     <Grid>
@@ -18,17 +18,17 @@
             <ui:Button x:Name="BackButton" Height="30" Width="110" Margin="20 0 0 0" Content="НАЗАД" Click="BackButton_Click"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Row="1">
-            <ui:DataGrid x:Name="WorkOrdersDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserDeleteRows="False" CanUserSortColumns="False">
+            <ui:DataGrid x:Name="WorkOrdersDataGrid" Width="1400" AutoGenerateColumns="False" CanUserAddRows="False" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserDeleteRows="False" CanUserSortColumns="False">
                 <ui:DataGrid.Columns>
                     <DataGridTextColumn Header="Номер наряда" Binding="{Binding WorkOrderId}"/>
                     <DataGridTextColumn Header="Табельный номер сотрудника" Binding="{Binding EmployeeId}"/>
-                    <DataGridTextColumn Header="Фамилия сотрудника" Binding="{Binding Employee.EmployeeSurname}"/>
-                    <DataGridTextColumn Header="Имя сотрудника" Binding="{Binding Employee.EmployeeName}"/>
-                    <DataGridTextColumn Header="Отчество сотрудника" Binding="{Binding Employee.EmployeePatronymic}"/>
+                    <DataGridTextColumn Header="Фамилия" Width="80" Binding="{Binding Employee.EmployeeSurname}"/>
+                    <DataGridTextColumn Header="Имя" Width="80" Binding="{Binding Employee.EmployeeName}"/>
+                    <DataGridTextColumn Header="Отчество" Width="80" Binding="{Binding Employee.EmployeePatronymic}"/>
                     <DataGridTextColumn Header="Номер ДСЕ" Binding="{Binding PAUId}"/>
-                    <DataGridTextColumn Header="Наименование ДСЕ" Binding="{Binding PAUNumber}"/>
-                    <DataGridTextColumn Header="Кол-во ДСЕ" Binding="{Binding PAUCount}"/>
-                    <DataGridTextColumn Header="Дата составление наряда" Binding="{Binding WorkOrderCreateDate}"/>
+                    <DataGridTextColumn Header="Наименование" Binding="{Binding PAUNumber}"/>
+                    <DataGridTextColumn Header="Кол-во" Binding="{Binding PAUCount}"/>
+                    <DataGridTextColumn Header="Дата составления наряда" Binding="{Binding WorkOrderCreateDate}"/>
                     <DataGridTextColumn Header="Дата выполнения наряда" Binding="{Binding WorkOrderCompleteDate}"/>
                     <DataGridTextColumn Header="Дата закрытия наряда" Binding="{Binding WorkOrderCloseDate}"/>
                 </ui:DataGrid.Columns>
