@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Graduation.Pages.WorkOrderPages"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      Loaded="Page_Loaded"
       mc:Ignorable="d" 
       d:DesignHeight="650" d:DesignWidth="1400"
       Title="WorkOrdersPage">
@@ -12,12 +13,27 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
             <ui:Button x:Name="BackButton" Height="30" Width="110" Margin="20 0 0 0" Content="НАЗАД" Click="BackButton_Click"/>
+            <ui:NavigationView x:Name="MasterNavigationView" Width="1250" VerticalAlignment="Center" PaneDisplayMode="Top">
+                <ui:NavigationView.MenuItems>
+                    <ui:NavigationViewItem x:Name="WorkOrdersViewItem" Content="ЗАКАЗ-НАРЯДЫ" Click="WorkOrdersViewItem_Click"/>
+                    <ui:NavigationViewItem x:Name="AcceptNotesViewItem" Content="ПРИЕМО-СДАТОЧНЫЕ НАКЛАДНЫЕ" Click="AcceptNotesViewItem_Click"/>
+                    <ui:NavigationViewItem x:Name="PAUViewItem" Content="ДОБАВИТЬ ДСЕ" Click="PAUViewItem_Click"/>
+                </ui:NavigationView.MenuItems>
+            </ui:NavigationView>
+            <ui:NavigationView x:Name="EmployeeNavigationView" Width="1250" VerticalAlignment="Center" PaneDisplayMode="Top">
+                <ui:NavigationView.MenuItems>
+                    <ui:NavigationViewItem x:Name="WorkOrdersEmployeeViewItem" Content="ЗАКАЗ-НАРЯДЫ" Click="WorkOrdersEmployeeViewItem_Click"/>
+                    <ui:NavigationViewItem x:Name="AcceptNotesEmployeeViewItem" Content="ПРИЕМО-СДАТОЧНЫЕ НАКЛАДНЫЕ" Click="AcceptNotesEmployeeViewItem_Click"/>
+                    <ui:NavigationViewItem x:Name="AcceptNoteAddViewItem" Content="ДОБАВИТЬ НАКЛАДНУЮ" Click="AcceptNoteAddViewItem_Click"/>
+                </ui:NavigationView.MenuItems>
+            </ui:NavigationView>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Grid.Row="1">
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
             <ui:DataGrid x:Name="WorkOrdersDataGrid" Width="1400" AutoGenerateColumns="False" CanUserAddRows="False" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserDeleteRows="False" CanUserSortColumns="False">
                 <ui:DataGrid.Columns>
                     <DataGridTextColumn Header="Номер наряда" Binding="{Binding WorkOrderId}"/>
@@ -30,7 +46,7 @@
                     <DataGridTextColumn Header="Кол-во" Binding="{Binding PAUCount}"/>
                     <DataGridTextColumn Header="Дата составления наряда" Binding="{Binding WorkOrderCreateDate}"/>
                     <DataGridTextColumn Header="Дата выполнения наряда" Binding="{Binding WorkOrderCompleteDate}"/>
-                    <DataGridTextColumn Header="Дата закрытия наряда" Binding="{Binding WorkOrderCloseDate}"/>
+                    <DataGridTextColumn Header="Дата закрытия наряда" Width="300" Binding="{Binding WorkOrderCloseDate}"/>
                 </ui:DataGrid.Columns>
             </ui:DataGrid>
         </StackPanel>

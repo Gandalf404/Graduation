@@ -13,16 +13,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Graduation.Pages
+namespace Graduation.Pages.WorkOrderPages
 {
-    /// <summary>
-    /// Логика взаимодействия для RegistrationPage.xaml
-    /// </summary>
-    public partial class RegistrationPage : Page
+    public partial class WorkOrderAddPage : Page
     {
-        public RegistrationPage()
+        public WorkOrderAddPage()
         {
             InitializeComponent();
+        }
+
+        private void WorkOrderSaveButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
