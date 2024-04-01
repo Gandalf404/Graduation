@@ -1,0 +1,82 @@
+﻿<Page x:Class="Graduation.Pages.WorkOrdersPages.WorkOrdersPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Graduation.Pages.WorkOrdersPages"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      Loaded="Page_Loaded"
+      mc:Ignorable="d" 
+      d:DesignHeight="1040" d:DesignWidth="1420"
+      Title="WorkOrdersPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <ui:Button x:Name="LogOutButton" Height="40" Width="120" Margin="20 0 0 0" Content="Выйти" Click="LogOutButton_Click"/>
+            <ui:NavigationView x:Name="MasterNavigationView" Width="1040" Margin="20 0 0 0" VerticalAlignment="Center" PaneDisplayMode="Top">
+                <ui:NavigationView.MenuItems>
+                    <ui:NavigationViewItem x:Name="WorkOrdersViewItem" Content="ЗАКАЗ-НАРЯДЫ" Click="WorkOrdersViewItem_Click"/>
+                    <ui:NavigationViewItem x:Name="InvoicesViewItem" Content="ПРИЕМО-СДАТОЧНЫЕ НАКЛАДНЫЕ" Click="InvoicesViewItem_Click"/>
+                </ui:NavigationView.MenuItems>
+            </ui:NavigationView>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10 0 0 0">
+            <ui:TextBox x:Name="SearchTextBox" Height="35" Width="200" PlaceholderText="Поиск" TextChanged="SearchTextBox_TextChanged"/>
+            <StackPanel Orientation="Vertical" Margin="20 0 0 0" Cursor="">
+                <ui:TextBlock Text="Дата составления" HorizontalAlignment="Center"/>
+                <RadioButton x:Name="WorkOrderCompilationDateAscRadioButton" Content="Старее" Checked="WorkOrderCompilationDateAscRadioButton_Checked"/>
+                <RadioButton x:Name="WorkOrderCompilationDateDescRadioButton" Content="Новее" Checked="WorkOrderCompilationDateDescRadioButton_Checked" Cursor="Hand"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="20 0 0 0">
+                <ui:TextBlock Text="Дата закрытия" HorizontalAlignment="Center"/>
+                <RadioButton x:Name="WorkOrderCloseDateAscRadioButton" Content="Старее" Checked="WorkOrderCloseDateAscRadioButton_Checked"/>
+                <RadioButton x:Name="WorkOrderCloseDateDescRadioButton" Content="Новее" Checked="WorkOrderCloseDateDescRadioButton_Checked"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="20 0 0 0">
+                <ui:TextBlock Text="Время начала операции" HorizontalAlignment="Center"/>
+                <RadioButton x:Name="OperationStartTimeAscRadioButton" Content="Раньше" Checked="OperationStartTimeAscRadioButton_Checked"/>
+                <RadioButton x:Name="OperationStartTimeDescRadioButton" Content="Позже" Checked="OperationStartTimeDescRadioButton_Checked"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="20 0 0 0">
+                <ui:TextBlock Text="Время завершения операции" HorizontalAlignment="Center"/>
+                <RadioButton x:Name="OperationEndTimeAscRadioButton" Content="Раньше" Checked="OperationEndTimeAscRadioButton_Checked"/>
+                <RadioButton x:Name="OperationEndTimeDescRadioButton" Content="Позже" Checked="OperationEndTimeDescRadioButton_Checked"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="20 0 0 0">
+                <ui:TextBlock Text="ДСЕ" HorizontalAlignment="Center"/>
+                <ComboBox x:Name="PauNameComboBox" Height="35" Width="200" Margin="0 15 0 0" SelectedIndex="0" DisplayMemberPath="PauName" SelectionChanged="PAUComboBox_SelectionChanged"/>
+            </StackPanel>
+            <ui:Button x:Name="WorkOrderCreateButton" Height="40" Width="120" Margin="20 0 0 0" Content="Добавить" Click="WorkOrderCreateButton_Click"/>
+        </StackPanel>
+        <ScrollViewer Grid.Row="2">
+            <ui:DataGrid x:Name="WorkOrdersDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False">
+                <ui:DataGrid.Columns>
+                    <DataGridTextColumn Header="Номер наряда" Binding="{Binding WorkOrderId}"/>
+                    <DataGridTextColumn Header="Номер заказа" Binding="{Binding WorkOrder.ReservationId}"/>
+                    <DataGridTextColumn Header="Дата составления" Binding="{Binding WorkOrder.WorkOrderCompilationDate, StringFormat=\{0:dd.MM.yyyy\}}"/>
+                    <DataGridTextColumn Header="Дата закрытия" Binding="{Binding WorkOrder.WorkOrderCloseDate, StringFormat=\{0:dd.MM.yyyy\}}"/>
+                    <DataGridTextColumn Header="Сотрдуник" Binding="{Binding WorkOrder.Employee.EmployeeSurname}"/>
+                    <DataGridTextColumn Header="Наименование ДСЕ" Binding="{Binding WorkOrder.Pau.PauName}"/>
+                    <DataGridTextColumn Header="Количество ДСЕ" Binding="{Binding WorkOrder.PauCount}"/>
+                    <DataGridTextColumn Header="Код участка" Binding="{Binding AreaId}"/>
+                    <DataGridTextColumn Header="Наименование операции" Binding="{Binding Operation.OperationName}"/>
+                    <DataGridTextColumn Header="Дата начала операции" Binding="{Binding OperationStartDate, StringFormat=\{0:dd.MM.yyyy\}}"/>
+                    <DataGridTextColumn Header="Время начала операции" Binding="{Binding OperationStartTime, StringFormat=\{0:HH:mm\}}"/>
+                    <DataGridTextColumn Header="Дата завершения операции" Binding="{Binding OperationEndDate, StringFormat=\{0:dd.MM.yyyy\}}"/>
+                    <DataGridTextColumn Header="Время завершения операции" Binding="{Binding OperationEndTime, StringFormat=\{0:HH:mm\}}"/>
+                </ui:DataGrid.Columns>
+                <ui:DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem x:Name="UpdateWorkOrderMenuItem" Header="Изменить заказ-наряд" Click="UpdateWorkOrderMenuItem_Click"/>
+                        <MenuItem x:Name="PrintWorkOrderMenuItem" Header="Распечатать заказ-наряд" Click="PrintWorkOrderMenuItem_Click"/>
+                    </ContextMenu>
+                </ui:DataGrid.ContextMenu>
+            </ui:DataGrid>
+        </ScrollViewer>
+    </Grid>
+</Page>

@@ -1,0 +1,62 @@
+﻿<Page x:Class="Graduation.Pages.WorkOrdersPages.WorkOrderCreatePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Graduation.Pages.WorkOrdersPages"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit.Obselete;assembly=Xceed.Wpf.Toolkit.NET5"
+      Loaded="Page_Loaded"
+      Language="ru-RU"
+      mc:Ignorable="d" 
+      d:DesignHeight="1040" d:DesignWidth="1420"
+      Title="WorkOrderCreatePage" Cursor="">
+
+    <Grid>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 220 0 0">
+            <StackPanel Orientation="Vertical">
+                <ui:TextBlock Text="Номер заказ-наряда" HorizontalAlignment="Center"/>
+                <ui:TextBox x:Name="WorkOrderIdTextBox" Height="35" Width="200" Margin="0 10 0 0" Text="{Binding WorkOrder.WorkOrderId}" PreviewTextInput="WorkOrderIdTextBox_PreviewTextInput"/>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Orientation="Vertical">
+                <ui:TextBlock Text="Номер заказа" HorizontalAlignment="Center"/>
+                <ComboBox x:Name="ReservationIdComboBox" Height="35" Width="200" Margin="0 10 0 0" DisplayMemberPath="ReservationId" SelectedItem="{Binding WorkOrder.Reservation}" SelectionChanged="ReservationIdComboBox_SelectionChanged"/>
+                <ui:TextBlock Text="Наименование ДСЕ" HorizontalAlignment="Center" Margin="0 10 0 0"/>
+                <ComboBox x:Name="PauNameComboBox" Height="35" Width="200" Margin="0 10 0 0" DisplayMemberPath="PauName"  SelectedItem="{Binding WorkOrder.Pau}"/>
+                <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
+                    <ui:TextBlock Text="Количество ДСЕ" HorizontalAlignment="Left"/>
+                    <ui:TextBlock Text="Кол-во на заказ" HorizontalAlignment="Right" Margin="20 0 0 0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <ui:TextBox x:Name="PauCountTextBox" Height="35" Width="100" Margin="0 10 0 0" Text="{Binding WorkOrder.PauCount}" PreviewTextInput="PauCountTextBox_PreviewTextInput"/>
+                    <ui:TextBlock x:Name="ReservationCountTextBlock" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="40 10 0 0" Text="{Binding WorkOrder.Reservation.ReservationCount}" FontSize="16"/>
+                </StackPanel>
+                <ui:TextBlock Text="Дата выполнения наряда" HorizontalAlignment="Center" Margin="0 10 0 0"/>
+                <xctk:MaskedTextBox x:Name="WorkOrderCompilationDateTextBox" Height="35" Width="200" Margin="0 10 0 0" Background="SlateGray" Mask="00/00/0000" Text="{Binding WorkOrder.WorkOrderCompleteDate}"/>
+                <ui:TextBlock Text="Сотрудник" HorizontalAlignment="Center" Margin="0 10 0 0"/>
+                <ComboBox x:Name="EmployeeSurnameComboBox" Height="35" Width="200" Margin="0 10 0 0" DisplayMemberPath="EmployeeSurname"  SelectedItem="{Binding WorkOrder.Employee}"/>
+                <CheckBox x:Name="WorkOrderCloseCheckBox" Margin="40 30 0 0" Content="Закрыть наряд" Cursor="Hand"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="50 0 0 0">
+                <ui:TextBlock Text="Код участка" HorizontalAlignment="Center"/>
+                <ComboBox x:Name="AreaIdComboBox" Height="35" Width="200" Margin="0 10 0 0" DisplayMemberPath="AreaId" SelectedItem="{Binding AreaId}"/>
+                <ui:TextBlock Text="Наименование операции" HorizontalAlignment="Center" Margin="0 10 0 0"/>
+                <ComboBox x:Name="OperationNameComboBox" Height="35" Width="200" Margin="0 10 0 0" DisplayMemberPath="OperationName" SelectedItem="{Binding Operation}"/>
+                <ui:TextBlock Text="Дата начала операции" HorizontalAlignment="Center" Margin="0 10 0 0"/>
+                <xctk:MaskedTextBox x:Name="OperationStartDateTextBox" Height="35" Width="200" Margin="0 10 0 0" Background="SlateGray" Mask="00/00/0000" Text="{Binding OperationStartDate}"/>
+                <ui:TextBlock Text="Время начала операции" HorizontalAlignment="Center" Margin="0 10 0 0"/>
+                <xctk:MaskedTextBox x:Name="OperationStartTimeTextBox" Height="35" Width="200" Margin="0 10 0 0" Background="SlateGray" Mask="00:00" Text="{Binding OperationStartTime}"/>
+                <ui:TextBlock Text="Дата завершения операции" HorizontalAlignment="Center" Margin="0 10 0 0"/>
+                <xctk:MaskedTextBox x:Name="OperationEndDateTextBox" Height="35" Width="200" Margin="0 10 0 0" Background="SlateGray" Mask="00/00/0000" Text="{Binding OperationEndDate}"/>
+                <ui:TextBlock Text="Время завершения операции" HorizontalAlignment="Center" Margin="0 10 0 0"/>
+                <xctk:MaskedTextBox x:Name="OperationEndTimeTextBox" Height="35" Width="200" Background="SlateGray" Mask="00:00" Text="{Binding OperationEndTime}"/>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"  Margin="0 550 0 0">
+            <ui:Button x:Name="WorkOrderCreateButton" Height="40" Width="120" Content="Сохранить" Click="WorkOrderCreateButton_Click"/>
+            <ui:Button x:Name="BackButton" Height="40" Width="120" Margin="50 0 0 0" Content="Назад" Click="BackButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Page>

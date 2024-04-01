@@ -1,0 +1,78 @@
+﻿<Page x:Class="Graduation.Pages.InvoicesPages.InvoicesPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Graduation.Pages.InvoicesPages"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      Loaded="Page_Loaded"
+      mc:Ignorable="d" 
+      d:DesignHeight="1040" d:DesignWidth="1420"
+      Title="InvoicesPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <ui:Button x:Name="LogOutButton" Height="40" Width="120" Margin="20 0 0 0" Content="Выйти" Click="LogOutButton_Click"/>
+            <ui:NavigationView x:Name="MasterNavigationView" Width="1040" Margin="20 0 0 0" VerticalAlignment="Center" PaneDisplayMode="Top">
+                <ui:NavigationView.MenuItems>
+                    <ui:NavigationViewItem x:Name="WorkOrdersViewItem" Content="ЗАКАЗ-НАРЯДЫ" Click="WorkOrdersViewItem_Click"/>
+                    <ui:NavigationViewItem x:Name="InvoicesViewItem" Content="ПРИЕМО-СДАТОЧНЫЕ НАКЛАДНЫЕ" Click="InvoicesViewItem_Click"/>
+                </ui:NavigationView.MenuItems>
+            </ui:NavigationView>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10 0 0 0">
+            <ui:TextBox x:Name="SearchTextBox" Height="35" Width="200" PlaceholderText="Поиск" TextChanged="SearchTextBox_TextChanged"/>
+            <StackPanel Orientation="Vertical" Margin="20 0 0 0">
+                <ui:TextBlock Text="Дата составления" HorizontalAlignment="Center"/>
+                <RadioButton x:Name="InvoicesCompilationDateAscRadioButton" Content="По возрастанию" Checked="InvoicesCompilationDateAscRadioButton_Checked"/>
+                <RadioButton x:Name="InvoicesCompilationDateDescRadioButton" Content="По убыванию" Checked="InvoicesCompilationDateDescRadioButton_Checked"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="20 0 0 0">
+                <ui:TextBlock Text="Количество ДСЕ" HorizontalAlignment="Center"/>
+                <RadioButton x:Name="PauCountAscRadioButton" Content="По возрастанию" Checked="PauCountAscRadioButton_Checked"/>
+                <RadioButton x:Name="PauCountDescRadioButton" Content="По убыванию" Checked="PauCountDescRadioButton_Checked"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="20 0 0 0">
+                <ui:TextBlock Text="Количество фактически" HorizontalAlignment="Center"/>
+                <RadioButton x:Name="FactCountAscRadioButton" Content="По возрастанию" Checked="FactCountAscRadioButton_Checked"/>
+                <RadioButton x:Name="FactCountDescRadioButton" Content="По убыванию" Checked="FactCountDescRadioButton_Checked"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="20 0 0 0">
+                <ui:TextBlock Text="Цех отправитель" HorizontalAlignment="Center"/>
+                <ComboBox x:Name="WorkOrderIdComboBox" Height="35" Width="175" Margin="0 15 0 0" SelectedIndex="0" DisplayMemberPath="WorkOrderId" SelectionChanged="WorkOrderIdComboBox_SelectionChanged"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="20 0 0 0">
+                <RadioButton x:Name="DepartmentRadioButton" Content="Цех отправитель"/>
+                <RadioButton x:Name="DepartmentReceiverRadioButton" Content="Цех получатель"/>
+                <ComboBox x:Name="DepartmentIdComboBox" Height="35" Width="175" SelectedIndex="0" DisplayMemberPath="DepartmentId" SelectionChanged="DepartmentIdComboBox_SelectionChanged"/>
+            </StackPanel>
+            <ui:Button x:Name="InvoiceCreateButton" Height="40" Width="120" Margin="20 0 0 0" Content="Добавить" Click="InvoiceCreateButton_Click"/>
+        </StackPanel>
+        <ScrollViewer Grid.Row="2">
+            <ui:DataGrid x:Name="InvoicesDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False">
+                <ui:DataGrid.Columns>
+                    <DataGridTextColumn Header="Номер накладной" Binding="{Binding InvoiceId}"/>
+                    <DataGridTextColumn Header="Номер заказ-наряда" Binding="{Binding Invoice.WorkOrder.WorkOrderId}"/>
+                    <DataGridTextColumn Header="Дата составления заказ-наряда" Binding="{Binding Invoice.WorkOrder.WorkOrderCompilationDate, StringFormat=\{0:dd.MM.yyyy\}}"/>
+                    <DataGridTextColumn Header="Дата составления накладной" Binding="{Binding Invoice.InvoiceCompilationDate, StringFormat=\{0:dd.MM.yyyy\}}"/>
+                    <DataGridTextColumn Header="Цех отправитель" Binding="{Binding Invoice.DepartmentId}"/>
+                    <DataGridTextColumn Header="Цех получатель" Binding="{Binding Invoice.DepartmentReceiverId}"/>
+                    <DataGridTextColumn Header="Наименование ДСЕ" Binding="{Binding Invoice.WorkOrder.Pau.PauName}"/>
+                    <DataGridTextColumn Header="Количество ДСЕ" Binding="{Binding Invoice.WorkOrder.PauCount}"/>
+                    <DataGridTextColumn Header="Количество фактически" Binding="{Binding FactCount}"/>
+                </ui:DataGrid.Columns>
+                <ui:DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem x:Name="UpdateInvoiceMenuItem" Header="Изменить накладную" Click="UpdateInvoiceMenuItem_Click"/>
+                        <MenuItem x:Name="PrintInvoiceMenuItem" Header="Распечатать накладную" Click="PrintInvoiceMenuItem_Click"/>
+                    </ContextMenu>
+                </ui:DataGrid.ContextMenu>
+            </ui:DataGrid>
+        </ScrollViewer>
+    </Grid>
+</Page>

@@ -1,0 +1,148 @@
+﻿using Graduation.Models;
+using Graduation.Models.Master;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace Graduation.Pages.InvoicesPages
+{
+    public partial class InvoiceCreatePage : Page
+    {
+        private Invoice _invoice;
+        private InvoicePau _invoicePau;
+        private bool _isCreating;
+        public InvoiceCreatePage()
+        {
+            try
+            {
+                InitializeComponent();
+                _invoice = new Invoice();
+                _invoicePau = new InvoicePau();
+                _isCreating = true;
+                foreach (var item in GraduationDB.graduationContext.WorkOrders.OrderBy(c => c.WorkOrderId))
+                {
+                    WorkOrderIdComboBox.Items.Add(item);
+                }
+                foreach (var item in GraduationDB.graduationContext.Departments)
+                {
+                    DepartmentIdComboBox.Items.Add(item);
+                    DepartmentReceiverIdComboBox.Items.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        public InvoiceCreatePage(InvoicePau invoicePau)
+        {
+            try
+            {
+                InitializeComponent();
+                _invoicePau = invoicePau;
+                _isCreating = false;
+                foreach (var item in GraduationDB.graduationContext.WorkOrders.OrderBy(c => c.WorkOrderId))
+                {
+                    WorkOrderIdComboBox.Items.Add(item);
+                }
+                foreach (var item in GraduationDB.graduationContext.Departments)
+                {
+                    DepartmentIdComboBox.Items.Add(item);
+                    DepartmentReceiverIdComboBox.Items.Add(item);
+                }
+                InvoiceIdTextBox.IsEnabled = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                DataContext = _invoicePau;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void InvoiceCreateButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (_isCreating)
+                {
+                    _invoice.InvoiceId = Convert.ToInt32(InvoiceIdTextBox.Text);
+                    _invoice.InvoiceCompilationDate = DateOnly.FromDateTime(DateTime.Now);
+                    _invoice.WorkOrderId = ((WorkOrder)WorkOrderIdComboBox.SelectedItem).WorkOrderId;
+                    _invoice.DepartmentId = ((Department)DepartmentIdComboBox.SelectedItem).DepartmentId;
+                    _invoice.DepartmentReceiverId = ((Department)DepartmentReceiverIdComboBox.SelectedItem).DepartmentId;
+                    _invoice.WorkOrderCompilationDate = ((WorkOrder)WorkOrderIdComboBox.SelectedItem).WorkOrderCompilationDate;
+
+                    _invoicePau.InvoiceId = Convert.ToInt32(InvoiceIdTextBox.Text);
+                    _invoicePau.InvoiceCompilationDate = DateOnly.FromDateTime(DateTime.Now);
+                    _invoicePau.FactCount = Convert.ToInt32(FactCountTextBox.Text);
+
+                    GraduationDB.graduationContext.Add(_invoice);
+                    GraduationDB.graduationContext.Add(_invoicePau);
+                    GraduationDB.graduationContext.SaveChanges();
+                    MessageBox.Show("Накладная успешно добавлена", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    _invoicePau.Invoice.WorkOrderId = ((WorkOrder)WorkOrderIdComboBox.SelectedItem).WorkOrderId;
+                    _invoicePau.Invoice.DepartmentId = ((Department)DepartmentIdComboBox.SelectedItem).DepartmentId;
+                    _invoicePau.Invoice.DepartmentReceiverId = ((Department)DepartmentReceiverIdComboBox.SelectedItem).DepartmentId;
+                    _invoicePau.FactCount = Convert.ToInt32(FactCountTextBox.Text);
+
+                    GraduationDB.graduationContext.SaveChanges();
+                    MessageBox.Show("Накладная успешно изменена", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                NavigationService.Navigate(new InvoicesPage());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void InvoiceIdTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (Char.IsDigit(e.Text, 0)) return;
+            e.Handled = true;
+        }
+
+        private void FactCountTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (Char.IsDigit(e.Text, 0)) return;
+            e.Handled = true;
+        }
+    }
+}
