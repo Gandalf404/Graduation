@@ -10,6 +10,12 @@
     <Compile Update="Pages\AuthPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Pages\EmployeesPages\EmployeeCreatePage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\EmployeesPages\EmployeesPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pages\InvoicesPages\InvoiceCreatePage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -25,6 +31,12 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Pages\AuthPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\EmployeesPages\EmployeeCreatePage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\EmployeesPages\EmployeesPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\InvoicesPages\InvoiceCreatePage.xaml">

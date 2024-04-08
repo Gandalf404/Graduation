@@ -82,6 +82,23 @@ namespace Graduation.Pages.InvoicesPages
             }
         }
 
+        //TODO: Починить этот и WorkOrderIdComboBox.
+        private void WorkOrderIdComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                foreach (var item in GraduationDB.graduationContext.WorkOrders.Where(c => c.WorkOrderCompilationDate 
+                        == ((WorkOrder)WorkOrderIdComboBox.SelectedItem).WorkOrderCompilationDate))
+                {
+                    WorkOrderCompilationDateComboBox.Items.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private void InvoiceCreateButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -91,6 +108,8 @@ namespace Graduation.Pages.InvoicesPages
                     _invoice.InvoiceId = Convert.ToInt32(InvoiceIdTextBox.Text);
                     _invoice.InvoiceCompilationDate = DateOnly.FromDateTime(DateTime.Now);
                     _invoice.WorkOrderId = ((WorkOrder)WorkOrderIdComboBox.SelectedItem).WorkOrderId;
+                    _invoice.WorkOrderCompilationDate = ((WorkOrder)WorkOrderCompilationDateComboBox.SelectedItem).WorkOrderCompilationDate;
+                    //TODO: Починить ComboBox'ы с цехами.
                     _invoice.DepartmentId = ((Department)DepartmentIdComboBox.SelectedItem).DepartmentId;
                     _invoice.DepartmentReceiverId = ((Department)DepartmentReceiverIdComboBox.SelectedItem).DepartmentId;
                     _invoice.WorkOrderCompilationDate = ((WorkOrder)WorkOrderIdComboBox.SelectedItem).WorkOrderCompilationDate;
@@ -107,6 +126,7 @@ namespace Graduation.Pages.InvoicesPages
                 else
                 {
                     _invoicePau.Invoice.WorkOrderId = ((WorkOrder)WorkOrderIdComboBox.SelectedItem).WorkOrderId;
+                    _invoicePau.Invoice.WorkOrderCompilationDate = ((WorkOrder)WorkOrderCompilationDateComboBox.SelectedItem).WorkOrderCompilationDate;
                     _invoicePau.Invoice.DepartmentId = ((Department)DepartmentIdComboBox.SelectedItem).DepartmentId;
                     _invoicePau.Invoice.DepartmentReceiverId = ((Department)DepartmentReceiverIdComboBox.SelectedItem).DepartmentId;
                     _invoicePau.FactCount = Convert.ToInt32(FactCountTextBox.Text);
@@ -114,6 +134,11 @@ namespace Graduation.Pages.InvoicesPages
                     GraduationDB.graduationContext.SaveChanges();
                     MessageBox.Show("Накладная успешно изменена", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
+            }
+            catch when (String.IsNullOrWhiteSpace(InvoiceIdTextBox.Text) || WorkOrderIdComboBox.SelectedItem == null || DepartmentIdComboBox.SelectedItem == null
+                        || DepartmentReceiverIdComboBox.SelectedItem == null || String.IsNullOrWhiteSpace(FactCountTextBox.Text))
+            {
+                MessageBox.Show("Необходимо заполнить все поля", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             catch (Exception ex)
             {

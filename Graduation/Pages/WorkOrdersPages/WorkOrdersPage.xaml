@@ -54,9 +54,9 @@
             <ui:Button x:Name="WorkOrderCreateButton" Height="40" Width="120" Margin="20 0 0 0" Content="Добавить" Click="WorkOrderCreateButton_Click"/>
         </StackPanel>
         <ScrollViewer Grid.Row="2">
-            <ui:DataGrid x:Name="WorkOrdersDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False">
+            <ui:DataGrid x:Name="WorkOrdersDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False">
                 <ui:DataGrid.Columns>
-                    <DataGridTextColumn Header="Номер наряда" Binding="{Binding WorkOrderId}"/>
+                    <DataGridTextColumn Header="Номер заказ-наряда" Binding="{Binding WorkOrderId}"/>
                     <DataGridTextColumn Header="Номер заказа" Binding="{Binding WorkOrder.ReservationId}"/>
                     <DataGridTextColumn Header="Дата составления" Binding="{Binding WorkOrder.WorkOrderCompilationDate, StringFormat=\{0:dd.MM.yyyy\}}"/>
                     <DataGridTextColumn Header="Дата закрытия" Binding="{Binding WorkOrder.WorkOrderCloseDate, StringFormat=\{0:dd.MM.yyyy\}}"/>

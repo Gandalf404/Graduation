@@ -20,4 +20,22 @@
     <PackageReference Include="Wpf-UI" Version="3.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Resources\InvoiceTemplate.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\WorkOrderTemplate.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\Invoices\" />
+    <Folder Include="Resources\WorkOrders\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="App.xaml" />
+  </ItemGroup>
+
 </Project>

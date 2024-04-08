@@ -2,8 +2,11 @@
 using Graduation.Models.Master;
 using Graduation.Pages.InvoicesPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,20 +19,47 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Xceed.Document.NET;
+using Xceed.Words.NET;
 
 namespace Graduation.Pages.WorkOrdersPages
 {
     public partial class WorkOrdersPage : Page
     {
+        private Authorisation _authorisation;
         private List<WorkOrderArea> _workOrderAreas;
         private Pau _selectedPau;
         private WorkOrderArea _selectedWorkOrderArea;
+        private DocX _docX;
+        private SaveFileDialog _saveFileDialog;
         public WorkOrdersPage()
         {
             try
             {
                 InitializeComponent();
                 _workOrderAreas = GraduationDB.graduationContext.WorkOrderAreas.Include(c => c.WorkOrder).Include(c => c.WorkOrder.Employee).Include(c => c.Operation).OrderBy(c => c.WorkOrderId).ToList();
+                WorkOrdersDataGrid.ItemsSource = _workOrderAreas;
+                PauNameComboBox.Items.Add(new Pau { PauName = "Все ДСЕ" });
+                foreach (var item in GraduationDB.graduationContext.Paus)
+                {
+                    PauNameComboBox.Items.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        //TODO: Сделать отображение заказ-нарядов которые составил авторизованный мастер.
+        public WorkOrdersPage(Authorisation authorisation)
+        {
+            try
+            {
+                InitializeComponent();
+                _authorisation = authorisation;
+                _workOrderAreas = GraduationDB.graduationContext.WorkOrderAreas.Include(c => c.WorkOrder).Include(c => c.WorkOrder.Employee).Include(c => c.Operation).OrderBy(c => c.WorkOrderId)
+                    .Where(c => c.WorkOrder.EmployeeId == authorisation.EmployeeId).ToList();
                 WorkOrdersDataGrid.ItemsSource = _workOrderAreas;
                 PauNameComboBox.Items.Add(new Pau { PauName = "Все ДСЕ" });
                 foreach (var item in GraduationDB.graduationContext.Paus)
@@ -108,7 +138,7 @@ namespace Graduation.Pages.WorkOrdersPages
                                                             || c.WorkOrder.WorkOrderCompilationDate.ToString().Contains(SearchTextBox.Text)
                                                             || c.WorkOrder.WorkOrderCloseDate.ToString().Contains(SearchTextBox.Text)
                                                             || c.WorkOrder.Employee.EmployeeSurname.ToLower().Contains(SearchTextBox.Text)
-                                                            || c.WorkOrder.Pau.PauName.ToLower().Contains(SearchTextBox.Text)                                                             
+                                                            || c.WorkOrder.Pau.PauName.ToLower().Contains(SearchTextBox.Text)
                                                             || c.Operation.OperationName.ToLower().Contains(SearchTextBox.Text)
                                                             || c.OperationStartDate.ToString().Contains(SearchTextBox.Text)
                                                             || c.OperationStartTime.ToString().Contains(SearchTextBox.Text)
@@ -297,7 +327,44 @@ namespace Graduation.Pages.WorkOrdersPages
         {
             try
             {
-
+                _selectedWorkOrderArea = (WorkOrderArea)WorkOrdersDataGrid.SelectedItem;
+                if (_selectedWorkOrderArea != null)
+                {
+                    _docX = DocX.Load(new FileInfo("..//..//..//Resources//WorkOrderTemplate.docx").FullName);
+                    _docX.ReplaceText("{0}", $"{_selectedWorkOrderArea.WorkOrderId}");
+                    _docX.ReplaceText("{1}", $"{_selectedWorkOrderArea.WorkOrderCompilationDate}");
+                    _docX.ReplaceText("{2}", $"{_selectedWorkOrderArea.WorkOrderId}");
+                    _docX.ReplaceText("{3}", $"{_selectedWorkOrderArea.WorkOrder.ReservationId}");
+                    if (_selectedWorkOrderArea.WorkOrder.WorkOrderCloseDate != null)
+                    {
+                        _docX.ReplaceText("{4}", $"{_selectedWorkOrderArea.WorkOrder.WorkOrderCloseDate}");
+                    }
+                    else
+                    {
+                        _docX.ReplaceText("{4}", "-");
+                    }
+                    _docX.ReplaceText("{5}", $"{_selectedWorkOrderArea.WorkOrder.Employee.EmployeeSurname}");
+                    _docX.ReplaceText("{6}", $"{_selectedWorkOrderArea.WorkOrder.Pau.PauName}");
+                    _docX.ReplaceText("{7}", $"{_selectedWorkOrderArea.WorkOrder.PauCount}");
+                    _docX.ReplaceText("{8}", $"{_selectedWorkOrderArea.AreaId}");
+                    _docX.ReplaceText("{9}", $"{_selectedWorkOrderArea.Operation.OperationName}");
+                    _docX.ReplaceText("{10}", $"{_selectedWorkOrderArea.OperationStartDate}");
+                    _docX.ReplaceText("{11}", $"{_selectedWorkOrderArea.OperationStartTime}");
+                    _docX.ReplaceText("{12}", $"{_selectedWorkOrderArea.OperationEndDate}");
+                    _docX.ReplaceText("{13}", $"{_selectedWorkOrderArea.OperationEndTime}");
+                    _docX.ReplaceText("{14}", $"{_authorisation.Employee.EmployeeSurname}");
+                    _saveFileDialog = new SaveFileDialog() { DefaultDirectory = @$"C:\Users\{Environment.UserName}\source\repos\Graduation\Graduation\Resources\WorkOrders" };
+                    if (_saveFileDialog.ShowDialog() != true)
+                    {
+                        return;
+                    }
+                    _docX.SaveAs(_saveFileDialog.FileName);
+                    MessageBox.Show("Форма для печати заказ-наряда успешно создана", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Выберите накладную для печати", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
             }
             catch (Exception ex)
             {

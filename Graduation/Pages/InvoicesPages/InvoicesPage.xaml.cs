@@ -2,6 +2,7 @@
 using Graduation.Models.Master;
 using Graduation.Pages.WorkOrdersPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,12 +12,12 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Xceed.Document.NET;
 using Xceed.Words.NET;
 
 namespace Graduation.Pages.InvoicesPages
@@ -28,6 +29,8 @@ namespace Graduation.Pages.InvoicesPages
         private Department _selectedDepartment;
         private InvoicePau _selectedInvoicePau;
         private DocX _docX;
+        SaveFileDialog saveFileDialog;
+
         public InvoicesPage()
         {
             try
@@ -35,17 +38,17 @@ namespace Graduation.Pages.InvoicesPages
                 InitializeComponent();
                 _invoicesPaus = GraduationDB.graduationContext.InvoicePaus.Include(c => c.Invoice).Include(c => c.Invoice.WorkOrder).OrderBy(c => c.InvoiceId).ToList();
                 InvoicesDataGrid.ItemsSource = _invoicesPaus;
-                WorkOrderIdComboBox.Items.Add(new WorkOrder { WorkOrderId = 0});
+                WorkOrderIdComboBox.Items.Add(new WorkOrder { WorkOrderId = 0 });
                 foreach (var item in GraduationDB.graduationContext.WorkOrders)
                 {
                     WorkOrderIdComboBox.Items.Add(item);
                 }
-                DepartmentIdComboBox.Items.Add(new Department { DepartmentId = 0});
+                DepartmentIdComboBox.Items.Add(new Department { DepartmentId = 0 });
                 foreach (var item in GraduationDB.graduationContext.Departments)
                 {
                     DepartmentIdComboBox.Items.Add(item);
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -102,6 +105,7 @@ namespace Graduation.Pages.InvoicesPages
             }
         }
 
+        //UNDONE: Сделать вывод окна если ничего не найдено.
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
@@ -113,12 +117,11 @@ namespace Graduation.Pages.InvoicesPages
                 }
                 else
                 {
-                    _invoicesPaus = _invoicesPaus.Where(c => c.InvoiceId.ToString().Contains(SearchTextBox.Text) 
+                    _invoicesPaus = _invoicesPaus.Where(c => c.InvoiceId.ToString().Contains(SearchTextBox.Text)
                                                         || c.Invoice.WorkOrder.WorkOrderId.ToString().Contains(SearchTextBox.Text)
                                                         || c.Invoice.InvoiceCompilationDate.ToString().Contains(SearchTextBox.Text)
                                                         || c.Invoice.DepartmentId.ToString().Contains(SearchTextBox.Text)
                                                         || c.Invoice.DepartmentReceiverId.ToString().Contains(SearchTextBox.Text)
-                                                        //Наименование операции.
                                                         || c.Invoice.WorkOrder.PauId.ToString().Contains(SearchTextBox.Text)
                                                         || c.Invoice.WorkOrder.Pau.PauCount.ToString().Contains(SearchTextBox.Text)
                                                         || c.FactCount.ToString().Contains(SearchTextBox.Text)).ToList();
@@ -209,6 +212,7 @@ namespace Graduation.Pages.InvoicesPages
             }
         }
 
+        //TODO: Подумать над фильтрацией либо по номеру заказ-наряда, либо по цеху отправителю.
         private void WorkOrderIdComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -306,9 +310,9 @@ namespace Graduation.Pages.InvoicesPages
             try
             {
                 _selectedInvoicePau = (InvoicePau)InvoicesDataGrid.SelectedItem;
-                if ( _selectedInvoicePau != null)
+                if (_selectedInvoicePau != null)
                 {
-                    _docX = DocX.Load(new FileInfo("..//..//Resources//InvoiceTemplate.docx").FullName);
+                    _docX = DocX.Load(new FileInfo("..//..//..//Resources//InvoiceTemplate.docx").FullName);
                     _docX.ReplaceText("{0}", $"{_selectedInvoicePau.InvoiceId}");
                     _docX.ReplaceText("{1}", $"{_selectedInvoicePau.InvoiceCompilationDate}");
                     _docX.ReplaceText("{2}", $"{_selectedInvoicePau.Invoice.DepartmentId}");
@@ -319,16 +323,13 @@ namespace Graduation.Pages.InvoicesPages
                     _docX.ReplaceText("{7}", $"{_selectedInvoicePau.Invoice.WorkOrder.PauCount}");
                     _docX.ReplaceText("{8}", $"{_selectedInvoicePau.FactCount}");
                     _docX.ReplaceText("{9}", $"{_selectedInvoicePau.Invoice.WorkOrder.Employee.EmployeeSurname}");
-                    var tableInvoice = _docX.Tables[2];
-                    int index = 2;
-                    foreach (var item in _invoicesPaus)
+                    saveFileDialog = new SaveFileDialog() { DefaultDirectory = @$"C:\Users\{Environment.UserName}\source\repos\Graduation\Graduation\Resources\Invoices" };
+                    if (saveFileDialog.ShowDialog() != true)
                     {
-                        tableInvoice.InsertRow(index);
-                        tableInvoice.Rows[index].Cells[0].Paragraphs.First().Append($"{_selectedInvoicePau.Invoice.DepartmentId}");
-                        tableInvoice.Rows[index].Cells[1].Paragraphs.First().Append($"{_selectedInvoicePau.Invoice.DepartmentReceiverId}");
-                        
-                        index++;
+                        return;
                     }
+                    _docX.SaveAs(saveFileDialog.FileName);
+                    MessageBox.Show("Форма для печати приемо-сдаточной накладной успешно создана", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {

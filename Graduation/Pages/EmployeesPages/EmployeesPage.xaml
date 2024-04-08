@@ -1,0 +1,60 @@
+﻿<Page x:Class="Graduation.Pages.EmployeesPages.EmployeesPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Graduation.Pages.EmployeesPages"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      Loaded="Page_Loaded"
+      mc:Ignorable="d" 
+      d:DesignHeight="1040" d:DesignWidth="1420"
+      Title="EmployeesPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <ui:Button x:Name="LogOutButton" Height="40" Width="120" Margin="20 0 0 0" Content="Выйти" Click="LogOutButton_Click"/>
+            <ui:NavigationView x:Name="AdminNavigationView" Width="1040" Margin="20 0 0 0" VerticalAlignment="Center" PaneDisplayMode="Top">
+                <ui:NavigationView.MenuItems>
+                    <ui:NavigationViewItem x:Name="EmployeesViewItem" Content="СОТРУДНИКИ" Click="EmployeesViewItem_Click"/>
+
+                </ui:NavigationView.MenuItems>
+            </ui:NavigationView>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10 0 0 0">
+            <ui:TextBox x:Name="SearchTextBox" Height="35" Width="200" PlaceholderText="Поиск" TextChanged="SearchTextBox_TextChanged"/>
+            <StackPanel Orientation="Vertical" Margin="20 0 0 0">
+                <ui:TextBlock Text="Участок" HorizontalAlignment="Center"/>
+                <RadioButton x:Name="AreaIdAscRadioButton" Content="По возрастанию" Checked="AreaIdAscRadioButton_Checked"/>
+                <RadioButton x:Name="AreaIdDescRadioButton" Content="По убыванию" Checked="AreaIdDescRadioButton_Checked"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="20 0 0 0">
+                <ui:TextBlock Text="Разряд" HorizontalAlignment="Center"/>
+                <RadioButton x:Name="ClassIdAscRadioButton" Content="От меньшего" Checked="ClassIdAscRadioButton_Checked"/>
+                <RadioButton x:Name="ClassIdDescRadioButton" Content="От большего" Checked="ClassIdDescRadioButton_Checked"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="20 0 0 0">
+                <ui:TextBlock Text="Должность" HorizontalAlignment="Center"/>
+                <ComboBox x:Name="PositionNameComboBox" Height="35" Width="200" Margin="0 15 0 0" SelectedIndex="0" DisplayMemberPath="PositionName" SelectionChanged="PositionNameComboBox_SelectionChanged"/>
+            </StackPanel>
+            <ui:Button x:Name="EmployeeCreateButton" Height="40" Width="120" Margin="20 0 0 0" Content="Добавить" Click="EmployeeCreateButton_Click"/>
+        </StackPanel>
+        <ScrollViewer Grid.Row="2">
+            <ui:DataGrid x:Name="EmployeesDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False">
+                <ui:DataGrid.Columns>
+                    <DataGridTextColumn Header="Табельный номер сотрудника" Binding="{Binding EmployeeId}"/>
+                    <DataGridTextColumn Header="Фамилия" Binding="{Binding EmployeeSurname}"/>
+                    <DataGridTextColumn Header="Имя" Binding="{Binding EmployeeName}"/>
+                    <DataGridTextColumn Header="Отчество" Binding="{Binding EmployeePatronymic}"/>
+                    <DataGridTextColumn Header="Код участка" Binding="{Binding AreaId}"/>
+                    <DataGridTextColumn Header="Должность" Binding="{Binding Position.PositionName}"/>
+                    <DataGridTextColumn Header="Код разряда" Binding="{Binding ClassId}"/>
+                </ui:DataGrid.Columns>
+            </ui:DataGrid>
+        </ScrollViewer>
+    </Grid>
+</Page>

@@ -34,7 +34,7 @@
                     <ui:TextBlock x:Name="ReservationCountTextBlock" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="40 10 0 0" Text="{Binding WorkOrder.Reservation.ReservationCount}" FontSize="16"/>
                 </StackPanel>
                 <ui:TextBlock Text="Дата выполнения наряда" HorizontalAlignment="Center" Margin="0 10 0 0"/>
-                <xctk:MaskedTextBox x:Name="WorkOrderCompilationDateTextBox" Height="35" Width="200" Margin="0 10 0 0" Background="SlateGray" Mask="00/00/0000" Text="{Binding WorkOrder.WorkOrderCompleteDate}"/>
+                <xctk:MaskedTextBox x:Name="WorkOrderCompleteDateTextBox" Height="35" Width="200" Margin="0 10 0 0" Background="SlateGray" Mask="00/00/0000" Text="{Binding WorkOrder.WorkOrderCompleteDate}"/>
                 <ui:TextBlock Text="Сотрудник" HorizontalAlignment="Center" Margin="0 10 0 0"/>
                 <ComboBox x:Name="EmployeeSurnameComboBox" Height="35" Width="200" Margin="0 10 0 0" DisplayMemberPath="EmployeeSurname"  SelectedItem="{Binding WorkOrder.Employee}"/>
                 <CheckBox x:Name="WorkOrderCloseCheckBox" Margin="40 30 0 0" Content="Закрыть наряд" Cursor="Hand"/>

@@ -56,8 +56,8 @@
         <ScrollViewer Grid.Row="2">
             <ui:DataGrid x:Name="InvoicesDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False">
                 <ui:DataGrid.Columns>
-                    <DataGridTextColumn Header="Номер накладной" Binding="{Binding InvoiceId}"/>
-                    <DataGridTextColumn Header="Номер заказ-наряда" Binding="{Binding Invoice.WorkOrder.WorkOrderId}"/>
+                    <DataGridTextColumn Header="Номер приемо-сдаточной накладной" Binding="{Binding InvoiceId}"/>
+                    <DataGridTextColumn Header="Номер наряда" Binding="{Binding Invoice.WorkOrder.WorkOrderId}"/>
                     <DataGridTextColumn Header="Дата составления заказ-наряда" Binding="{Binding Invoice.WorkOrder.WorkOrderCompilationDate, StringFormat=\{0:dd.MM.yyyy\}}"/>
                     <DataGridTextColumn Header="Дата составления накладной" Binding="{Binding Invoice.InvoiceCompilationDate, StringFormat=\{0:dd.MM.yyyy\}}"/>
                     <DataGridTextColumn Header="Цех отправитель" Binding="{Binding Invoice.DepartmentId}"/>

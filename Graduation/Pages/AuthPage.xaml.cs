@@ -1,5 +1,6 @@
-﻿//using Graduation.Models;
-//using Graduation.Models.Master;
+﻿using Graduation.Models;
+using Graduation.Models.Master;
+using Graduation.Pages.EmployeesPages;
 using Graduation.Pages.WorkOrdersPages;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,8 @@ namespace Graduation.Pages
 {
     public partial class AuthPage : Page
     {
-        //private Authorisation _authorisation;
+        private Authorisation _dbAdmin;
+        private Authorisation _master;
         public AuthPage()
         {
             InitializeComponent();
@@ -30,17 +32,24 @@ namespace Graduation.Pages
         {
             try
             {
-                //_authorisation = GraduationDB.graduationContext.Authorisations.FirstOrDefault(c => c.Login == LoginTextBox.Text && c.Password == PasswordBox.Password && c.Employee.PositionId == 4);
-                //if (_authorisation != null)
-                //{
-                //    MessageBox.Show("Успешный вход", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
-                      NavigationService.Navigate(new WorkOrdersPage());
-                //}
-                //else
-                //{
-                //    MessageBox.Show("Неверный логин или пароль", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                //}
+                _dbAdmin = GraduationDB.graduationContext.Authorisations.FirstOrDefault(c => c.Login == LoginTextBox.Text && c.Password == PasswordBox.Password && c.Employee.PositionId == 2);
+                _master = GraduationDB.graduationContext.Authorisations.FirstOrDefault(c => c.Login == LoginTextBox.Text && c.Password == PasswordBox.Password && c.Employee.PositionId == 4);
+                if (_dbAdmin != null)
+                {
+                    MessageBox.Show("Успешный вход", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                    NavigationService.Navigate(new EmployeesPage());
+                }
+                else if (_master != null)
+                {
+                    MessageBox.Show("Успешный вход", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                    NavigationService.Navigate(new WorkOrdersPage(_master));
+                }
+                else
+                {
+                    MessageBox.Show("Неверный логин или пароль", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
+            //UNDONE: Сделать проверки на поля логина и пароля.
             catch when (String.IsNullOrWhiteSpace(LoginTextBox.Text) && String.IsNullOrWhiteSpace(PasswordBox.Password))
             {
                 MessageBox.Show("Введите логин и пароль", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);

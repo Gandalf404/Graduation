@@ -19,7 +19,6 @@ namespace Graduation.Pages.WorkOrdersPages
 {
     public partial class WorkOrderCreatePage : Page
     {
-        //private WorkOrder _workOrder;
         private WorkOrder _workOrder;
         private WorkOrderArea _workOrderArea;
         private bool _isCreating;
@@ -51,7 +50,7 @@ namespace Graduation.Pages.WorkOrdersPages
                 {
                     OperationNameComboBox.Items.Add(item);
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -133,14 +132,13 @@ namespace Graduation.Pages.WorkOrdersPages
             {
                 if (_isCreating == true)
                 {
-                    //TODO: Починить ReservationId.
                     _workOrder.WorkOrderId = Convert.ToInt32(WorkOrderIdTextBox.Text);
                     _workOrder.ReservationId = ((Reservation)ReservationIdComboBox.SelectedItem).ReservationId;
                     _workOrder.WorkOrderCompilationDate = DateOnly.FromDateTime(DateTime.Now);
                     _workOrder.PauId = ((Pau)PauNameComboBox.SelectedItem).PauId;
                     _workOrder.PauCount = ((Pau)PauNameComboBox.SelectedItem).PauCount;
                     _workOrder.EmployeeId = ((Employee)EmployeeSurnameComboBox.SelectedItem).EmployeeId;
-                    _workOrder.ReservationCompilationDate = ((Reservation)ReservationIdComboBox.SelectedItem).ReservationCompilationDate;                    
+                    _workOrder.ReservationCompilationDate = ((Reservation)ReservationIdComboBox.SelectedItem).ReservationCompilationDate;
                     if (WorkOrderCloseCheckBox.IsChecked == true)
                     {
                         _workOrder.WorkOrderCloseDate = DateOnly.FromDateTime(DateTime.Now);
@@ -180,6 +178,13 @@ namespace Graduation.Pages.WorkOrdersPages
                     GraduationDB.graduationContext.SaveChanges();
                     MessageBox.Show("Заказ-наряд успешно изменен", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
+            }
+            catch when (String.IsNullOrWhiteSpace(WorkOrderIdTextBox.Text) || String.IsNullOrWhiteSpace(PauCountTextBox.Text) || ReservationIdComboBox.SelectedItem == null
+                        || PauNameComboBox.SelectedItem == null || String.IsNullOrWhiteSpace(WorkOrderCompleteDateTextBox.Text) || EmployeeSurnameComboBox.SelectedItem == null
+                        || AreaIdComboBox.SelectedItem == null || OperationNameComboBox.SelectedItem == null || String.IsNullOrWhiteSpace(OperationStartDateTextBox.Text)
+                        || String.IsNullOrWhiteSpace(OperationStartTimeTextBox.Text) || String.IsNullOrWhiteSpace(OperationEndDateTextBox.Text) || String.IsNullOrWhiteSpace(OperationEndTimeTextBox.Text))
+            {
+                MessageBox.Show("Необходимо заполнить все поля", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             catch (Exception ex)
             {
