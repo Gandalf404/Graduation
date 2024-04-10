@@ -41,7 +41,7 @@
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="50 0 0 0">
                 <ui:TextBlock Text="Код участка" HorizontalAlignment="Center"/>
-                <ComboBox x:Name="AreaIdComboBox" Height="35" Width="200" Margin="0 10 0 0" DisplayMemberPath="AreaId" SelectedItem="{Binding AreaId}"/>
+                <ComboBox x:Name="AreaIdComboBox" Height="35" Width="200" Margin="0 10 0 0" DisplayMemberPath="AreaId" SelectedItem="{Binding Area}"/>
                 <ui:TextBlock Text="Наименование операции" HorizontalAlignment="Center" Margin="0 10 0 0"/>
                 <ComboBox x:Name="OperationNameComboBox" Height="35" Width="200" Margin="0 10 0 0" DisplayMemberPath="OperationName" SelectedItem="{Binding Operation}"/>
                 <ui:TextBlock Text="Дата начала операции" HorizontalAlignment="Center" Margin="0 10 0 0"/>

@@ -21,6 +21,7 @@ namespace Graduation.Pages.EmployeesPages
     public partial class EmployeesPage : Page
     {
         private List<Employee> _employees;
+        private Position _selectedPosition;
         private Employee _selectedEmployee;
 
         public EmployeesPage()
@@ -163,7 +164,17 @@ namespace Graduation.Pages.EmployeesPages
         {
             try
             {
-
+                _selectedPosition = (Position)PositionNameComboBox.SelectedItem;
+                if (_selectedPosition.PositionName != "Все должности")
+                {
+                    _employees = GraduationDB.graduationContext.Employees.Where(c => c.Position.PositionName == _selectedPosition.PositionName).ToList();
+                    EmployeesDataGrid.ItemsSource= _employees;
+                }
+                else
+                {
+                    _employees = GraduationDB.graduationContext.Employees.Include(c => c.Position).ToList();
+                    EmployeesDataGrid.ItemsSource = _employees;
+                }
             }
             catch (Exception ex)
             {

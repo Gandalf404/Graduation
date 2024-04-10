@@ -50,9 +50,9 @@
                     <DataGridTextColumn Header="Фамилия" Binding="{Binding EmployeeSurname}"/>
                     <DataGridTextColumn Header="Имя" Binding="{Binding EmployeeName}"/>
                     <DataGridTextColumn Header="Отчество" Binding="{Binding EmployeePatronymic}"/>
-                    <DataGridTextColumn Header="Код участка" Binding="{Binding AreaId}"/>
+                    <DataGridTextColumn Header="Участок" Binding="{Binding AreaId}"/>
                     <DataGridTextColumn Header="Должность" Binding="{Binding Position.PositionName}"/>
-                    <DataGridTextColumn Header="Код разряда" Binding="{Binding ClassId}"/>
+                    <DataGridTextColumn Header="Разряд" Binding="{Binding ClassId}"/>
                 </ui:DataGrid.Columns>
             </ui:DataGrid>
         </ScrollViewer>

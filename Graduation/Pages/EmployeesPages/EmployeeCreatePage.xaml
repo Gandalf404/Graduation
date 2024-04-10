@@ -4,11 +4,46 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Graduation.Pages.EmployeesPages"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      Loaded="Page_Loaded"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="1040" d:DesignWidth="1420"
       Title="EmployeeCreatePage">
 
     <Grid>
-        
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Vertical">
+                    <ui:TextBlock Text="Фамилия" HorizontalAlignment="Center"/>
+                    <ui:TextBox x:Name="EmployeeSurnameTextBox" Height="35" Width="200" Margin="0 10 0 0" Text="{Binding EmployeeSurname}" PreviewTextInput="EmployeeSurnameTextBox_PreviewTextInput"/>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Margin="20 0 0 0">
+                    <ui:TextBlock Text="Имя" HorizontalAlignment="Center"/>
+                    <ui:TextBox x:Name="EmployeeNameTextBox" Height="35" Width="200" Margin="0 10 0 0" Text="{Binding EmployeeName}" PreviewTextInput="EmployeeNameTextBox_PreviewTextInput"/>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Margin="20 0 0 0">
+                    <ui:TextBlock Text="Отчество" HorizontalAlignment="Center"/>
+                    <ui:TextBox x:Name="EmployeePatronymicTextBox" Height="35" Width="200" Margin="0 10 0 0" Text="{Binding EmployeePatronymic}" PreviewTextInput="EmployeePatronymicTextBox_PreviewTextInput"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
+                <StackPanel Orientation="Vertical">
+                    <ui:TextBlock Text="Код участка" HorizontalAlignment="Center"/>
+                    <ComboBox x:Name="AreaIdComboBox" Height="35" Width="200" Margin="0 10 0 0" DisplayMemberPath="AreaId" SelectedItem="{Binding Area}"/>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Margin="20 0 0 0">
+                    <ui:TextBlock Text="Должность" HorizontalAlignment="Center"/>
+                    <ComboBox x:Name="PositionNameComboBox" Height="35" Width="200" Margin="0 10 0 0" DisplayMemberPath="PositionName" SelectedItem="{Binding Position}"/>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Margin="20 0 0 0">
+                    <ui:TextBlock Text="Разряд" HorizontalAlignment="Center"/>
+                    <ComboBox x:Name="ClassComboBox" Height="35" Width="200" Margin="0 10 0 0" DisplayMemberPath="ClassId" SelectedItem="{Binding Class}"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 20 0 0">
+                <ui:Button x:Name="EmployeeCreateButton" Height="40" Width="120" Content="Сохранить" Click="EmployeeCreateButton_Click"/>
+                <ui:Button x:Name="BackButton" Height="40" Width="120" Margin="50 0 0 0" Content="Назад" Click="BackButton_Click"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Page>

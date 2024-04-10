@@ -3,20 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\yegor\\source\\repos\\Graduation\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{983F396B-44F9-47B9-AB30-EDCC3BC3CAD0}|Graduation\\Graduation.csproj|c:\\users\\yegor\\source\\repos\\graduation\\graduation\\pages\\employeespages\\employeecreatepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{983F396B-44F9-47B9-AB30-EDCC3BC3CAD0}|Graduation\\Graduation.csproj|solutionrelative:graduation\\pages\\employeespages\\employeecreatepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{983F396B-44F9-47B9-AB30-EDCC3BC3CAD0}|Graduation\\Graduation.csproj|c:\\users\\yegor\\source\\repos\\graduation\\graduation\\models\\master\\graduationcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{983F396B-44F9-47B9-AB30-EDCC3BC3CAD0}|Graduation\\Graduation.csproj|solutionrelative:graduation\\models\\master\\graduationcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{983F396B-44F9-47B9-AB30-EDCC3BC3CAD0}|Graduation\\Graduation.csproj|c:\\users\\yegor\\source\\repos\\graduation\\graduation\\pages\\invoicespages\\invoicecreatepage.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{983F396B-44F9-47B9-AB30-EDCC3BC3CAD0}|Graduation\\Graduation.csproj|solutionrelative:graduation\\pages\\invoicespages\\invoicecreatepage.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{983F396B-44F9-47B9-AB30-EDCC3BC3CAD0}|Graduation\\Graduation.csproj|c:\\users\\yegor\\source\\repos\\graduation\\graduation\\pages\\employeespages\\employeespage.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
       "RelativeMoniker": "D:0:0:{983F396B-44F9-47B9-AB30-EDCC3BC3CAD0}|Graduation\\Graduation.csproj|solutionrelative:graduation\\pages\\employeespages\\employeespage.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{983F396B-44F9-47B9-AB30-EDCC3BC3CAD0}|Graduation\\Graduation.csproj|c:\\users\\yegor\\source\\repos\\graduation\\graduation\\pages\\employeespages\\employeespage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{983F396B-44F9-47B9-AB30-EDCC3BC3CAD0}|Graduation\\Graduation.csproj|solutionrelative:graduation\\pages\\employeespages\\employeespage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{983F396B-44F9-47B9-AB30-EDCC3BC3CAD0}|Graduation\\Graduation.csproj|c:\\users\\yegor\\source\\repos\\graduation\\graduation\\pages\\invoicespages\\invoicespage.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
-      "RelativeMoniker": "D:0:0:{983F396B-44F9-47B9-AB30-EDCC3BC3CAD0}|Graduation\\Graduation.csproj|solutionrelative:graduation\\pages\\invoicespages\\invoicespage.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{983F396B-44F9-47B9-AB30-EDCC3BC3CAD0}|Graduation\\Graduation.csproj|c:\\users\\yegor\\source\\repos\\graduation\\graduation\\models\\master\\graduationcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{983F396B-44F9-47B9-AB30-EDCC3BC3CAD0}|Graduation\\Graduation.csproj|solutionrelative:graduation\\models\\master\\graduationcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{983F396B-44F9-47B9-AB30-EDCC3BC3CAD0}|Graduation\\Graduation.csproj|c:\\users\\yegor\\source\\repos\\graduation\\graduation\\pages\\invoicespages\\invoicespage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
@@ -30,20 +34,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "GraduationContext.cs",
               "DocumentMoniker": "C:\\Users\\yegor\\source\\repos\\Graduation\\Graduation\\Models\\Master\\GraduationContext.cs",
               "RelativeDocumentMoniker": "Graduation\\Models\\Master\\GraduationContext.cs",
               "ToolTip": "C:\\Users\\yegor\\source\\repos\\Graduation\\Graduation\\Models\\Master\\GraduationContext.cs",
               "RelativeToolTip": "Graduation\\Models\\Master\\GraduationContext.cs",
-              "ViewState": "AQIAABoAAAAAAAAAAAAuwCsAAAA8AAAA",
+              "ViewState": "AQIAABoAAAAAAAAAAAAuwDEAAAA5AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-08T12:45:01.059Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Bookmark",
@@ -59,47 +64,63 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
+              "Title": "InvoiceCreatePage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\yegor\\source\\repos\\Graduation\\Graduation\\Pages\\InvoicesPages\\InvoiceCreatePage.xaml.cs",
+              "RelativeDocumentMoniker": "Graduation\\Pages\\InvoicesPages\\InvoiceCreatePage.xaml.cs",
+              "ToolTip": "C:\\Users\\yegor\\source\\repos\\Graduation\\Graduation\\Pages\\InvoicesPages\\InvoiceCreatePage.xaml.cs",
+              "RelativeToolTip": "Graduation\\Pages\\InvoicesPages\\InvoiceCreatePage.xaml.cs",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-09T23:41:19.711Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "EmployeeCreatePage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\yegor\\source\\repos\\Graduation\\Graduation\\Pages\\EmployeesPages\\EmployeeCreatePage.xaml.cs",
+              "RelativeDocumentMoniker": "Graduation\\Pages\\EmployeesPages\\EmployeeCreatePage.xaml.cs",
+              "ToolTip": "C:\\Users\\yegor\\source\\repos\\Graduation\\Graduation\\Pages\\EmployeesPages\\EmployeeCreatePage.xaml.cs",
+              "RelativeToolTip": "Graduation\\Pages\\EmployeesPages\\EmployeeCreatePage.xaml.cs",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAACcAAABMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-09T23:35:04.958Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "InvoicesPage.xaml",
               "DocumentMoniker": "C:\\Users\\yegor\\source\\repos\\Graduation\\Graduation\\Pages\\InvoicesPages\\InvoicesPage.xaml",
               "RelativeDocumentMoniker": "Graduation\\Pages\\InvoicesPages\\InvoicesPage.xaml",
               "ToolTip": "C:\\Users\\yegor\\source\\repos\\Graduation\\Graduation\\Pages\\InvoicesPages\\InvoicesPage.xaml",
               "RelativeToolTip": "Graduation\\Pages\\InvoicesPages\\InvoicesPage.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-04-08T15:08:24.407Z"
+              "WhenOpened": "2024-04-08T15:08:24.407Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "InvoicesPage.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\yegor\\source\\repos\\Graduation\\Graduation\\Pages\\InvoicesPages\\InvoicesPage.xaml.cs",
-              "RelativeDocumentMoniker": "Graduation\\Pages\\InvoicesPages\\InvoicesPage.xaml.cs",
-              "ToolTip": "C:\\Users\\yegor\\source\\repos\\Graduation\\Graduation\\Pages\\InvoicesPages\\InvoicesPage.xaml.cs",
-              "RelativeToolTip": "Graduation\\Pages\\InvoicesPages\\InvoicesPage.xaml.cs",
-              "ViewState": "AQIAAHAAAAAAAAAAAAAmwGsAAAASAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-08T18:10:46.205Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "EmployeesPage.xaml",
               "DocumentMoniker": "C:\\Users\\yegor\\source\\repos\\Graduation\\Graduation\\Pages\\EmployeesPages\\EmployeesPage.xaml",
               "RelativeDocumentMoniker": "Graduation\\Pages\\EmployeesPages\\EmployeesPage.xaml",
               "ToolTip": "C:\\Users\\yegor\\source\\repos\\Graduation\\Graduation\\Pages\\EmployeesPages\\EmployeesPage.xaml",
               "RelativeToolTip": "Graduation\\Pages\\EmployeesPages\\EmployeesPage.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-04-08T12:44:56.932Z"
+              "WhenOpened": "2024-04-08T12:44:56.932Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "EmployeesPage.xaml.cs",
               "DocumentMoniker": "C:\\Users\\yegor\\source\\repos\\Graduation\\Graduation\\Pages\\EmployeesPages\\EmployeesPage.xaml.cs",
               "RelativeDocumentMoniker": "Graduation\\Pages\\EmployeesPages\\EmployeesPage.xaml.cs",
               "ToolTip": "C:\\Users\\yegor\\source\\repos\\Graduation\\Graduation\\Pages\\EmployeesPages\\EmployeesPage.xaml.cs",
               "RelativeToolTip": "Graduation\\Pages\\EmployeesPages\\EmployeesPage.xaml.cs",
-              "ViewState": "AQIAAIYAAAAAAAAAAAAuwJ4AAAANAAAA",
+              "ViewState": "AQIAAIEAAAAAAAAAAAAAAK0AAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-08T18:10:42.244Z",
               "EditorCaption": ""
