@@ -54,6 +54,11 @@
                     <DataGridTextColumn Header="Должность" Binding="{Binding Position.PositionName}"/>
                     <DataGridTextColumn Header="Разряд" Binding="{Binding ClassId}"/>
                 </ui:DataGrid.Columns>
+                <ui:DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem x:Name="UpdateEmployeeMenuItem" Header="Изменить данные сотрудника" Click="UpdateEmployeeMenuItem_Click"/>
+                    </ContextMenu>
+                </ui:DataGrid.ContextMenu>
             </ui:DataGrid>
         </ScrollViewer>
     </Grid>

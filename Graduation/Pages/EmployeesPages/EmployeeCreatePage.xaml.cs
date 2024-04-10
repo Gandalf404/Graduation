@@ -1,25 +1,17 @@
-﻿using Graduation.Models;
+﻿using Graduation.Classes;
+using Graduation.Models;
 using Graduation.Models.Master;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Graduation.Pages.EmployeesPages
 {
     public partial class EmployeeCreatePage : Page
     {
         private Employee _employee;
+        private Authorisation _authorisation;
         private bool _isCreating;
 
         public EmployeeCreatePage()
@@ -28,6 +20,7 @@ namespace Graduation.Pages.EmployeesPages
             {
                 InitializeComponent();
                 _employee = new Employee();
+                _authorisation = new Authorisation();
                 _isCreating = true;
                 foreach (var item in GraduationDB.graduationContext.Areas)
                 {
@@ -67,6 +60,14 @@ namespace Graduation.Pages.EmployeesPages
                 {
                     ClassComboBox.Items.Add(item);
                 }
+                EmployeeLoginTextBox.Text = "";
+                EmployeePasswordBox.Password = "";
+            }
+            catch when (String.IsNullOrWhiteSpace(EmployeeIdTextBox.Text) || String.IsNullOrWhiteSpace(EmployeeSurnameTextBox.Text) || String.IsNullOrWhiteSpace(EmployeeNameTextBox.Text)
+                        || String.IsNullOrWhiteSpace(EmployeePatronymicTextBox.Text) || AreaIdComboBox.SelectedItem == null || PositionNameComboBox.SelectedItem == null
+                        || ClassComboBox.SelectedItem == null || String.IsNullOrWhiteSpace(EmployeeLoginTextBox.Text) || String.IsNullOrWhiteSpace(EmployeePasswordBox.Password))
+            {
+                MessageBox.Show("Необходимо заполнить все поля", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             catch (Exception ex)
             {
@@ -86,11 +87,26 @@ namespace Graduation.Pages.EmployeesPages
             }
         }
 
+
+        private void EmployeeIdTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            try
+            {
+                if (Char.IsDigit(e.Text, 0)) return;
+                e.Handled = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private void EmployeeSurnameTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             try
             {
-
+                if (Char.IsLetter(e.Text, 0)) return;
+                e.Handled = true;
             }
             catch (Exception ex)
             {
@@ -102,7 +118,8 @@ namespace Graduation.Pages.EmployeesPages
         {
             try
             {
-
+                if (Char.IsLetter(e.Text, 0)) return;
+                e.Handled = true;
             }
             catch (Exception ex)
             {
@@ -114,7 +131,8 @@ namespace Graduation.Pages.EmployeesPages
         {
             try
             {
-
+                if (Char.IsLetter(e.Text, 0)) return;
+                e.Handled = true;
             }
             catch (Exception ex)
             {
@@ -126,7 +144,34 @@ namespace Graduation.Pages.EmployeesPages
         {
             try
             {
+                if (_isCreating)
+                {
+                    _employee.AreaId = ((Area)AreaIdComboBox.SelectedItem).AreaId;
+                    _employee.PositionId = ((Position)PositionNameComboBox.SelectedItem).PositionId;
+                    _employee.ClassId = ((Class)ClassComboBox.SelectedItem).ClassId;
 
+                    _authorisation.EmployeeId = Convert.ToInt32(EmployeeIdTextBox.Text);
+                    _authorisation.Login = Encryption.Encrypt(EmployeeLoginTextBox.Text);
+                    _authorisation.Password = Encryption.Encrypt(EmployeePasswordBox.Password);
+
+                    GraduationDB.graduationContext.Add(_employee);
+                    GraduationDB.graduationContext.Add(_authorisation);
+                    GraduationDB.graduationContext.SaveChanges();
+                    MessageBox.Show("Сотрудник успешно зарегистрирован", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    _employee.AreaId = ((Area)AreaIdComboBox.SelectedItem).AreaId;
+                    _employee.PositionId = ((Position)PositionNameComboBox.SelectedItem).PositionId;
+                    _employee.ClassId = ((Class)ClassComboBox.SelectedItem).ClassId;
+
+                    _employee.Authorisation.EmployeeId = Convert.ToInt32(EmployeeIdTextBox.Text);
+                    _employee.Authorisation.Login = Encryption.Encrypt(EmployeeLoginTextBox.Text);
+                    _employee.Authorisation.Password = Encryption.Encrypt(EmployeePasswordBox.Password);
+
+                    GraduationDB.graduationContext.SaveChanges();
+                    MessageBox.Show("Данные о сотруднике успешно изменены", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
             }
             catch (Exception ex)
             {
@@ -138,7 +183,7 @@ namespace Graduation.Pages.EmployeesPages
         {
             try
             {
-
+                NavigationService.Navigate(new EmployeesPage());
             }
             catch (Exception ex)
             {

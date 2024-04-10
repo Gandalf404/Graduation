@@ -3,21 +3,10 @@ using Graduation.Models.Master;
 using Graduation.Pages.WorkOrdersPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Xceed.Document.NET;
 using Xceed.Words.NET;
 
 namespace Graduation.Pages.InvoicesPages
@@ -36,7 +25,7 @@ namespace Graduation.Pages.InvoicesPages
             try
             {
                 InitializeComponent();
-                _invoicesPaus = GraduationDB.graduationContext.InvoicePaus.Include(c => c.Invoice).Include(c => c.Invoice.WorkOrder).OrderBy(c => c.InvoiceId).ToList();
+                _invoicesPaus = GraduationDB.graduationContext.InvoicePaus.Include(c => c.Invoice).Include(c => c.Invoice.WorkOrder).ToList();
                 InvoicesDataGrid.ItemsSource = _invoicesPaus;
                 WorkOrderIdComboBox.Items.Add(new WorkOrder { WorkOrderId = 0 });
                 foreach (var item in GraduationDB.graduationContext.WorkOrders)
@@ -60,7 +49,7 @@ namespace Graduation.Pages.InvoicesPages
         {
             try
             {
-                _invoicesPaus = GraduationDB.graduationContext.InvoicePaus.Include(c => c.Invoice).Include(c => c.Invoice.WorkOrder).OrderBy(c => c.InvoiceId).ToList();
+                _invoicesPaus = GraduationDB.graduationContext.InvoicePaus.Include(c => c.Invoice).Include(c => c.Invoice.WorkOrder).ToList();
                 InvoicesDataGrid.ItemsSource = _invoicesPaus;
             }
             catch (Exception ex)

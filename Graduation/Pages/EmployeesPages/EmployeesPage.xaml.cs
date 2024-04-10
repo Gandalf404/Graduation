@@ -1,20 +1,9 @@
 ﻿using Graduation.Models;
 using Graduation.Models.Master;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Graduation.Pages.EmployeesPages
 {
@@ -29,7 +18,7 @@ namespace Graduation.Pages.EmployeesPages
             try
             {
                 InitializeComponent();
-                _employees = GraduationDB.graduationContext.Employees.Include(c => c.Position).ToList();
+                _employees = GraduationDB.graduationContext.Employees.Include(c => c.Position).Include(c => c.Authorisation).OrderBy(c => c.EmployeeId).ToList();
                 EmployeesDataGrid.ItemsSource = _employees;
                 PositionNameComboBox.Items.Add(new Position { PositionName = "Все должности" });
                 foreach (var item in GraduationDB.graduationContext.Positions)
@@ -47,7 +36,7 @@ namespace Graduation.Pages.EmployeesPages
         {
             try
             {
-                _employees = GraduationDB.graduationContext.Employees.Include(c => c.Position).ToList();
+                _employees = GraduationDB.graduationContext.Employees.Include(c => c.Position).Include(c => c.Authorisation).OrderBy(c => c.EmployeeId).ToList();
                 EmployeesDataGrid.ItemsSource = _employees;
             }
             catch (Exception ex)
@@ -187,6 +176,26 @@ namespace Graduation.Pages.EmployeesPages
             try
             {
                 NavigationService.Navigate(new EmployeeCreatePage());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void UpdateEmployeeMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                _selectedEmployee = (Employee)EmployeesDataGrid.SelectedItem;
+                if (_selectedEmployee != null)
+                {
+                    NavigationService.Navigate(new EmployeeCreatePage(_selectedEmployee));
+                }
+                else
+                {
+                    MessageBox.Show("Выберите сотрдуника для изменения", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
             }
             catch (Exception ex)
             {

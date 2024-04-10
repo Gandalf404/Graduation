@@ -1,21 +1,11 @@
-﻿using Graduation.Models;
+﻿using Graduation.Classes;
+using Graduation.Models;
 using Graduation.Models.Master;
 using Graduation.Pages.EmployeesPages;
 using Graduation.Pages.WorkOrdersPages;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Graduation.Pages
 {
@@ -32,8 +22,8 @@ namespace Graduation.Pages
         {
             try
             {
-                _dbAdmin = GraduationDB.graduationContext.Authorisations.FirstOrDefault(c => c.Login == LoginTextBox.Text && c.Password == PasswordBox.Password && c.Employee.PositionId == 2);
-                _master = GraduationDB.graduationContext.Authorisations.FirstOrDefault(c => c.Login == LoginTextBox.Text && c.Password == PasswordBox.Password && c.Employee.PositionId == 4);
+                _dbAdmin = GraduationDB.graduationContext.Authorisations.FirstOrDefault(c => c.Login == Encryption.Encrypt(LoginTextBox.Text) && c.Password == Encryption.Encrypt(PasswordBox.Password) && c.Employee.PositionId == 2);
+                _master = GraduationDB.graduationContext.Authorisations.FirstOrDefault(c => c.Login == Encryption.Encrypt(LoginTextBox.Text) && c.Password == Encryption.Encrypt(PasswordBox.Password) && c.Employee.PositionId == 4);
                 if (_dbAdmin != null)
                 {
                     MessageBox.Show("Успешный вход", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);

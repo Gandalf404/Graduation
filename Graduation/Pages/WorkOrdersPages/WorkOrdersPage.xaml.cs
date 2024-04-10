@@ -3,23 +3,10 @@ using Graduation.Models.Master;
 using Graduation.Pages.InvoicesPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Xceed.Document.NET;
 using Xceed.Words.NET;
 
 namespace Graduation.Pages.WorkOrdersPages
@@ -37,7 +24,7 @@ namespace Graduation.Pages.WorkOrdersPages
             try
             {
                 InitializeComponent();
-                _workOrderAreas = GraduationDB.graduationContext.WorkOrderAreas.Include(c => c.WorkOrder).Include(c => c.WorkOrder.Employee).Include(c => c.Operation).OrderBy(c => c.WorkOrderId).ToList();
+                _workOrderAreas = GraduationDB.graduationContext.WorkOrderAreas.Include(c => c.WorkOrder).Include(c => c.WorkOrder.Employee).Include(c => c.Operation).ToList();
                 WorkOrdersDataGrid.ItemsSource = _workOrderAreas;
                 PauNameComboBox.Items.Add(new Pau { PauName = "Все ДСЕ" });
                 foreach (var item in GraduationDB.graduationContext.Paus)
@@ -58,7 +45,7 @@ namespace Graduation.Pages.WorkOrdersPages
             {
                 InitializeComponent();
                 _authorisation = authorisation;
-                _workOrderAreas = GraduationDB.graduationContext.WorkOrderAreas.Include(c => c.WorkOrder).Include(c => c.WorkOrder.Employee).Include(c => c.Operation).OrderBy(c => c.WorkOrderId)
+                _workOrderAreas = GraduationDB.graduationContext.WorkOrderAreas.Include(c => c.WorkOrder).Include(c => c.WorkOrder.Employee).Include(c => c.Operation)
                     .Where(c => c.WorkOrder.EmployeeId == authorisation.EmployeeId).ToList();
                 WorkOrdersDataGrid.ItemsSource = _workOrderAreas;
                 PauNameComboBox.Items.Add(new Pau { PauName = "Все ДСЕ" });
