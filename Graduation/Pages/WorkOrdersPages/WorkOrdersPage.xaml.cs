@@ -27,7 +27,7 @@ namespace Graduation.Pages.WorkOrdersPages
                 _workOrderAreas = GraduationDB.graduationContext.WorkOrderAreas.Include(c => c.WorkOrder).Include(c => c.WorkOrder.Employee).Include(c => c.Operation).ToList();
                 WorkOrdersDataGrid.ItemsSource = _workOrderAreas;
                 PauNameComboBox.Items.Add(new Pau { PauName = "Все ДСЕ" });
-                foreach (var item in GraduationDB.graduationContext.Paus)
+                foreach (var item in GraduationDB.graduationContext.Paus.OrderBy(c => c.PauId))
                 {
                     PauNameComboBox.Items.Add(item);
                 }

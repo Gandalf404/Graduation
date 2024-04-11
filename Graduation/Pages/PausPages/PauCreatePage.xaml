@@ -1,0 +1,35 @@
+﻿<Page x:Class="Graduation.Pages.PausPages.PauCreatePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Graduation.Pages.PausPages"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      Loaded="Page_Loaded"
+      mc:Ignorable="d" 
+      d:DesignHeight="1040" d:DesignWidth="1420"
+      Title="PauCreatePage">
+
+    <Grid>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Orientation="Vertical">
+                <Image x:Name="PauBlueprintImage" Height="200" Width="200" Source="{Binding}"/>
+                <ui:Button x:Name="AddPauBlueprintImageButton" HorizontalAlignment="Center" Height="40" Width="150" Margin="0 10 0 0" Content="Добавить чертёж" Click="AddPauBlueprintImageButton_Click"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="20 0 0 0">
+                <ui:TextBlock Text="Номер ДСЕ"/>
+                <ui:TextBox x:Name="PauIdTextBox" Height="35" Width="200" Margin="0 10 0 0" Text="{Binding PauId}" PreviewTextInput="PauIdTextBox_PreviewTextInput"/>
+                <ui:TextBlock Text="Код места хранения" HorizontalAlignment="Center" Margin="0 10 0 0"/>
+                <ComboBox x:Name="StoragePlaceIdComboBox" Height="35" Width="200" Margin="0 10 0 0" DisplayMemberPath="StoragePlaceId" SelectedItem="{Binding StoragePlace}"/>
+                <ui:TextBlock Text="Наименование ДСЕ" HorizontalAlignment="Center" Margin="0 10 0 0"/>
+                <ui:TextBox x:Name="PauNameTextBox" Height="35" Width="200" Margin="0 10 0 0" Text="{Binding PauName}" PreviewTextInput="PauNameTextBox_PreviewTextInput"/>
+                <ui:TextBlock Text="Количество ДСЕ"/>
+                <ui:TextBox x:Name="PauCountTextBox" Height="35" Width="200" Margin="0 10 0 0" Text="{Binding PauCount}" PreviewTextInput="PauCountTextBox_PreviewTextInput"/>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"  Margin="0 360 0 0">
+            <ui:Button x:Name="PauCreateButton" Height="40" Width="120" Content="Сохранить" Click="PauCreateButton_Click"/>
+            <ui:Button x:Name="BackButton" Height="40" Width="120" Margin="50 0 0 0" Content="Назад" Click="BackButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Page>

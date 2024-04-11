@@ -186,7 +186,7 @@ namespace Graduation.Pages.WorkOrdersPages {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Graduation;V1.0.0.0;component/pages/workorderspages/workordercreatepage.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Graduation;component/pages/workorderspages/workordercreatepage.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Pages\WorkOrdersPages\WorkOrderCreatePage.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

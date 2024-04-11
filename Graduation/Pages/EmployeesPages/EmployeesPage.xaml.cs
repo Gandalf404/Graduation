@@ -1,5 +1,6 @@
 ﻿using Graduation.Models;
 using Graduation.Models.Master;
+using Graduation.Pages.PausPages;
 using Microsoft.EntityFrameworkCore;
 using System.Windows;
 using System.Windows.Controls;
@@ -63,6 +64,18 @@ namespace Graduation.Pages.EmployeesPages
             try
             {
                 NavigationService.Navigate(new EmployeesPage());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void PausViewItem_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                NavigationService.Navigate(new PausPage());
             }
             catch (Exception ex)
             {
@@ -161,6 +174,10 @@ namespace Graduation.Pages.EmployeesPages
                 }
                 else
                 {
+                    AreaIdAscRadioButton.IsChecked = false;
+                    AreaIdDescRadioButton.IsChecked = false;
+                    ClassIdAscRadioButton.IsChecked = false;
+                    ClassIdDescRadioButton.IsChecked = false;
                     _employees = GraduationDB.graduationContext.Employees.Include(c => c.Position).ToList();
                     EmployeesDataGrid.ItemsSource = _employees;
                 }

@@ -1,0 +1,70 @@
+﻿<Page x:Class="Graduation.Pages.PausPages.PausPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Graduation.Pages.PausPages"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      Loaded="Page_Loaded"
+      mc:Ignorable="d" 
+      d:DesignHeight="1040" d:DesignWidth="1420"
+      Title="PausPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <ui:Button x:Name="LogOutButton" Height="40" Width="120" Margin="20 0 0 0" Content="Выйти" Click="LogOutButton_Click"/>
+            <ui:NavigationView x:Name="AdminNavigationView" Width="1040" Margin="20 0 0 0" VerticalAlignment="Center" PaneDisplayMode="Top">
+                <ui:NavigationView.MenuItems>
+                    <ui:NavigationViewItem x:Name="EmployeesViewItem" Content="СОТРУДНИКИ" Click="EmployeesViewItem_Click"/>
+                    <ui:NavigationViewItem x:Name="PausViewItem" Content="ДСЕ" Click="PausViewItem_Click"/>
+                </ui:NavigationView.MenuItems>
+            </ui:NavigationView>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10 0 0 0">
+            <ui:TextBox x:Name="SearchTextBox" Height="35" Width="200" PlaceholderText="Поиск" TextChanged="SearchTextBox_TextChanged"/>
+            <StackPanel Orientation="Vertical" Margin="20 0 0 0">
+                <ui:TextBlock Text="Количество ДСЕ" HorizontalAlignment="Center"/>
+                <RadioButton x:Name="PauCountAscRadioButton" Content="По возрастанию" Checked="PauCountAscRadioButton_Checked"/>
+                <RadioButton x:Name="PauCountDescRadioButton" Content="По убыванию" Checked="PauCountDescRadioButton_Checked"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="20 0 0 0">
+                <ui:TextBlock Text="Код места хранения" HorizontalAlignment="Center"/>
+                <ComboBox x:Name="StoragePlaceIdComboBox" Height="35" Width="200" Margin="0 15 0 0" SelectedIndex="0" DisplayMemberPath="StoragePlaceId" SelectionChanged="StoragePlaceIdComboBox_SelectionChanged"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="20 0 0 0">
+                <ui:TextBlock Text="Наименование ДСЕ" HorizontalAlignment="Center"/>
+                <ComboBox x:Name="PauNameComboBox" Height="35" Width="200" Margin="0 15 0 0" SelectedIndex="0" DisplayMemberPath="PauName" SelectionChanged="PauNameComboBox_SelectionChanged"/>
+            </StackPanel>
+            <ui:Button x:Name="PauCreateButton" Height="40" Width="120" Margin="20 0 0 0" Content="Добавить" Click="PauCreateButton_Click"/>
+        </StackPanel>
+        <ui:ListView x:Name="PausListView" Grid.Row="2">
+            <ui:ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Height="250" Width="250" Margin="5" Source="{Binding PauBlueprint}"/>
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="20 0 0 0">
+                            <ui:TextBlock Text="Номер ДСЕ"/>
+                            <ui:TextBlock Text="{Binding PauId}"/>
+                            <ui:TextBlock Text="Код места хранения" Margin="0 10 0 0"/>
+                            <ui:TextBlock Text="{Binding StoragePlaceId}"/>
+                            <ui:TextBlock Text="Наименование ДСЕ" Margin="0 10 0 0"/>
+                            <ui:TextBlock Text="{Binding PauName}"/>
+                            <ui:TextBlock Text="Количество ДСЕ" Margin="0 10 0 0"/>
+                            <ui:TextBlock Text="{Binding PauCount}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ui:ListView.ItemTemplate>
+            <ui:ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem x:Name="UpdatePauMenuItem" Header="Изменить ДСЕ" Click="UpdatePauMenuItem_Click"/>
+                </ContextMenu>
+            </ui:ListView.ContextMenu>
+        </ui:ListView>
+    </Grid>
+</Page>

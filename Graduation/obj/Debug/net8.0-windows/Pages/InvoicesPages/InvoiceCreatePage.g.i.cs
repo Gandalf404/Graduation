@@ -122,7 +122,7 @@ namespace Graduation.Pages.InvoicesPages {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Graduation;V1.0.0.0;component/pages/invoicespages/invoicecreatepage.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Graduation;component/pages/invoicespages/invoicecreatepage.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Pages\InvoicesPages\InvoiceCreatePage.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

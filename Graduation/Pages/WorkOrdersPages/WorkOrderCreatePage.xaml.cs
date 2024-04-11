@@ -24,11 +24,11 @@ namespace Graduation.Pages.WorkOrdersPages
                 {
                     ReservationIdComboBox.Items.Add(item);
                 }
-                foreach (var item in GraduationDB.graduationContext.Paus)
+                foreach (var item in GraduationDB.graduationContext.Paus.OrderBy(c => c.PauId))
                 {
                     PauNameComboBox.Items.Add(item);
                 }
-                foreach (var item in GraduationDB.graduationContext.Employees)
+                foreach (var item in GraduationDB.graduationContext.Employees.OrderBy(c => c.EmployeeId))
                 {
                     EmployeeSurnameComboBox.Items.Add(item);
                 }
@@ -59,11 +59,11 @@ namespace Graduation.Pages.WorkOrdersPages
                 {
                     ReservationIdComboBox.Items.Add(item);
                 }
-                foreach (var item in GraduationDB.graduationContext.Paus)
+                foreach (var item in GraduationDB.graduationContext.Paus.OrderBy(c => c.PauId))
                 {
                     PauNameComboBox.Items.Add(item);
                 }
-                foreach (var item in GraduationDB.graduationContext.Employees)
+                foreach (var item in GraduationDB.graduationContext.Employees.OrderBy(c => c.EmployeeId))
                 {
                     EmployeeSurnameComboBox.Items.Add(item);
                 }

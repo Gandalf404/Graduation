@@ -145,7 +145,7 @@ namespace Graduation.Pages.EmployeesPages {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Graduation;V1.0.0.0;component/pages/employeespages/employeecreatepage.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Graduation;component/pages/employeespages/employeecreatepage.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Pages\EmployeesPages\EmployeeCreatePage.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

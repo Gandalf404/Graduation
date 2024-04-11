@@ -28,7 +28,7 @@ namespace Graduation.Pages.InvoicesPages
                 _invoicesPaus = GraduationDB.graduationContext.InvoicePaus.Include(c => c.Invoice).Include(c => c.Invoice.WorkOrder).ToList();
                 InvoicesDataGrid.ItemsSource = _invoicesPaus;
                 WorkOrderIdComboBox.Items.Add(new WorkOrder { WorkOrderId = 0 });
-                foreach (var item in GraduationDB.graduationContext.WorkOrders)
+                foreach (var item in GraduationDB.graduationContext.WorkOrders.OrderBy(c => c.WorkOrderId))
                 {
                     WorkOrderIdComboBox.Items.Add(item);
                 }
