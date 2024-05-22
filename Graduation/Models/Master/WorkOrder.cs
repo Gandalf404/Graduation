@@ -17,8 +17,6 @@ public partial class WorkOrder
 
     public int EmployeeId { get; set; }
 
-    public int PauCount { get; set; }
-
     public DateOnly? WorkOrderCompleteDate { get; set; }
 
     public DateOnly? WorkOrderCloseDate { get; set; }

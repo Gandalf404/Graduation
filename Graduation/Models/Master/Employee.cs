@@ -19,9 +19,11 @@ public partial class Employee
 
     public int ClassId { get; set; }
 
-    public virtual Area Area { get; set; } = null!;
+    public string? Login { get; set; }
 
-    public virtual Authorisation? Authorisation { get; set; }
+    public string? Password { get; set; }
+
+    public virtual Area Area { get; set; } = null!;
 
     public virtual Class Class { get; set; } = null!;
 

@@ -33,14 +33,14 @@
                 <RadioButton x:Name="InvoicesCompilationDateDescRadioButton" Content="По убыванию" Checked="InvoicesCompilationDateDescRadioButton_Checked"/>
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="20 0 0 0">
-                <ui:TextBlock Text="Количество ДСЕ" HorizontalAlignment="Center"/>
-                <RadioButton x:Name="PauCountAscRadioButton" Content="По возрастанию" Checked="PauCountAscRadioButton_Checked"/>
-                <RadioButton x:Name="PauCountDescRadioButton" Content="По убыванию" Checked="PauCountDescRadioButton_Checked"/>
-            </StackPanel>
-            <StackPanel Orientation="Vertical" Margin="20 0 0 0">
                 <ui:TextBlock Text="Количество фактически" HorizontalAlignment="Center"/>
                 <RadioButton x:Name="FactCountAscRadioButton" Content="По возрастанию" Checked="FactCountAscRadioButton_Checked"/>
                 <RadioButton x:Name="FactCountDescRadioButton" Content="По убыванию" Checked="FactCountDescRadioButton_Checked"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="20 0 0 0">
+                <ui:TextBlock Text="Количество заказанных ДСЕ" HorizontalAlignment="Center"/>
+                <RadioButton x:Name="PauCountAscRadioButton" Content="По возрастанию" Checked="PauCountAscRadioButton_Checked"/>
+                <RadioButton x:Name="PauCountDescRadioButton" Content="По убыванию" Checked="PauCountDescRadioButton_Checked"/>
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="20 0 0 0">
                 <ui:TextBlock Text="Цех отправитель" HorizontalAlignment="Center"/>
@@ -63,8 +63,8 @@
                     <DataGridTextColumn Header="Цех отправитель" Binding="{Binding Invoice.DepartmentId}"/>
                     <DataGridTextColumn Header="Цех получатель" Binding="{Binding Invoice.DepartmentReceiverId}"/>
                     <DataGridTextColumn Header="Наименование ДСЕ" Binding="{Binding Invoice.WorkOrder.Pau.PauName}"/>
-                    <DataGridTextColumn Header="Количество ДСЕ" Binding="{Binding Invoice.WorkOrder.PauCount}"/>
                     <DataGridTextColumn Header="Количество фактически" Binding="{Binding FactCount}"/>
+                    <DataGridTextColumn Header="ДСЕ заказано" Binding="{Binding Invoice.WorkOrder.Reservation.ReservationCount}"/>
                 </ui:DataGrid.Columns>
                 <ui:DataGrid.ContextMenu>
                     <ContextMenu>

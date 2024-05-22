@@ -1,5 +1,5 @@
 ﻿using Graduation.Models;
-using Graduation.Models.Master;
+using Graduation.Models.Admin;
 using Microsoft.Win32;
 using System.IO;
 using System.Windows;
@@ -16,13 +16,13 @@ namespace Graduation.Pages.PausPages
         private OpenFileDialog _openFileDialog;
 
         public PauCreatePage()
-        {           
+        {
             try
             {
                 InitializeComponent();
                 _pau = new Pau();
                 _isCreating = true;
-                foreach (var item in GraduationDB.graduationContext.StoragePlaces)
+                foreach (var item in WorkOrdersDB.graduationContextAdmin.StoragePlaces)
                 {
                     StoragePlaceIdComboBox.Items.Add(item);
                 }
@@ -40,7 +40,7 @@ namespace Graduation.Pages.PausPages
                 InitializeComponent();
                 _pau = pau;
                 _isCreating = false;
-                foreach (var item in GraduationDB.graduationContext.StoragePlaces)
+                foreach (var item in WorkOrdersDB.graduationContextAdmin.StoragePlaces)
                 {
                     StoragePlaceIdComboBox.Items.Add(item);
                 }
@@ -128,14 +128,14 @@ namespace Graduation.Pages.PausPages
                 if (_isCreating)
                 {
                     _pau.StoragePlaceId = ((StoragePlace)StoragePlaceIdComboBox.SelectedItem).StoragePlaceId;
-                    GraduationDB.graduationContext.Add(_pau);
-                    GraduationDB.graduationContext.SaveChanges();
+                    WorkOrdersDB.graduationContextAdmin.Add(_pau);
+                    WorkOrdersDB.graduationContextAdmin.SaveChanges();
                     MessageBox.Show("ДСЕ успешно добавлена", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
                     _pau.StoragePlaceId = ((StoragePlace)StoragePlaceIdComboBox.SelectedItem).StoragePlaceId;
-                    GraduationDB.graduationContext.SaveChanges();
+                    WorkOrdersDB.graduationContextAdmin.SaveChanges();
                     MessageBox.Show("ДСЕ успешно изменена", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }

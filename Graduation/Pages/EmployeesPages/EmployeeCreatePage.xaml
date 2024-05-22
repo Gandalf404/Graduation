@@ -37,7 +37,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Margin="20 0 0 0">
                     <ui:TextBlock Text="Должность" HorizontalAlignment="Center"/>
-                    <ComboBox x:Name="PositionNameComboBox" Height="35" Width="200" Margin="0 10 0 0" DisplayMemberPath="PositionName" SelectedItem="{Binding Position}"/>
+                    <ComboBox x:Name="PositionNameComboBox" Height="35" Width="200" Margin="0 10 0 0" DisplayMemberPath="PositionName" SelectedItem="{Binding Position}" SelectionChanged="PositionNameComboBox_SelectionChanged"/>
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Margin="20 0 0 0">
                     <ui:TextBlock Text="Разряд" HorizontalAlignment="Center"/>
@@ -47,11 +47,11 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 10 0 0">
                 <StackPanel Orientation="Vertical">
                     <ui:TextBlock Text="Логин" HorizontalAlignment="Center"/>
-                    <ui:TextBox x:Name="EmployeeLoginTextBox" Height="35" Width="200" Margin="0 10 0 0" Text="{Binding Authorisation.Login}"/>
+                    <ui:TextBox x:Name="EmployeeLoginTextBox" Height="35" Width="200" Margin="0 10 0 0" Text="{Binding Login}"/>
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Margin="20 0 0 0">
                     <ui:TextBlock Text="Пароль" HorizontalAlignment="Center"/>
-                    <ui:PasswordBox x:Name="EmployeePasswordBox" Height="35" Width="200" Margin="0 10 0 0" Text="{Binding Authorisation.Password}"/>
+                    <ui:PasswordBox x:Name="EmployeePasswordBox" Height="35" Width="200" Margin="0 10 0 0" Text="{Binding Password}"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 20 0 0">

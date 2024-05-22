@@ -15,6 +15,8 @@ public partial class Pau
 
     public byte[]? PauBlueprint { get; set; }
 
+    public virtual ICollection<InvoicePau> InvoicePaus { get; set; } = new List<InvoicePau>();
+
     public virtual StoragePlace StoragePlace { get; set; } = null!;
 
     public virtual ICollection<WorkOrder> WorkOrders { get; set; } = new List<WorkOrder>();

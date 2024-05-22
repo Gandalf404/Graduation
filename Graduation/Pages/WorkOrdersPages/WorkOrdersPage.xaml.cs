@@ -13,7 +13,7 @@ namespace Graduation.Pages.WorkOrdersPages
 {
     public partial class WorkOrdersPage : Page
     {
-        private Authorisation _authorisation;
+        private Employee _employee;
         private List<WorkOrderArea> _workOrderAreas;
         private Pau _selectedPau;
         private WorkOrderArea _selectedWorkOrderArea;
@@ -24,10 +24,10 @@ namespace Graduation.Pages.WorkOrdersPages
             try
             {
                 InitializeComponent();
-                _workOrderAreas = GraduationDB.graduationContext.WorkOrderAreas.Include(c => c.WorkOrder).Include(c => c.WorkOrder.Employee).Include(c => c.Operation).OrderBy(c => c.WorkOrderId).ToList();
+                _workOrderAreas = WorkOrdersDB.graduationContextMaster.WorkOrderAreas.Include(c => c.WorkOrder).Include(c => c.WorkOrder.Employee).Include(c => c.WorkOrder.Reservation).Include(c => c.Operation).OrderBy(c => c.WorkOrderId).ToList();
                 WorkOrdersDataGrid.ItemsSource = _workOrderAreas;
                 PauNameComboBox.Items.Add(new Pau { PauName = "Все ДСЕ" });
-                foreach (var item in GraduationDB.graduationContext.Paus.OrderBy(c => c.PauId))
+                foreach (var item in WorkOrdersDB.graduationContextMaster.Paus.OrderBy(c => c.PauId))
                 {
                     PauNameComboBox.Items.Add(item);
                 }
@@ -39,17 +39,17 @@ namespace Graduation.Pages.WorkOrdersPages
         }
 
         //TODO: Сделать отображение заказ-нарядов которые составил авторизованный мастер.
-        public WorkOrdersPage(Authorisation authorisation)
+        public WorkOrdersPage(Employee employee)
         {
             try
             {
                 InitializeComponent();
-                _authorisation = authorisation;
-                _workOrderAreas = GraduationDB.graduationContext.WorkOrderAreas.Include(c => c.WorkOrder).Include(c => c.WorkOrder.Employee).Include(c => c.Operation)
-                    .Where(c => c.WorkOrder.EmployeeId == authorisation.EmployeeId).ToList();
+                _employee = employee;
+                _workOrderAreas = WorkOrdersDB.graduationContextMaster.WorkOrderAreas.Include(c => c.WorkOrder).Include(c => c.WorkOrder.Employee).Include(c => c.WorkOrder.Reservation).Include(c => c.Operation)
+                    .Where(c => c.WorkOrder.EmployeeId == employee.EmployeeId).ToList();
                 WorkOrdersDataGrid.ItemsSource = _workOrderAreas;
                 PauNameComboBox.Items.Add(new Pau { PauName = "Все ДСЕ" });
-                foreach (var item in GraduationDB.graduationContext.Paus)
+                foreach (var item in WorkOrdersDB.graduationContextMaster.Paus)
                 {
                     PauNameComboBox.Items.Add(item);
                 }
@@ -64,7 +64,7 @@ namespace Graduation.Pages.WorkOrdersPages
         {
             try
             {
-                _workOrderAreas = GraduationDB.graduationContext.WorkOrderAreas.Include(c => c.WorkOrder).Include(c => c.WorkOrder.Employee).Include(c => c.Operation).OrderBy(c => c.WorkOrderId).ToList();
+                _workOrderAreas = WorkOrdersDB.graduationContextMaster.WorkOrderAreas.Include(c => c.WorkOrder).Include(c => c.WorkOrder.Employee).Include(c => c.Operation).OrderBy(c => c.WorkOrderId).ToList();
                 WorkOrdersDataGrid.ItemsSource = _workOrderAreas;
             }
             catch (Exception ex)
@@ -115,7 +115,7 @@ namespace Graduation.Pages.WorkOrdersPages
             {
                 if (String.IsNullOrWhiteSpace(SearchTextBox.Text))
                 {
-                    _workOrderAreas = GraduationDB.graduationContext.WorkOrderAreas.Include(c => c.WorkOrder).Include(c => c.WorkOrder.Employee).Include(c => c.Operation).OrderBy(c => c.WorkOrderId).ToList();
+                    _workOrderAreas = WorkOrdersDB.graduationContextMaster.WorkOrderAreas.Include(c => c.WorkOrder).Include(c => c.WorkOrder.Employee).Include(c => c.Operation).OrderBy(c => c.WorkOrderId).ToList();
                     WorkOrdersDataGrid.ItemsSource = _workOrderAreas;
                 }
                 else
@@ -255,7 +255,7 @@ namespace Graduation.Pages.WorkOrdersPages
                 _selectedPau = (Pau)PauNameComboBox.SelectedItem;
                 if (_selectedPau.PauName != "Все ДСЕ")
                 {
-                    _workOrderAreas = GraduationDB.graduationContext.WorkOrderAreas.Where(c => c.WorkOrder.Pau.PauName == _selectedPau.PauName).ToList();
+                    _workOrderAreas = WorkOrdersDB.graduationContextMaster.WorkOrderAreas.Where(c => c.WorkOrder.Pau.PauName == _selectedPau.PauName).ToList();
                     WorkOrdersDataGrid.ItemsSource = _workOrderAreas;
                 }
                 else
@@ -268,7 +268,7 @@ namespace Graduation.Pages.WorkOrdersPages
                     OperationStartTimeDescRadioButton.IsChecked = false;
                     OperationEndTimeAscRadioButton.IsChecked = false;
                     OperationEndTimeDescRadioButton.IsChecked = false;
-                    _workOrderAreas = GraduationDB.graduationContext.WorkOrderAreas.Include(c => c.WorkOrder).Include(c => c.WorkOrder.Employee).Include(c => c.Operation).OrderBy(c => c.WorkOrderId).ToList();
+                    _workOrderAreas = WorkOrdersDB.graduationContextMaster.WorkOrderAreas.Include(c => c.WorkOrder).Include(c => c.WorkOrder.Employee).Include(c => c.Operation).OrderBy(c => c.WorkOrderId).ToList();
                     WorkOrdersDataGrid.ItemsSource = _workOrderAreas;
                 }
             }
@@ -332,14 +332,14 @@ namespace Graduation.Pages.WorkOrdersPages
                     }
                     _docX.ReplaceText("{5}", $"{_selectedWorkOrderArea.WorkOrder.Employee.EmployeeSurname}");
                     _docX.ReplaceText("{6}", $"{_selectedWorkOrderArea.WorkOrder.Pau.PauName}");
-                    _docX.ReplaceText("{7}", $"{_selectedWorkOrderArea.WorkOrder.PauCount}");
+                    _docX.ReplaceText("{7}", $"{_selectedWorkOrderArea.WorkOrder.Reservation.ReservationCount}");
                     _docX.ReplaceText("{8}", $"{_selectedWorkOrderArea.AreaId}");
                     _docX.ReplaceText("{9}", $"{_selectedWorkOrderArea.Operation.OperationName}");
                     _docX.ReplaceText("{10}", $"{_selectedWorkOrderArea.OperationStartDate}");
                     _docX.ReplaceText("{11}", $"{_selectedWorkOrderArea.OperationStartTime}");
                     _docX.ReplaceText("{12}", $"{_selectedWorkOrderArea.OperationEndDate}");
                     _docX.ReplaceText("{13}", $"{_selectedWorkOrderArea.OperationEndTime}");
-                    _docX.ReplaceText("{14}", $"{_authorisation.Employee.EmployeeSurname}");
+                    _docX.ReplaceText("{14}", $"{_employee.EmployeeSurname}");
                     _saveFileDialog = new SaveFileDialog() { DefaultDirectory = @$"C:\Users\{Environment.UserName}\source\repos\Graduation\Graduation\Resources\WorkOrders" };
                     if (_saveFileDialog.ShowDialog() != true)
                     {

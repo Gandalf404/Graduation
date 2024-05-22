@@ -11,8 +11,8 @@ namespace Graduation.Pages
 {
     public partial class AuthPage : Page
     {
-        private Authorisation _dbAdmin;
-        private Authorisation _master;
+        private Employee _dbAdmin;
+        private Employee _master;
         public AuthPage()
         {
             InitializeComponent();
@@ -22,8 +22,10 @@ namespace Graduation.Pages
         {
             try
             {
-                _dbAdmin = GraduationDB.graduationContext.Authorisations.FirstOrDefault(c => c.Login == Encryption.Encrypt(LoginTextBox.Text) && c.Password == Encryption.Encrypt(PasswordBox.Password) && c.Employee.PositionId == 2);
-                _master = GraduationDB.graduationContext.Authorisations.FirstOrDefault(c => c.Login == Encryption.Encrypt(LoginTextBox.Text) && c.Password == Encryption.Encrypt(PasswordBox.Password) && c.Employee.PositionId == 4);
+                _dbAdmin = WorkOrdersDB.graduationContextMaster.Employees.FirstOrDefault(c => c.Login == Encryption.Encrypt(LoginTextBox.Text) && c.Password == Encryption.Encrypt(PasswordBox.Password) && c.PositionId == 2);
+                string login = Encryption.Encrypt(LoginTextBox.Text);
+                string password = Encryption.Encrypt(PasswordBox.Password);
+                _master = WorkOrdersDB.graduationContextMaster.Employees.FirstOrDefault(c => c.Login == Encryption.Encrypt(LoginTextBox.Text) && c.Password == Encryption.Encrypt(PasswordBox.Password) && c.PositionId == 4);
                 if (_dbAdmin != null)
                 {
                     MessageBox.Show("Успешный вход", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);

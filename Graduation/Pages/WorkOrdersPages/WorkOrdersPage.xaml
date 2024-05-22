@@ -27,25 +27,25 @@
         </StackPanel>
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10 0 0 0">
             <ui:TextBox x:Name="SearchTextBox" Height="35" Width="200" PlaceholderText="Поиск" TextChanged="SearchTextBox_TextChanged"/>
-            <StackPanel Orientation="Vertical" Margin="20 0 0 0" Cursor="">
+            <StackPanel Orientation="Vertical" Margin="20 0 0 0">
                 <ui:TextBlock Text="Дата составления" HorizontalAlignment="Center"/>
-                <RadioButton x:Name="WorkOrderCompilationDateAscRadioButton" Content="Старее" Checked="WorkOrderCompilationDateAscRadioButton_Checked"/>
-                <RadioButton x:Name="WorkOrderCompilationDateDescRadioButton" Content="Новее" Checked="WorkOrderCompilationDateDescRadioButton_Checked" Cursor="Hand"/>
+                <RadioButton x:Name="WorkOrderCompilationDateAscRadioButton" Content="По возрастанию" Checked="WorkOrderCompilationDateAscRadioButton_Checked"/>
+                <RadioButton x:Name="WorkOrderCompilationDateDescRadioButton" Content="По убыванию" Checked="WorkOrderCompilationDateDescRadioButton_Checked"/>
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="20 0 0 0">
                 <ui:TextBlock Text="Дата закрытия" HorizontalAlignment="Center"/>
-                <RadioButton x:Name="WorkOrderCloseDateAscRadioButton" Content="Старее" Checked="WorkOrderCloseDateAscRadioButton_Checked"/>
-                <RadioButton x:Name="WorkOrderCloseDateDescRadioButton" Content="Новее" Checked="WorkOrderCloseDateDescRadioButton_Checked"/>
+                <RadioButton x:Name="WorkOrderCloseDateAscRadioButton" Content="По возрастанию" Checked="WorkOrderCloseDateAscRadioButton_Checked"/>
+                <RadioButton x:Name="WorkOrderCloseDateDescRadioButton" Content="По убыванию" Checked="WorkOrderCloseDateDescRadioButton_Checked"/>
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="20 0 0 0">
                 <ui:TextBlock Text="Время начала операции" HorizontalAlignment="Center"/>
-                <RadioButton x:Name="OperationStartTimeAscRadioButton" Content="Раньше" Checked="OperationStartTimeAscRadioButton_Checked"/>
-                <RadioButton x:Name="OperationStartTimeDescRadioButton" Content="Позже" Checked="OperationStartTimeDescRadioButton_Checked"/>
+                <RadioButton x:Name="OperationStartTimeAscRadioButton" Content="По возрастанию" Checked="OperationStartTimeAscRadioButton_Checked"/>
+                <RadioButton x:Name="OperationStartTimeDescRadioButton" Content="По убыванию" Checked="OperationStartTimeDescRadioButton_Checked"/>
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="20 0 0 0">
                 <ui:TextBlock Text="Время завершения операции" HorizontalAlignment="Center"/>
-                <RadioButton x:Name="OperationEndTimeAscRadioButton" Content="Раньше" Checked="OperationEndTimeAscRadioButton_Checked"/>
-                <RadioButton x:Name="OperationEndTimeDescRadioButton" Content="Позже" Checked="OperationEndTimeDescRadioButton_Checked"/>
+                <RadioButton x:Name="OperationEndTimeAscRadioButton" Content="По возрастанию" Checked="OperationEndTimeAscRadioButton_Checked"/>
+                <RadioButton x:Name="OperationEndTimeDescRadioButton" Content="По убыванию" Checked="OperationEndTimeDescRadioButton_Checked"/>
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="20 0 0 0">
                 <ui:TextBlock Text="ДСЕ" HorizontalAlignment="Center"/>
@@ -62,7 +62,7 @@
                     <DataGridTextColumn Header="Дата закрытия" Binding="{Binding WorkOrder.WorkOrderCloseDate, StringFormat=\{0:dd.MM.yyyy\}}"/>
                     <DataGridTextColumn Header="Сотрдуник" Binding="{Binding WorkOrder.Employee.EmployeeSurname}"/>
                     <DataGridTextColumn Header="Наименование ДСЕ" Binding="{Binding WorkOrder.Pau.PauName}"/>
-                    <DataGridTextColumn Header="Количество ДСЕ" Binding="{Binding WorkOrder.PauCount}"/>
+                    <DataGridTextColumn Header="ДСЕ заказано" Binding="{Binding WorkOrder.Reservation.ReservationCount}"/>
                     <DataGridTextColumn Header="Код участка" Binding="{Binding AreaId}"/>
                     <DataGridTextColumn Header="Наименование операции" Binding="{Binding Operation.OperationName}"/>
                     <DataGridTextColumn Header="Дата начала операции" Binding="{Binding OperationStartDate, StringFormat=\{0:dd.MM.yyyy\}}"/>

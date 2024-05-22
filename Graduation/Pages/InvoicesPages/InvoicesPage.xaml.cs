@@ -25,15 +25,15 @@ namespace Graduation.Pages.InvoicesPages
             try
             {
                 InitializeComponent();
-                _invoicesPaus = GraduationDB.graduationContext.InvoicePaus.Include(c => c.Invoice).Include(c => c.Invoice.WorkOrder).ToList();
+                _invoicesPaus = WorkOrdersDB.graduationContextMaster.InvoicePaus.Include(c => c.Invoice).Include(c => c.Invoice.WorkOrder).OrderBy(c => c.InvoiceId).ToList();
                 InvoicesDataGrid.ItemsSource = _invoicesPaus;
                 WorkOrderIdComboBox.Items.Add(new WorkOrder { WorkOrderId = 0 });
-                foreach (var item in GraduationDB.graduationContext.WorkOrders.OrderBy(c => c.WorkOrderId))
+                foreach (var item in WorkOrdersDB.graduationContextMaster.WorkOrders.OrderBy(c => c.WorkOrderId))
                 {
                     WorkOrderIdComboBox.Items.Add(item);
                 }
                 DepartmentIdComboBox.Items.Add(new Department { DepartmentId = 0 });
-                foreach (var item in GraduationDB.graduationContext.Departments)
+                foreach (var item in WorkOrdersDB.graduationContextMaster.Departments)
                 {
                     DepartmentIdComboBox.Items.Add(item);
                 }
@@ -49,7 +49,7 @@ namespace Graduation.Pages.InvoicesPages
         {
             try
             {
-                _invoicesPaus = GraduationDB.graduationContext.InvoicePaus.Include(c => c.Invoice).Include(c => c.Invoice.WorkOrder).ToList();
+                _invoicesPaus = WorkOrdersDB.graduationContextMaster.InvoicePaus.Include(c => c.Invoice).Include(c => c.Invoice.WorkOrder).OrderBy(c => c.InvoiceId).ToList();
                 InvoicesDataGrid.ItemsSource = _invoicesPaus;
             }
             catch (Exception ex)
@@ -101,7 +101,7 @@ namespace Graduation.Pages.InvoicesPages
             {
                 if (String.IsNullOrWhiteSpace(SearchTextBox.Text))
                 {
-                    _invoicesPaus = GraduationDB.graduationContext.InvoicePaus.Include(c => c.Invoice).Include(c => c.Invoice.WorkOrder.Pau).ToList();
+                    _invoicesPaus = WorkOrdersDB.graduationContextMaster.InvoicePaus.Include(c => c.Invoice).Include(c => c.Invoice.WorkOrder.Pau).ToList();
                     InvoicesDataGrid.ItemsSource = _invoicesPaus;
                 }
                 else
@@ -209,12 +209,12 @@ namespace Graduation.Pages.InvoicesPages
                 _selectedWorkOrder = (WorkOrder)WorkOrderIdComboBox.SelectedItem;
                 if (_selectedWorkOrder.WorkOrderId != 0)
                 {
-                    _invoicesPaus = GraduationDB.graduationContext.InvoicePaus.Where(c => c.Invoice.WorkOrder.WorkOrderId == _selectedWorkOrder.WorkOrderId).ToList();
+                    _invoicesPaus = WorkOrdersDB.graduationContextMaster.InvoicePaus.Where(c => c.Invoice.WorkOrder.WorkOrderId == _selectedWorkOrder.WorkOrderId).ToList();
                     InvoicesDataGrid.ItemsSource = _invoicesPaus;
                 }
                 else
                 {
-                    _invoicesPaus = GraduationDB.graduationContext.InvoicePaus.Include(c => c.Invoice).Include(c => c.Invoice.WorkOrder).OrderBy(c => c.InvoiceId).ToList();
+                    _invoicesPaus = WorkOrdersDB.graduationContextMaster.InvoicePaus.Include(c => c.Invoice).Include(c => c.Invoice.WorkOrder).OrderBy(c => c.InvoiceId).ToList();
                     InvoicesDataGrid.ItemsSource = _invoicesPaus;
                 }
             }
@@ -233,12 +233,12 @@ namespace Graduation.Pages.InvoicesPages
                 {
                     if (DepartmentRadioButton.IsChecked == true)
                     {
-                        _invoicesPaus = GraduationDB.graduationContext.InvoicePaus.Where(c => c.Invoice.DepartmentId == _selectedDepartment.DepartmentId).ToList();
+                        _invoicesPaus = WorkOrdersDB.graduationContextMaster.InvoicePaus.Where(c => c.Invoice.DepartmentId == _selectedDepartment.DepartmentId).ToList();
                         InvoicesDataGrid.ItemsSource = _invoicesPaus;
                     }
                     else if (DepartmentReceiverRadioButton.IsChecked == true)
                     {
-                        _invoicesPaus = GraduationDB.graduationContext.InvoicePaus.Where(c => c.Invoice.DepartmentReceiverId == _selectedDepartment.DepartmentId).ToList();
+                        _invoicesPaus = WorkOrdersDB.graduationContextMaster.InvoicePaus.Where(c => c.Invoice.DepartmentReceiverId == _selectedDepartment.DepartmentId).ToList();
                         InvoicesDataGrid.ItemsSource = _invoicesPaus;
                     }
                 }
@@ -252,7 +252,7 @@ namespace Graduation.Pages.InvoicesPages
                     FactCountDescRadioButton.IsChecked = false;
                     DepartmentRadioButton.IsChecked = false;
                     DepartmentReceiverRadioButton.IsChecked = false;
-                    _invoicesPaus = GraduationDB.graduationContext.InvoicePaus.Include(c => c.Invoice).Include(c => c.Invoice.WorkOrder).OrderBy(c => c.InvoiceId).ToList();
+                    _invoicesPaus = WorkOrdersDB.graduationContextMaster.InvoicePaus.Include(c => c.Invoice).Include(c => c.Invoice.WorkOrder).OrderBy(c => c.InvoiceId).ToList();
                     InvoicesDataGrid.ItemsSource = _invoicesPaus;
                 }
             }
@@ -309,7 +309,7 @@ namespace Graduation.Pages.InvoicesPages
                     _docX.ReplaceText("{4}", $"{_selectedInvoicePau.Invoice.WorkOrderId}");
                     _docX.ReplaceText("{5}", $"{_selectedInvoicePau.Invoice.WorkOrder.PauId}");
                     _docX.ReplaceText("{6}", $"{_selectedInvoicePau.Invoice.WorkOrder.Pau.PauName}");
-                    _docX.ReplaceText("{7}", $"{_selectedInvoicePau.Invoice.WorkOrder.PauCount}");
+                    //_docX.ReplaceText("{7}", $"{_selectedInvoicePau.Invoice.WorkOrder.PauCount}");
                     _docX.ReplaceText("{8}", $"{_selectedInvoicePau.FactCount}");
                     _docX.ReplaceText("{9}", $"{_selectedInvoicePau.Invoice.WorkOrder.Employee.EmployeeSurname}");
                     saveFileDialog = new SaveFileDialog() { DefaultDirectory = @$"C:\Users\{Environment.UserName}\source\repos\Graduation\Graduation\Resources\Invoices" };

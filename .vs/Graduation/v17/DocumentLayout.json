@@ -3,8 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\yegor\\source\\repos\\Graduation\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{983F396B-44F9-47B9-AB30-EDCC3BC3CAD0}|Graduation\\Graduation.csproj|c:\\users\\yegor\\source\\repos\\graduation\\graduation\\models\\master\\graduationcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{983F396B-44F9-47B9-AB30-EDCC3BC3CAD0}|Graduation\\Graduation.csproj|solutionrelative:graduation\\models\\master\\graduationcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{983F396B-44F9-47B9-AB30-EDCC3BC3CAD0}|Graduation\\Graduation.csproj|c:\\users\\yegor\\source\\repos\\graduation\\graduation\\pages\\workorderspages\\workordercreatepage.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{983F396B-44F9-47B9-AB30-EDCC3BC3CAD0}|Graduation\\Graduation.csproj|solutionrelative:graduation\\pages\\workorderspages\\workordercreatepage.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{983F396B-44F9-47B9-AB30-EDCC3BC3CAD0}|Graduation\\Graduation.csproj|c:\\users\\yegor\\source\\repos\\graduation\\graduation\\models\\master\\workorderscontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{983F396B-44F9-47B9-AB30-EDCC3BC3CAD0}|Graduation\\Graduation.csproj|solutionrelative:graduation\\models\\master\\workorderscontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{983F396B-44F9-47B9-AB30-EDCC3BC3CAD0}|Graduation\\Graduation.csproj|c:\\users\\yegor\\source\\repos\\graduation\\graduation\\models\\admin\\workorderscontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{983F396B-44F9-47B9-AB30-EDCC3BC3CAD0}|Graduation\\Graduation.csproj|solutionrelative:graduation\\models\\admin\\workorderscontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{983F396B-44F9-47B9-AB30-EDCC3BC3CAD0}|Graduation\\Graduation.csproj|c:\\users\\yegor\\source\\repos\\graduation\\graduation\\classes\\encryption.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{983F396B-44F9-47B9-AB30-EDCC3BC3CAD0}|Graduation\\Graduation.csproj|solutionrelative:graduation\\classes\\encryption.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,21 +26,46 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "GraduationContext.cs",
-              "DocumentMoniker": "C:\\Users\\yegor\\source\\repos\\Graduation\\Graduation\\Models\\Master\\GraduationContext.cs",
-              "RelativeDocumentMoniker": "Graduation\\Models\\Master\\GraduationContext.cs",
-              "ToolTip": "C:\\Users\\yegor\\source\\repos\\Graduation\\Graduation\\Models\\Master\\GraduationContext.cs",
-              "RelativeToolTip": "Graduation\\Models\\Master\\GraduationContext.cs",
-              "ViewState": "AQIAAB4AAAAAAAAAAAAmwC0AAABEAAAA",
+              "DocumentIndex": 1,
+              "Title": "WorkOrdersContext.cs",
+              "DocumentMoniker": "C:\\Users\\yegor\\source\\repos\\Graduation\\Graduation\\Models\\Master\\WorkOrdersContext.cs",
+              "RelativeDocumentMoniker": "Graduation\\Models\\Master\\WorkOrdersContext.cs",
+              "ToolTip": "C:\\Users\\yegor\\source\\repos\\Graduation\\Graduation\\Models\\Master\\WorkOrdersContext.cs",
+              "RelativeToolTip": "Graduation\\Models\\Master\\WorkOrdersContext.cs",
+              "ViewState": "AQIAACkAAAAAAAAAAAAqwDMAAAA5AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-08T12:45:01.059Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-17T15:29:01.597Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "WorkOrdersContext.cs",
+              "DocumentMoniker": "C:\\Users\\yegor\\source\\repos\\Graduation\\Graduation\\Models\\Admin\\WorkOrdersContext.cs",
+              "RelativeDocumentMoniker": "Graduation\\Models\\Admin\\WorkOrdersContext.cs",
+              "ToolTip": "C:\\Users\\yegor\\source\\repos\\Graduation\\Graduation\\Models\\Admin\\WorkOrdersContext.cs",
+              "RelativeToolTip": "Graduation\\Models\\Admin\\WorkOrdersContext.cs",
+              "ViewState": "AQIAACQAAAAAAAAAAAAAADMAAAA5AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-17T15:29:12.669Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Encryption.cs",
+              "DocumentMoniker": "C:\\Users\\yegor\\source\\repos\\Graduation\\Graduation\\Classes\\Encryption.cs",
+              "RelativeDocumentMoniker": "Graduation\\Classes\\Encryption.cs",
+              "ToolTip": "C:\\Users\\yegor\\source\\repos\\Graduation\\Graduation\\Classes\\Encryption.cs",
+              "RelativeToolTip": "Graduation\\Classes\\Encryption.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAABAAAAA1AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-18T14:28:43.699Z",
+              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -41,6 +78,19 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "WorkOrderCreatePage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\yegor\\source\\repos\\Graduation\\Graduation\\Pages\\WorkOrdersPages\\WorkOrderCreatePage.xaml.cs",
+              "RelativeDocumentMoniker": "Graduation\\Pages\\WorkOrdersPages\\WorkOrderCreatePage.xaml.cs",
+              "ToolTip": "C:\\Users\\yegor\\source\\repos\\Graduation\\Graduation\\Pages\\WorkOrdersPages\\WorkOrderCreatePage.xaml.cs",
+              "RelativeToolTip": "Graduation\\Pages\\WorkOrdersPages\\WorkOrderCreatePage.xaml.cs",
+              "ViewState": "AQIAAG4AAAAAAAAAAAAQwJUAAAAVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-22T07:21:06.647Z",
+              "EditorCaption": ""
             }
           ]
         }

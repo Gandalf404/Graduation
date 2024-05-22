@@ -9,6 +9,10 @@ public partial class Reservation
 
     public DateOnly ReservationCompilationDate { get; set; }
 
+    public DateOnly ReservationStartDate { get; set; }
+
+    public DateOnly? ReservationEndDate { get; set; }
+
     public int ReservationCount { get; set; }
 
     public virtual ICollection<WorkOrder> WorkOrders { get; set; } = new List<WorkOrder>();

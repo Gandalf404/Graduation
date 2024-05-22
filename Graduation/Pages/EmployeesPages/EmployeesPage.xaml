@@ -34,8 +34,8 @@
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="20 0 0 0">
                 <ui:TextBlock Text="Разряд" HorizontalAlignment="Center"/>
-                <RadioButton x:Name="ClassIdAscRadioButton" Content="От меньшего" Checked="ClassIdAscRadioButton_Checked"/>
-                <RadioButton x:Name="ClassIdDescRadioButton" Content="От большего" Checked="ClassIdDescRadioButton_Checked"/>
+                <RadioButton x:Name="ClassIdAscRadioButton" Content="По возрастанию" Checked="ClassIdAscRadioButton_Checked"/>
+                <RadioButton x:Name="ClassIdDescRadioButton" Content="По убыванию" Checked="ClassIdDescRadioButton_Checked"/>
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="20 0 0 0">
                 <ui:TextBlock Text="Должность" HorizontalAlignment="Center"/>

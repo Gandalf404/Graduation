@@ -17,13 +17,13 @@
                 <ui:Button x:Name="AddPauBlueprintImageButton" HorizontalAlignment="Center" Height="40" Width="150" Margin="0 10 0 0" Content="Добавить чертёж" Click="AddPauBlueprintImageButton_Click"/>
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="20 0 0 0">
-                <ui:TextBlock Text="Номер ДСЕ"/>
+                <ui:TextBlock Text="Номер ДСЕ" HorizontalAlignment="Center"/>
                 <ui:TextBox x:Name="PauIdTextBox" Height="35" Width="200" Margin="0 10 0 0" Text="{Binding PauId}" PreviewTextInput="PauIdTextBox_PreviewTextInput"/>
                 <ui:TextBlock Text="Код места хранения" HorizontalAlignment="Center" Margin="0 10 0 0"/>
                 <ComboBox x:Name="StoragePlaceIdComboBox" Height="35" Width="200" Margin="0 10 0 0" DisplayMemberPath="StoragePlaceId" SelectedItem="{Binding StoragePlace}"/>
                 <ui:TextBlock Text="Наименование ДСЕ" HorizontalAlignment="Center" Margin="0 10 0 0"/>
                 <ui:TextBox x:Name="PauNameTextBox" Height="35" Width="200" Margin="0 10 0 0" Text="{Binding PauName}" PreviewTextInput="PauNameTextBox_PreviewTextInput"/>
-                <ui:TextBlock Text="Количество ДСЕ"/>
+                <ui:TextBlock Text="Количество ДСЕ" HorizontalAlignment="Center" Margin="0 10 0 0"/>
                 <ui:TextBox x:Name="PauCountTextBox" Height="35" Width="200" Margin="0 10 0 0" Text="{Binding PauCount}" PreviewTextInput="PauCountTextBox_PreviewTextInput"/>
             </StackPanel>
         </StackPanel>

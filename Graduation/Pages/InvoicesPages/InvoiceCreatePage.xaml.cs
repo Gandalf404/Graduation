@@ -20,11 +20,11 @@ namespace Graduation.Pages.InvoicesPages
                 _invoice = new Invoice();
                 _invoicePau = new InvoicePau();
                 _isCreating = true;
-                foreach (var item in GraduationDB.graduationContext.WorkOrders.OrderBy(c => c.WorkOrderId))
+                foreach (var item in WorkOrdersDB.graduationContextMaster.WorkOrders.OrderBy(c => c.WorkOrderId))
                 {
                     WorkOrderIdComboBox.Items.Add(item);
                 }
-                foreach (var item in GraduationDB.graduationContext.Departments)
+                foreach (var item in WorkOrdersDB.graduationContextMaster.Departments)
                 {
                     DepartmentIdComboBox.Items.Add(item);
                     DepartmentReceiverIdComboBox.Items.Add(item);
@@ -43,11 +43,11 @@ namespace Graduation.Pages.InvoicesPages
                 InitializeComponent();
                 _invoicePau = invoicePau;
                 _isCreating = false;
-                foreach (var item in GraduationDB.graduationContext.WorkOrders.OrderBy(c => c.WorkOrderId))
+                foreach (var item in WorkOrdersDB.graduationContextMaster.WorkOrders.OrderBy(c => c.WorkOrderId))
                 {
                     WorkOrderIdComboBox.Items.Add(item);
                 }
-                foreach (var item in GraduationDB.graduationContext.Departments)
+                foreach (var item in WorkOrdersDB.graduationContextMaster.Departments)
                 {
                     DepartmentIdComboBox.Items.Add(item);
                     DepartmentReceiverIdComboBox.Items.Add(item);
@@ -77,7 +77,7 @@ namespace Graduation.Pages.InvoicesPages
         {
             try
             {
-                foreach (var item in GraduationDB.graduationContext.WorkOrders.Where(c => c.WorkOrderCompilationDate 
+                foreach (var item in WorkOrdersDB.graduationContextMaster.WorkOrders.Where(c => c.WorkOrderCompilationDate
                         == ((WorkOrder)WorkOrderIdComboBox.SelectedItem).WorkOrderCompilationDate))
                 {
                     WorkOrderCompilationDateComboBox.Items.Add(item);
@@ -108,9 +108,9 @@ namespace Graduation.Pages.InvoicesPages
                     _invoicePau.InvoiceCompilationDate = DateOnly.FromDateTime(DateTime.Now);
                     _invoicePau.FactCount = Convert.ToInt32(FactCountTextBox.Text);
 
-                    GraduationDB.graduationContext.Add(_invoice);
-                    GraduationDB.graduationContext.Add(_invoicePau);
-                    GraduationDB.graduationContext.SaveChanges();
+                    WorkOrdersDB.graduationContextMaster.Add(_invoice);
+                    WorkOrdersDB.graduationContextMaster.Add(_invoicePau);
+                    WorkOrdersDB.graduationContextMaster.SaveChanges();
                     MessageBox.Show("Накладная успешно добавлена", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
@@ -121,7 +121,7 @@ namespace Graduation.Pages.InvoicesPages
                     _invoicePau.Invoice.DepartmentReceiverId = ((Department)DepartmentReceiverIdComboBox.SelectedItem).DepartmentId;
                     _invoicePau.FactCount = Convert.ToInt32(FactCountTextBox.Text);
 
-                    GraduationDB.graduationContext.SaveChanges();
+                    WorkOrdersDB.graduationContextMaster.SaveChanges();
                     MessageBox.Show("Накладная успешно изменена", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }

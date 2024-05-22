@@ -1,5 +1,6 @@
 ﻿using Graduation.Models;
 using Graduation.Models.Master;
+using Npgsql;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -20,23 +21,23 @@ namespace Graduation.Pages.WorkOrdersPages
                 _workOrder = new WorkOrder();
                 _workOrderArea = new WorkOrderArea();
                 _isCreating = true;
-                foreach (var item in GraduationDB.graduationContext.Reservations)
+                foreach (var item in WorkOrdersDB.graduationContextMaster.Reservations)
                 {
                     ReservationIdComboBox.Items.Add(item);
                 }
-                foreach (var item in GraduationDB.graduationContext.Paus.OrderBy(c => c.PauId))
+                foreach (var item in WorkOrdersDB.graduationContextMaster.Paus.OrderBy(c => c.PauId))
                 {
                     PauNameComboBox.Items.Add(item);
                 }
-                foreach (var item in GraduationDB.graduationContext.Employees.OrderBy(c => c.EmployeeId))
+                foreach (var item in WorkOrdersDB.graduationContextMaster.Employees.OrderBy(c => c.EmployeeId))
                 {
                     EmployeeSurnameComboBox.Items.Add(item);
                 }
-                foreach (var item in GraduationDB.graduationContext.Areas)
+                foreach (var item in WorkOrdersDB.graduationContextMaster.Areas)
                 {
                     AreaIdComboBox.Items.Add(item);
                 }
-                foreach (var item in GraduationDB.graduationContext.Operations)
+                foreach (var item in WorkOrdersDB.graduationContextMaster.Operations)
                 {
                     OperationNameComboBox.Items.Add(item);
                 }
@@ -55,23 +56,23 @@ namespace Graduation.Pages.WorkOrdersPages
                 InitializeComponent();
                 _workOrderArea = workOrderArea;
                 _isCreating = false;
-                foreach (var item in GraduationDB.graduationContext.Reservations)
+                foreach (var item in WorkOrdersDB.graduationContextMaster.Reservations)
                 {
                     ReservationIdComboBox.Items.Add(item);
                 }
-                foreach (var item in GraduationDB.graduationContext.Paus.OrderBy(c => c.PauId))
+                foreach (var item in WorkOrdersDB.graduationContextMaster.Paus.OrderBy(c => c.PauId))
                 {
                     PauNameComboBox.Items.Add(item);
                 }
-                foreach (var item in GraduationDB.graduationContext.Employees.OrderBy(c => c.EmployeeId))
+                foreach (var item in WorkOrdersDB.graduationContextMaster.Employees.OrderBy(c => c.EmployeeId))
                 {
                     EmployeeSurnameComboBox.Items.Add(item);
                 }
-                foreach (var item in GraduationDB.graduationContext.Areas)
+                foreach (var item in WorkOrdersDB.graduationContextMaster.Areas)
                 {
                     AreaIdComboBox.Items.Add(item);
                 }
-                foreach (var item in GraduationDB.graduationContext.Operations)
+                foreach (var item in WorkOrdersDB.graduationContextMaster.Operations)
                 {
                     OperationNameComboBox.Items.Add(item);
                 }
@@ -126,7 +127,6 @@ namespace Graduation.Pages.WorkOrdersPages
                     _workOrder.ReservationId = ((Reservation)ReservationIdComboBox.SelectedItem).ReservationId;
                     _workOrder.WorkOrderCompilationDate = DateOnly.FromDateTime(DateTime.Now);
                     _workOrder.PauId = ((Pau)PauNameComboBox.SelectedItem).PauId;
-                    _workOrder.PauCount = ((Pau)PauNameComboBox.SelectedItem).PauCount;
                     _workOrder.EmployeeId = ((Employee)EmployeeSurnameComboBox.SelectedItem).EmployeeId;
                     _workOrder.ReservationCompilationDate = ((Reservation)ReservationIdComboBox.SelectedItem).ReservationCompilationDate;
                     if (WorkOrderCloseCheckBox.IsChecked == true)
@@ -139,37 +139,35 @@ namespace Graduation.Pages.WorkOrdersPages
                     _workOrderArea.AreaId = ((Area)AreaIdComboBox.SelectedItem).AreaId;
                     _workOrderArea.OperationId = ((Operation)OperationNameComboBox.SelectedItem).OperationId;
 
-                    if (Convert.ToInt32(PauCountTextBox.Text) > Convert.ToInt32(ReservationCountTextBlock.Text))
+                    using (NpgsqlConnection npgsqlConnection = new NpgsqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["Postgresql"].ToString()))
                     {
-                        throw new Exception("Количество ДСЕ не может быть больше количества ДСЕ в заказе");
+                        using (NpgsqlCommand npgsqlCommand = new NpgsqlCommand($"CALL add_work_order({_workOrder.WorkOrderId}, {_workOrder.PauId}, {_workOrder.ReservationId}, {_workOrder.ReservationCompilationDate}, {_workOrder.EmployeeId}, {_workOrder.WorkOrderCompleteDate}, " +
+                            $"{_workOrder.WorkOrderCloseDate}, {_workOrderArea.AreaId}, {_workOrderArea.OperationId}, {_workOrderArea.OperationStartDate}, {_workOrderArea.OperationStartTime}, {_workOrderArea.OperationEndDate}, {_workOrderArea.OperationEndTime});", npgsqlConnection))
+                        {
+                            npgsqlConnection.Open();
+                            npgsqlCommand.ExecuteNonQuery();
+                        }
                     }
-
-                    GraduationDB.graduationContext.Add(_workOrder);
-                    GraduationDB.graduationContext.Add(_workOrderArea);
-                    GraduationDB.graduationContext.SaveChanges();
+                    //WorkOrdersDB.graduationContextMaster.Add(_workOrder);
+                    //WorkOrdersDB.graduationContextMaster.Add(_workOrderArea);
+                    WorkOrdersDB.graduationContextMaster.SaveChanges();
                     MessageBox.Show("Заказ-наряд успешно добавлен", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
                     _workOrderArea.WorkOrder.ReservationId = ((Reservation)ReservationIdComboBox.SelectedItem).ReservationId;
                     _workOrderArea.WorkOrder.PauId = ((Pau)PauNameComboBox.SelectedItem).PauId;
-                    _workOrderArea.WorkOrder.PauCount = Convert.ToInt32(PauCountTextBox.Text);
                     _workOrderArea.WorkOrder.EmployeeId = ((Employee)EmployeeSurnameComboBox.SelectedItem).EmployeeId;
                     if (WorkOrderCloseCheckBox.IsChecked == true)
                     {
                         _workOrderArea.WorkOrder.WorkOrderCloseDate = DateOnly.FromDateTime(DateTime.Now);
                     }
 
-                    if (Convert.ToInt32(PauCountTextBox.Text) > Convert.ToInt32(ReservationCountTextBlock.Text))
-                    {
-                        throw new Exception("Количество ДСЕ не может быть больше количества ДСЕ в заказе");
-                    }
-
-                    GraduationDB.graduationContext.SaveChanges();
+                    WorkOrdersDB.graduationContextMaster.SaveChanges();
                     MessageBox.Show("Заказ-наряд успешно изменен", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
-            catch when (String.IsNullOrWhiteSpace(WorkOrderIdTextBox.Text) || String.IsNullOrWhiteSpace(PauCountTextBox.Text) || ReservationIdComboBox.SelectedItem == null
+            catch when (String.IsNullOrWhiteSpace(WorkOrderIdTextBox.Text) || ReservationIdComboBox.SelectedItem == null
                         || PauNameComboBox.SelectedItem == null || String.IsNullOrWhiteSpace(WorkOrderCompleteDateTextBox.Text) || EmployeeSurnameComboBox.SelectedItem == null
                         || AreaIdComboBox.SelectedItem == null || OperationNameComboBox.SelectedItem == null || String.IsNullOrWhiteSpace(OperationStartDateTextBox.Text)
                         || String.IsNullOrWhiteSpace(OperationStartTimeTextBox.Text) || String.IsNullOrWhiteSpace(OperationEndDateTextBox.Text) || String.IsNullOrWhiteSpace(OperationEndTimeTextBox.Text))

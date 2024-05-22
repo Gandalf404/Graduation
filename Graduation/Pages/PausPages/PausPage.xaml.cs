@@ -1,5 +1,5 @@
 ﻿using Graduation.Models;
-using Graduation.Models.Master;
+using Graduation.Models.Admin;
 using Graduation.Pages.EmployeesPages;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,19 +14,19 @@ namespace Graduation.Pages.PausPages
         private Pau _selectedPau;
 
         public PausPage()
-        {            
+        {
             try
             {
                 InitializeComponent();
-                _paus = GraduationDB.graduationContext.Paus.OrderBy(c => c.PauId).ToList();
+                _paus = WorkOrdersDB.graduationContextAdmin.Paus.OrderBy(c => c.PauId).ToList();
                 PausListView.ItemsSource = _paus;
                 StoragePlaceIdComboBox.Items.Add(new StoragePlace { StoragePlaceId = 0 });
-                foreach (var item in GraduationDB.graduationContext.StoragePlaces)
+                foreach (var item in WorkOrdersDB.graduationContextAdmin.StoragePlaces)
                 {
                     StoragePlaceIdComboBox.Items.Add(item);
                 }
                 PauNameComboBox.Items.Add(new Pau { PauName = "Все ДСЕ" });
-                foreach (var item in GraduationDB.graduationContext.Paus.OrderBy(c => c.PauId))
+                foreach (var item in WorkOrdersDB.graduationContextAdmin.Paus.OrderBy(c => c.PauId))
                 {
                     PauNameComboBox.Items.Add(item);
                 }
@@ -41,7 +41,7 @@ namespace Graduation.Pages.PausPages
         {
             try
             {
-                _paus = GraduationDB.graduationContext.Paus.OrderBy(c => c.PauId).ToList();
+                _paus = WorkOrdersDB.graduationContextAdmin.Paus.OrderBy(c => c.PauId).ToList();
                 PausListView.ItemsSource = _paus;
             }
             catch (Exception ex)
@@ -92,12 +92,12 @@ namespace Graduation.Pages.PausPages
             {
                 if (String.IsNullOrWhiteSpace(SearchTextBox.Text))
                 {
-                    _paus = GraduationDB.graduationContext.Paus.OrderBy(c => c.PauId).ToList();
+                    _paus = WorkOrdersDB.graduationContextAdmin.Paus.OrderBy(c => c.PauId).ToList();
                     PausListView.ItemsSource = _paus;
                 }
                 else
                 {
-                    _paus = GraduationDB.graduationContext.Paus.Where(c => c.PauId.ToString().Contains(SearchTextBox.Text) || c.StoragePlaceId.ToString().Contains(SearchTextBox.Text)
+                    _paus = WorkOrdersDB.graduationContextAdmin.Paus.Where(c => c.PauId.ToString().Contains(SearchTextBox.Text) || c.StoragePlaceId.ToString().Contains(SearchTextBox.Text)
                                                                         || c.PauName.Contains(SearchTextBox.Text) || c.PauCount.ToString().Contains(SearchTextBox.Text)).ToList();
                     PausListView.ItemsSource = _paus;
                 }
@@ -141,14 +141,14 @@ namespace Graduation.Pages.PausPages
                 _selectedStoragePlace = (StoragePlace)StoragePlaceIdComboBox.SelectedItem;
                 if (StoragePlaceIdComboBox.SelectedIndex != 0)
                 {
-                    _paus =  GraduationDB.graduationContext.Paus.Where(c => c.StoragePlaceId == _selectedStoragePlace.StoragePlaceId).ToList();
+                    _paus = WorkOrdersDB.graduationContextAdmin.Paus.Where(c => c.StoragePlaceId == _selectedStoragePlace.StoragePlaceId).ToList();
                     PausListView.ItemsSource = _paus;
                 }
                 else
                 {
                     PauCountAscRadioButton.IsChecked = false;
                     PauCountDescRadioButton.IsChecked = false;
-                    _paus = GraduationDB.graduationContext.Paus.ToList();
+                    _paus = WorkOrdersDB.graduationContextAdmin.Paus.ToList();
                     PausListView.ItemsSource = _paus;
                 }
             }
@@ -165,14 +165,14 @@ namespace Graduation.Pages.PausPages
                 _selectedPau = (Pau)PauNameComboBox.SelectedItem;
                 if (_selectedPau.PauName != "Все ДСЕ")
                 {
-                    _paus = GraduationDB.graduationContext.Paus.Where(c => c.PauName == _selectedPau.PauName).ToList();
+                    _paus = WorkOrdersDB.graduationContextAdmin.Paus.Where(c => c.PauName == _selectedPau.PauName).ToList();
                     PausListView.ItemsSource = _paus;
                 }
                 else
                 {
                     PauCountAscRadioButton.IsChecked = false;
                     PauCountDescRadioButton.IsChecked = false;
-                    _paus = GraduationDB.graduationContext.Paus.OrderBy(c => c.PauId).ToList();
+                    _paus = WorkOrdersDB.graduationContextAdmin.Paus.OrderBy(c => c.PauId).ToList();
                     PausListView.ItemsSource = _paus;
                 }
             }
