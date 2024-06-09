@@ -39,7 +39,6 @@ namespace Graduation.Pages.EmployeesPages
             }
         }
 
-        //UNDONE: Сделать пустые поля логина и пароля.
         public EmployeeCreatePage(Employee employee)
         {
             try
@@ -59,8 +58,7 @@ namespace Graduation.Pages.EmployeesPages
                 {
                     ClassComboBox.Items.Add(item);
                 }
-                EmployeeLoginTextBox.Text = "";
-                EmployeePasswordBox.Password = "";
+                EmployeeIdTextBox.IsEnabled = false;
             }
             catch (Exception ex)
             {
@@ -133,7 +131,6 @@ namespace Graduation.Pages.EmployeesPages
             }
         }
 
-        //UNDONE: При роли не мастер или админ БД чтобы исчезали поля ввода логина и пароля.
         private void EmployeeCreateButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -143,6 +140,23 @@ namespace Graduation.Pages.EmployeesPages
                     _employee.AreaId = ((Area)AreaIdComboBox.SelectedItem).AreaId;
                     _employee.PositionId = ((Position)PositionNameComboBox.SelectedItem).PositionId;
                     _employee.ClassId = ((Class)ClassComboBox.SelectedItem).ClassId;
+                    if (((Position)PositionNameComboBox.SelectedItem).PositionId == 2 || ((Position)PositionNameComboBox.SelectedItem).PositionId == 4)
+                    {
+                        if (!String.IsNullOrWhiteSpace(EmployeeLoginTextBox.Text) && !String.IsNullOrWhiteSpace(EmployeePasswordBox.Password))
+                        {
+                            _employee.Login = Encryption.Encrypt(EmployeeLoginTextBox.Text);
+                            _employee.Password = Encryption.Encrypt(EmployeePasswordBox.Password);
+                        }
+                        else
+                        {
+                            throw new Exception();
+                        }
+                    }
+                    else
+                    {
+                        _employee.Login = null;
+                        _employee.Password = null;
+                    }
 
                     WorkOrdersDB.graduationContextAdmin.Add(_employee);
                     WorkOrdersDB.graduationContextAdmin.SaveChanges();
@@ -153,16 +167,39 @@ namespace Graduation.Pages.EmployeesPages
                     _employee.AreaId = ((Area)AreaIdComboBox.SelectedItem).AreaId;
                     _employee.PositionId = ((Position)PositionNameComboBox.SelectedItem).PositionId;
                     _employee.ClassId = ((Class)ClassComboBox.SelectedItem).ClassId;
+                    if (((Position)PositionNameComboBox.SelectedItem).PositionId == 2 || ((Position)PositionNameComboBox.SelectedItem).PositionId == 4)
+                    {
+                        if (!String.IsNullOrWhiteSpace(EmployeeLoginTextBox.Text) && !String.IsNullOrWhiteSpace(EmployeePasswordBox.Password))
+                        {
+                            _employee.Login = Encryption.Encrypt(EmployeeLoginTextBox.Text);
+                            _employee.Password = Encryption.Encrypt(EmployeePasswordBox.Password);
+                        }
+                        else
+                        {
+                            throw new Exception();
+                        }
+                    }
+                    else
+                    {
+                        _employee.Login = null;
+                        _employee.Password = null;
+                    }
 
                     WorkOrdersDB.graduationContextAdmin.SaveChanges();
                     MessageBox.Show("Данные о сотруднике успешно изменены", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
+
             }
             catch when (String.IsNullOrWhiteSpace(EmployeeIdTextBox.Text) || String.IsNullOrWhiteSpace(EmployeeSurnameTextBox.Text) || String.IsNullOrWhiteSpace(EmployeeNameTextBox.Text)
-            || String.IsNullOrWhiteSpace(EmployeePatronymicTextBox.Text) || AreaIdComboBox.SelectedItem == null || PositionNameComboBox.SelectedItem == null
-            || ClassComboBox.SelectedItem == null || String.IsNullOrWhiteSpace(EmployeeLoginTextBox.Text) || String.IsNullOrWhiteSpace(EmployeePasswordBox.Password))
+                || String.IsNullOrWhiteSpace(EmployeePatronymicTextBox.Text) || AreaIdComboBox.SelectedItem == null || PositionNameComboBox.SelectedItem == null
+                || ClassComboBox.SelectedItem == null)
             {
                 MessageBox.Show("Необходимо заполнить все поля", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            catch when (((Position)PositionNameComboBox.SelectedItem).PositionId == 2 || ((Position)PositionNameComboBox.SelectedItem).PositionId == 4
+                && String.IsNullOrWhiteSpace(EmployeeLoginTextBox.Text) && String.IsNullOrWhiteSpace(EmployeePasswordBox.Password))
+            {
+                MessageBox.Show("Введите логин и пароль", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             catch (Exception ex)
             {
@@ -180,16 +217,6 @@ namespace Graduation.Pages.EmployeesPages
             {
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
-
-        private void AreaIdComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void PositionNameComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
     }
 }

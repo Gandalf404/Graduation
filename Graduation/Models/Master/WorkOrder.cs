@@ -29,5 +29,5 @@ public partial class WorkOrder
 
     public virtual Reservation Reservation { get; set; } = null!;
 
-    public virtual ICollection<WorkOrderArea> WorkOrderAreas { get; set; } = new List<WorkOrderArea>();
+    public virtual WorkOrderArea? WorkOrderArea { get; set; }
 }

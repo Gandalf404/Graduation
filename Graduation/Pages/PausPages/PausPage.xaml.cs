@@ -100,6 +100,10 @@ namespace Graduation.Pages.PausPages
                     _paus = WorkOrdersDB.graduationContextAdmin.Paus.Where(c => c.PauId.ToString().Contains(SearchTextBox.Text) || c.StoragePlaceId.ToString().Contains(SearchTextBox.Text)
                                                                         || c.PauName.Contains(SearchTextBox.Text) || c.PauCount.ToString().Contains(SearchTextBox.Text)).ToList();
                     PausListView.ItemsSource = _paus;
+                    if (PausListView.Items.Count == 0)
+                    {
+                        MessageBox.Show("Поиск не дал результатов", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
                 }
             }
             catch (Exception ex)

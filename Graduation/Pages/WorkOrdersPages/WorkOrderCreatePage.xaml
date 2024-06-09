@@ -24,7 +24,7 @@
                 <ui:TextBlock Text="Номер заказа" HorizontalAlignment="Center"/>
                 <ComboBox x:Name="ReservationIdComboBox" Height="35" Width="200" Margin="0 10 0 0" DisplayMemberPath="ReservationId" SelectedItem="{Binding WorkOrder.Reservation}" SelectionChanged="ReservationIdComboBox_SelectionChanged"/>
                 <ui:TextBlock Text="Наименование ДСЕ" HorizontalAlignment="Center" Margin="0 10 0 0"/>
-                <ComboBox x:Name="PauNameComboBox" Height="35" Width="200" Margin="0 10 0 0" DisplayMemberPath="PauName"  SelectedItem="{Binding WorkOrder.Pau}"/>
+                <ComboBox x:Name="PauNameComboBox" Height="35" Width="200" Margin="0 10 0 0" DisplayMemberPath="PauName" SelectedItem="{Binding WorkOrder.Pau}"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 10 0 0">
                     <ui:TextBlock Text="Кол-во на заказ"/>
                 </StackPanel>

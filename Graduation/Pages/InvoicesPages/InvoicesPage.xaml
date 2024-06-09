@@ -28,7 +28,7 @@
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10 0 0 0">
             <ui:TextBox x:Name="SearchTextBox" Height="35" Width="200" PlaceholderText="Поиск" TextChanged="SearchTextBox_TextChanged"/>
             <StackPanel Orientation="Vertical" Margin="20 0 0 0">
-                <ui:TextBlock Text="Дата составления" HorizontalAlignment="Center"/>
+                <ui:TextBlock Text="Дата составления накладной" HorizontalAlignment="Center"/>
                 <RadioButton x:Name="InvoicesCompilationDateAscRadioButton" Content="По возрастанию" Checked="InvoicesCompilationDateAscRadioButton_Checked"/>
                 <RadioButton x:Name="InvoicesCompilationDateDescRadioButton" Content="По убыванию" Checked="InvoicesCompilationDateDescRadioButton_Checked"/>
             </StackPanel>
@@ -39,17 +39,12 @@
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="20 0 0 0">
                 <ui:TextBlock Text="Количество заказанных ДСЕ" HorizontalAlignment="Center"/>
-                <RadioButton x:Name="PauCountAscRadioButton" Content="По возрастанию" Checked="PauCountAscRadioButton_Checked"/>
-                <RadioButton x:Name="PauCountDescRadioButton" Content="По убыванию" Checked="PauCountDescRadioButton_Checked"/>
+                <RadioButton x:Name="ReservationCountAscRadioButton" Content="По возрастанию" Checked="ReservationCountAscRadioButton_Checked"/>
+                <RadioButton x:Name="ReservationCountDescRadioButton" Content="По убыванию" Checked="ReservationCountDescRadioButton_Checked"/>
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="20 0 0 0">
-                <ui:TextBlock Text="Цех отправитель" HorizontalAlignment="Center"/>
+                <ui:TextBlock Text="Номер заказ-наряда" HorizontalAlignment="Center"/>
                 <ComboBox x:Name="WorkOrderIdComboBox" Height="35" Width="175" Margin="0 15 0 0" SelectedIndex="0" DisplayMemberPath="WorkOrderId" SelectionChanged="WorkOrderIdComboBox_SelectionChanged"/>
-            </StackPanel>
-            <StackPanel Orientation="Vertical" Margin="20 0 0 0">
-                <RadioButton x:Name="DepartmentRadioButton" Content="Цех отправитель"/>
-                <RadioButton x:Name="DepartmentReceiverRadioButton" Content="Цех получатель"/>
-                <ComboBox x:Name="DepartmentIdComboBox" Height="35" Width="175" SelectedIndex="0" DisplayMemberPath="DepartmentId" SelectionChanged="DepartmentIdComboBox_SelectionChanged"/>
             </StackPanel>
             <ui:Button x:Name="InvoiceCreateButton" Height="40" Width="120" Margin="20 0 0 0" Content="Добавить" Click="InvoiceCreateButton_Click"/>
         </StackPanel>
@@ -57,19 +52,19 @@
             <ui:DataGrid x:Name="InvoicesDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False">
                 <ui:DataGrid.Columns>
                     <DataGridTextColumn Header="Номер приемо-сдаточной накладной" Binding="{Binding InvoiceId}"/>
-                    <DataGridTextColumn Header="Номер наряда" Binding="{Binding Invoice.WorkOrder.WorkOrderId}"/>
-                    <DataGridTextColumn Header="Дата составления заказ-наряда" Binding="{Binding Invoice.WorkOrder.WorkOrderCompilationDate, StringFormat=\{0:dd.MM.yyyy\}}"/>
                     <DataGridTextColumn Header="Дата составления накладной" Binding="{Binding Invoice.InvoiceCompilationDate, StringFormat=\{0:dd.MM.yyyy\}}"/>
+                    <DataGridTextColumn Header="Номер заказ-наряда" Binding="{Binding Invoice.WorkOrder.WorkOrderId}"/>
+                    <DataGridTextColumn Header="Дата составления заказ-наряда" Binding="{Binding Invoice.WorkOrder.WorkOrderCompilationDate, StringFormat=\{0:dd.MM.yyyy\}}"/>
                     <DataGridTextColumn Header="Цех отправитель" Binding="{Binding Invoice.DepartmentId}"/>
                     <DataGridTextColumn Header="Цех получатель" Binding="{Binding Invoice.DepartmentReceiverId}"/>
-                    <DataGridTextColumn Header="Наименование ДСЕ" Binding="{Binding Invoice.WorkOrder.Pau.PauName}"/>
+                    <DataGridTextColumn Header="Наименование ДСЕ" Binding="{Binding Pau.PauName}"/>
                     <DataGridTextColumn Header="Количество фактически" Binding="{Binding FactCount}"/>
                     <DataGridTextColumn Header="ДСЕ заказано" Binding="{Binding Invoice.WorkOrder.Reservation.ReservationCount}"/>
                 </ui:DataGrid.Columns>
                 <ui:DataGrid.ContextMenu>
                     <ContextMenu>
-                        <MenuItem x:Name="UpdateInvoiceMenuItem" Header="Изменить накладную" Click="UpdateInvoiceMenuItem_Click"/>
-                        <MenuItem x:Name="PrintInvoiceMenuItem" Header="Распечатать накладную" Click="PrintInvoiceMenuItem_Click"/>
+                        <MenuItem x:Name="UpdateInvoiceMenuItem" Header="Изменить приемо-сдаточную накладную" Click="UpdateInvoiceMenuItem_Click"/>
+                        <MenuItem x:Name="PrintInvoiceMenuItem" Header="Распечатать приемо-сдаточную накладную" Click="PrintInvoiceMenuItem_Click"/>
                     </ContextMenu>
                 </ui:DataGrid.ContextMenu>
             </ui:DataGrid>

@@ -44,6 +44,7 @@ namespace Graduation.Pages.PausPages
                 {
                     StoragePlaceIdComboBox.Items.Add(item);
                 }
+                PauIdTextBox.IsEnabled = false;
                 PauBlueprintImage.DataContext = _pau.PauBlueprint;
                 AddPauBlueprintImageButton.Content = "Изменить чертёж";
             }

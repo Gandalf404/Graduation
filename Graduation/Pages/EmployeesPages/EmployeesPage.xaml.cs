@@ -1,5 +1,6 @@
 ﻿using Graduation.Models;
 using Graduation.Models.Admin;
+using Graduation.Pages.InfoPages;
 using Graduation.Pages.PausPages;
 using Microsoft.EntityFrameworkCore;
 using System.Windows;
@@ -13,6 +14,8 @@ namespace Graduation.Pages.EmployeesPages
         private List<Employee> _employees;
         private Position _selectedPosition;
         private Employee _selectedEmployee;
+        private DeleteMark _deleteMark;
+        private DeleteMark _isEmployeeDeleted;
 
         public EmployeesPage()
         {
@@ -58,7 +61,6 @@ namespace Graduation.Pages.EmployeesPages
             }
         }
 
-        //TODO: Изменить навигацию мб.
         private void EmployeesViewItem_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -102,6 +104,10 @@ namespace Graduation.Pages.EmployeesPages
                                                                                 || c.Position.PositionName.Contains(SearchTextBox.Text)
                                                                                 || c.ClassId.ToString().Contains(SearchTextBox.Text)).ToList();
                     EmployeesDataGrid.ItemsSource = _employees;
+                    if (EmployeesDataGrid.Items.Count == 0)
+                    {
+                        MessageBox.Show("Поиск не дал результатов", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
                 }
             }
             catch (Exception ex)
@@ -200,6 +206,18 @@ namespace Graduation.Pages.EmployeesPages
             }
         }
 
+        private void ClosedWorkOrdersInfoButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                NavigationService.Navigate(new ClosedWorkOrdersInfoPage());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private void UpdateEmployeeMenuItem_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -212,6 +230,47 @@ namespace Graduation.Pages.EmployeesPages
                 else
                 {
                     MessageBox.Show("Выберите сотрдуника для изменения", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void DeleteEmployeeCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                _selectedEmployee = (Employee)EmployeesDataGrid.SelectedItem;
+                if (_selectedEmployee != null)
+                {
+                    _isEmployeeDeleted = WorkOrdersDB.graduationContextAdmin.DeleteMarks.FirstOrDefault(c => c.EmployeeId == _selectedEmployee.EmployeeId);
+                    if (_isEmployeeDeleted == null)
+                    {
+                        if (MessageBox.Show("Вы действительно хотите уволить данного сотрудника ?", "Внимание", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                        {
+                            _deleteMark = new DeleteMark()
+                            {
+                                DeleteMarkId = new Random().Next(1, 999),
+                                DeleteMarkDate = DateOnly.FromDateTime(DateTime.Now),
+                                EmployeeId = _selectedEmployee.EmployeeId,
+                                IsDeleted = "Уволен"
+                            };
+                            WorkOrdersDB.graduationContextAdmin.DeleteMarks.Add(_deleteMark);
+                            //WorkOrdersDB.graduationContextAdmin.Employees.Remove(_selectedEmployee);
+                            WorkOrdersDB.graduationContextAdmin.SaveChanges();
+                            MessageBox.Show("Сотрудник уволен", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Данный сотрудник уже уволен", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Выберите сотрдуника для увольнениия", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
             catch (Exception ex)

@@ -42,6 +42,7 @@
                 <ComboBox x:Name="PositionNameComboBox" Height="35" Width="200" Margin="0 15 0 0" SelectedIndex="0" DisplayMemberPath="PositionName" SelectionChanged="PositionNameComboBox_SelectionChanged"/>
             </StackPanel>
             <ui:Button x:Name="EmployeeCreateButton" Height="40" Width="120" Margin="20 0 0 0" Content="Добавить" Click="EmployeeCreateButton_Click"/>
+            <ui:Button x:Name="ClosedWorkOrdersInfoButton" Height="40" Width="280" Margin="20 0 0 0" Content="Информация о закрытых заказ-нарядах" Click="ClosedWorkOrdersInfoButton_Click"/>
         </StackPanel>
         <ScrollViewer Grid.Row="2">
             <ui:DataGrid x:Name="EmployeesDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False">
@@ -56,7 +57,8 @@
                 </ui:DataGrid.Columns>
                 <ui:DataGrid.ContextMenu>
                     <ContextMenu>
-                        <MenuItem x:Name="UpdateEmployeeMenuItem" Header="Изменить данные сотрудника" Click="UpdateEmployeeMenuItem_Click"/>
+                        <ui:MenuItem x:Name="UpdateEmployeeMenuItem" Header="Изменить данные сотрудника" Click="UpdateEmployeeMenuItem_Click"/>
+                        <ui:MenuItem x:Name="DeleteEmployeeCheckBox" Header="Уволить сотрудника" Click="DeleteEmployeeCheckBox_Click"/>
                     </ContextMenu>
                 </ui:DataGrid.ContextMenu>
             </ui:DataGrid>

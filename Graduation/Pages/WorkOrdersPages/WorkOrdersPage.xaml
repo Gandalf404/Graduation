@@ -57,9 +57,9 @@
             <ui:DataGrid x:Name="WorkOrdersDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False">
                 <ui:DataGrid.Columns>
                     <DataGridTextColumn Header="Номер заказ-наряда" Binding="{Binding WorkOrderId}"/>
+                    <DataGridTextColumn Header="Дата составления заказ-наряда" Binding="{Binding WorkOrder.WorkOrderCompilationDate, StringFormat=\{0:dd.MM.yyyy\}}"/>
                     <DataGridTextColumn Header="Номер заказа" Binding="{Binding WorkOrder.ReservationId}"/>
-                    <DataGridTextColumn Header="Дата составления" Binding="{Binding WorkOrder.WorkOrderCompilationDate, StringFormat=\{0:dd.MM.yyyy\}}"/>
-                    <DataGridTextColumn Header="Дата закрытия" Binding="{Binding WorkOrder.WorkOrderCloseDate, StringFormat=\{0:dd.MM.yyyy\}}"/>
+                    <DataGridTextColumn Header="Дата закрытия заказ-наряда" Binding="{Binding WorkOrder.WorkOrderCloseDate, StringFormat=\{0:dd.MM.yyyy\}}"/>
                     <DataGridTextColumn Header="Сотрдуник" Binding="{Binding WorkOrder.Employee.EmployeeSurname}"/>
                     <DataGridTextColumn Header="Наименование ДСЕ" Binding="{Binding WorkOrder.Pau.PauName}"/>
                     <DataGridTextColumn Header="ДСЕ заказано" Binding="{Binding WorkOrder.Reservation.ReservationCount}"/>

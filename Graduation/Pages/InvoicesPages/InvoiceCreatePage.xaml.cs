@@ -1,33 +1,42 @@
 ﻿using Graduation.Models;
 using Graduation.Models.Master;
+using Npgsql;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Navigation;
+using WorkOrder = Graduation.Models.Master.WorkOrder;
 
 namespace Graduation.Pages.InvoicesPages
 {
     public partial class InvoiceCreatePage : Page
     {
+        private Employee _employee;
         private Invoice _invoice;
         private InvoicePau _invoicePau;
         private bool _isCreating;
-        public InvoiceCreatePage()
+        public InvoiceCreatePage(Employee employee)
         {
             try
             {
                 InitializeComponent();
+                _employee = employee;
                 _invoice = new Invoice();
                 _invoicePau = new InvoicePau();
                 _isCreating = true;
-                foreach (var item in WorkOrdersDB.graduationContextMaster.WorkOrders.OrderBy(c => c.WorkOrderId))
+                foreach (var item in WorkOrdersDB.graduationContextMaster.WorkOrders.Where(c => c.EmployeeId == _employee.EmployeeId && c.WorkOrderCloseDate == null)
+                    .OrderBy(c => c.WorkOrderId))
                 {
                     WorkOrderIdComboBox.Items.Add(item);
                 }
-                foreach (var item in WorkOrdersDB.graduationContextMaster.Departments)
+                foreach (var item in WorkOrdersDB.graduationContextMaster.Departments.OrderBy(c => c.DepartmentId))
                 {
                     DepartmentIdComboBox.Items.Add(item);
                     DepartmentReceiverIdComboBox.Items.Add(item);
+                }
+                foreach (var item in WorkOrdersDB.graduationContextMaster.Paus.OrderBy(c => c.PauId))
+                {
+                    PauNameComboBox.Items.Add(item);
                 }
             }
             catch (Exception ex)
@@ -36,21 +45,30 @@ namespace Graduation.Pages.InvoicesPages
             }
         }
 
-        public InvoiceCreatePage(InvoicePau invoicePau)
+        public InvoiceCreatePage(Employee employee, InvoicePau invoicePau)
         {
             try
             {
                 InitializeComponent();
+                _employee = employee;
                 _invoicePau = invoicePau;
                 _isCreating = false;
-                foreach (var item in WorkOrdersDB.graduationContextMaster.WorkOrders.OrderBy(c => c.WorkOrderId))
+                var a = WorkOrdersDB.graduationContextMaster.WorkOrders.Where(c => c.EmployeeId == _employee.EmployeeId && c.WorkOrderCloseDate == null)
+                    .GroupBy(c => c.WorkOrderId)
+                    .Select(c => c.Key)
+                    .ToList();
+                foreach (var item in a)
                 {
-                    WorkOrderIdComboBox.Items.Add(item);
+                    WorkOrderIdComboBox.Items.Add(WorkOrdersDB.graduationContextMaster.WorkOrders.First(c => c.WorkOrderId == item));
                 }
-                foreach (var item in WorkOrdersDB.graduationContextMaster.Departments)
+                foreach (var item in WorkOrdersDB.graduationContextMaster.Departments.OrderBy(c => c.DepartmentId))
                 {
                     DepartmentIdComboBox.Items.Add(item);
                     DepartmentReceiverIdComboBox.Items.Add(item);
+                }
+                foreach (var item in WorkOrdersDB.graduationContextMaster.Paus.OrderBy(c => c.PauId))
+                {
+                    PauNameComboBox.Items.Add(item);
                 }
                 InvoiceIdTextBox.IsEnabled = false;
             }
@@ -72,15 +90,35 @@ namespace Graduation.Pages.InvoicesPages
             }
         }
 
-        //TODO: Починить этот и WorkOrderIdComboBox.
+        //UNDONE: Fix.
         private void WorkOrderIdComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
-                foreach (var item in WorkOrdersDB.graduationContextMaster.WorkOrders.Where(c => c.WorkOrderCompilationDate
-                        == ((WorkOrder)WorkOrderIdComboBox.SelectedItem).WorkOrderCompilationDate))
+                WorkOrderCompilationDateComboBox.Items.Clear();
+                if ((WorkOrder)WorkOrderIdComboBox.SelectedItem == null) { return; }
+                foreach (var item in WorkOrdersDB.graduationContextMaster.WorkOrders.Where(c => c.EmployeeId == _employee.EmployeeId 
+                    && c.WorkOrderCompilationDate
+                    == ((WorkOrder)WorkOrderIdComboBox.SelectedItem).WorkOrderCompilationDate))
                 {
                     WorkOrderCompilationDateComboBox.Items.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void DepartmentIdComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                DepartmentReceiverIdComboBox.Items.Clear();
+                foreach (var item in WorkOrdersDB.graduationContextMaster.Departments.Where(c => ((Department)DepartmentIdComboBox.SelectedItem).DepartmentId
+                    != c.DepartmentId))
+                {
+                    DepartmentReceiverIdComboBox.Items.Add(item);
                 }
             }
             catch (Exception ex)
@@ -99,13 +137,13 @@ namespace Graduation.Pages.InvoicesPages
                     _invoice.InvoiceCompilationDate = DateOnly.FromDateTime(DateTime.Now);
                     _invoice.WorkOrderId = ((WorkOrder)WorkOrderIdComboBox.SelectedItem).WorkOrderId;
                     _invoice.WorkOrderCompilationDate = ((WorkOrder)WorkOrderCompilationDateComboBox.SelectedItem).WorkOrderCompilationDate;
-                    //TODO: Починить ComboBox'ы с цехами.
                     _invoice.DepartmentId = ((Department)DepartmentIdComboBox.SelectedItem).DepartmentId;
                     _invoice.DepartmentReceiverId = ((Department)DepartmentReceiverIdComboBox.SelectedItem).DepartmentId;
                     _invoice.WorkOrderCompilationDate = ((WorkOrder)WorkOrderIdComboBox.SelectedItem).WorkOrderCompilationDate;
 
                     _invoicePau.InvoiceId = Convert.ToInt32(InvoiceIdTextBox.Text);
                     _invoicePau.InvoiceCompilationDate = DateOnly.FromDateTime(DateTime.Now);
+                    _invoicePau.PauId = ((Pau)PauNameComboBox.SelectedItem).PauId;
                     _invoicePau.FactCount = Convert.ToInt32(FactCountTextBox.Text);
 
                     WorkOrdersDB.graduationContextMaster.Add(_invoice);
@@ -117,10 +155,10 @@ namespace Graduation.Pages.InvoicesPages
                 {
                     _invoicePau.Invoice.WorkOrderId = ((WorkOrder)WorkOrderIdComboBox.SelectedItem).WorkOrderId;
                     _invoicePau.Invoice.WorkOrderCompilationDate = ((WorkOrder)WorkOrderCompilationDateComboBox.SelectedItem).WorkOrderCompilationDate;
+                    _invoicePau.PauId = ((Pau)PauNameComboBox.SelectedItem).PauId;
                     _invoicePau.Invoice.DepartmentId = ((Department)DepartmentIdComboBox.SelectedItem).DepartmentId;
                     _invoicePau.Invoice.DepartmentReceiverId = ((Department)DepartmentReceiverIdComboBox.SelectedItem).DepartmentId;
                     _invoicePau.FactCount = Convert.ToInt32(FactCountTextBox.Text);
-
                     WorkOrdersDB.graduationContextMaster.SaveChanges();
                     MessageBox.Show("Накладная успешно изменена", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
@@ -140,7 +178,7 @@ namespace Graduation.Pages.InvoicesPages
         {
             try
             {
-                NavigationService.Navigate(new InvoicesPage());
+                NavigationService.Navigate(new InvoicesPage(_employee));
             }
             catch (Exception ex)
             {

@@ -19,11 +19,11 @@ public partial class WorkOrdersContext : DbContext
 
     public virtual DbSet<Class> Classes { get; set; }
 
+    public virtual DbSet<DeleteMark> DeleteMarks { get; set; }
+
     public virtual DbSet<Department> Departments { get; set; }
 
     public virtual DbSet<Employee> Employees { get; set; }
-
-    public virtual DbSet<EmployeeView> EmployeeViews { get; set; }
 
     public virtual DbSet<Invoice> Invoices { get; set; }
 
@@ -32,8 +32,6 @@ public partial class WorkOrdersContext : DbContext
     public virtual DbSet<Operation> Operations { get; set; }
 
     public virtual DbSet<Pau> Paus { get; set; }
-
-    public virtual DbSet<PauView> PauViews { get; set; }
 
     public virtual DbSet<Position> Positions { get; set; }
 
@@ -49,7 +47,7 @@ public partial class WorkOrdersContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Server=192.168.1.122;Database=WorkOrders;Username=admin;Password=admin1;");
+        => optionsBuilder.UseNpgsql("Server=192.168.1.130;Database=WorkOrders;Username=admin;Password=admin1;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -75,6 +73,27 @@ public partial class WorkOrdersContext : DbContext
             entity.ToTable("class");
 
             entity.Property(e => e.ClassId).HasColumnName("class_id");
+        });
+
+        modelBuilder.Entity<DeleteMark>(entity =>
+        {
+            entity.HasKey(e => new { e.DeleteMarkId, e.DeleteMarkDate }).HasName("delete_mark_pkey");
+
+            entity.ToTable("delete_mark");
+
+            entity.Property(e => e.DeleteMarkId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("delete_mark_id");
+            entity.Property(e => e.DeleteMarkDate).HasColumnName("delete_mark_date");
+            entity.Property(e => e.EmployeeId).HasColumnName("employee_id");
+            entity.Property(e => e.IsDeleted)
+                .HasMaxLength(20)
+                .HasColumnName("is_deleted");
+
+            entity.HasOne(d => d.Employee).WithMany(p => p.DeleteMarks)
+                .HasForeignKey(d => d.EmployeeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("delete_mark_employee_id_fkey");
         });
 
         modelBuilder.Entity<Department>(entity =>
@@ -126,19 +145,6 @@ public partial class WorkOrdersContext : DbContext
                 .HasForeignKey(d => d.PositionId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("employee_position_id_fkey");
-        });
-
-        modelBuilder.Entity<EmployeeView>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToView("employee_view");
-
-            entity.Property(e => e.Должность).HasMaxLength(50);
-            entity.Property(e => e.Имя).HasMaxLength(20);
-            entity.Property(e => e.Отчество).HasMaxLength(20);
-            entity.Property(e => e.ТабельныйНомерСотрудника).HasColumnName("Табельный номер сотрудника");
-            entity.Property(e => e.Фамилия).HasMaxLength(20);
         });
 
         modelBuilder.Entity<Invoice>(entity =>
@@ -228,20 +234,6 @@ public partial class WorkOrdersContext : DbContext
                 .HasConstraintName("pau_storage_place_id_fkey");
         });
 
-        modelBuilder.Entity<PauView>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToView("pau_view");
-
-            entity.Property(e => e.КодМестаХранения).HasColumnName("Код места хранения");
-            entity.Property(e => e.КоличествоДсе).HasColumnName("Количество ДСЕ");
-            entity.Property(e => e.НаименованиеДсе)
-                .HasMaxLength(20)
-                .HasColumnName("Наименование ДСЕ");
-            entity.Property(e => e.НомерДсе).HasColumnName("Номер ДСЕ");
-        });
-
         modelBuilder.Entity<Position>(entity =>
         {
             entity.HasKey(e => e.PositionId).HasName("position_pkey");
@@ -329,18 +321,18 @@ public partial class WorkOrdersContext : DbContext
 
         modelBuilder.Entity<WorkOrderArea>(entity =>
         {
-            entity.HasKey(e => new { e.WorkOrderId, e.AreaId, e.OperationId, e.WorkOrderCompilationDate }).HasName("work_order_area_pkey");
+            entity.HasKey(e => new { e.WorkOrderId, e.WorkOrderCompilationDate }).HasName("work_order_area_pkey");
 
             entity.ToTable("work_order_area");
 
             entity.Property(e => e.WorkOrderId)
                 .ValueGeneratedOnAdd()
                 .HasColumnName("work_order_id");
-            entity.Property(e => e.AreaId).HasColumnName("area_id");
-            entity.Property(e => e.OperationId).HasColumnName("operation_id");
             entity.Property(e => e.WorkOrderCompilationDate).HasColumnName("work_order_compilation_date");
+            entity.Property(e => e.AreaId).HasColumnName("area_id");
             entity.Property(e => e.OperationEndDate).HasColumnName("operation_end_date");
             entity.Property(e => e.OperationEndTime).HasColumnName("operation_end_time");
+            entity.Property(e => e.OperationId).HasColumnName("operation_id");
             entity.Property(e => e.OperationStartDate).HasColumnName("operation_start_date");
             entity.Property(e => e.OperationStartTime).HasColumnName("operation_start_time");
 
@@ -354,8 +346,8 @@ public partial class WorkOrdersContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("work_order_area_operation_id_fkey");
 
-            entity.HasOne(d => d.WorkOrder).WithMany(p => p.WorkOrderAreas)
-                .HasForeignKey(d => new { d.WorkOrderId, d.WorkOrderCompilationDate })
+            entity.HasOne(d => d.WorkOrder).WithOne(p => p.WorkOrderArea)
+                .HasForeignKey<WorkOrderArea>(d => new { d.WorkOrderId, d.WorkOrderCompilationDate })
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("work_order_area_work_order_id_work_order_compilation_date_fkey");
         });

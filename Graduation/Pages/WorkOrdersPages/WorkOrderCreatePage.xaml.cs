@@ -10,14 +10,16 @@ namespace Graduation.Pages.WorkOrdersPages
 {
     public partial class WorkOrderCreatePage : Page
     {
+        private Employee _employee;
         private WorkOrder _workOrder;
         private WorkOrderArea _workOrderArea;
         private bool _isCreating;
-        public WorkOrderCreatePage()
+        public WorkOrderCreatePage(Employee employee)
         {
             try
             {
                 InitializeComponent();
+                _employee = employee;
                 _workOrder = new WorkOrder();
                 _workOrderArea = new WorkOrderArea();
                 _isCreating = true;
@@ -33,6 +35,7 @@ namespace Graduation.Pages.WorkOrdersPages
                 {
                     EmployeeSurnameComboBox.Items.Add(item);
                 }
+                WorkOrderCloseCheckBox.Visibility = Visibility.Collapsed;
                 foreach (var item in WorkOrdersDB.graduationContextMaster.Areas)
                 {
                     AreaIdComboBox.Items.Add(item);
@@ -47,13 +50,15 @@ namespace Graduation.Pages.WorkOrdersPages
             {
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            _employee = employee;
         }
 
-        public WorkOrderCreatePage(WorkOrderArea workOrderArea)
+        public WorkOrderCreatePage(Employee employee, WorkOrderArea workOrderArea)
         {
             try
             {
                 InitializeComponent();
+                _employee = employee;
                 _workOrderArea = workOrderArea;
                 _isCreating = false;
                 foreach (var item in WorkOrdersDB.graduationContextMaster.Reservations)
@@ -83,6 +88,7 @@ namespace Graduation.Pages.WorkOrdersPages
                     WorkOrderCloseCheckBox.Content = "Наряд закрыт";
                 }
                 WorkOrderIdTextBox.IsEnabled = false;
+                //TODO: Возможно убрать.
                 AreaIdComboBox.IsEnabled = false;
                 OperationNameComboBox.IsEnabled = false;
             }
@@ -127,29 +133,48 @@ namespace Graduation.Pages.WorkOrdersPages
                     _workOrder.ReservationId = ((Reservation)ReservationIdComboBox.SelectedItem).ReservationId;
                     _workOrder.WorkOrderCompilationDate = DateOnly.FromDateTime(DateTime.Now);
                     _workOrder.PauId = ((Pau)PauNameComboBox.SelectedItem).PauId;
+                    _workOrder.WorkOrderCompleteDate = DateOnly.Parse(WorkOrderCompleteDateTextBox.Text);
+                    if (DateOnly.Parse(WorkOrderCompleteDateTextBox.Text) > DateOnly.FromDateTime(DateTime.Now))
+                    {
+                        throw new Exception("Дата выполнения заказ-наряда не может быть позднее текущей даты");
+                    }
+                    if (DateOnly.Parse(OperationEndDateTextBox.Text) > DateOnly.FromDateTime(DateTime.Now))
+                    {
+                        throw new Exception("Дата начала операции не может быть позднее текущей даты");
+                    }
+                    if (DateOnly.Parse(OperationEndDateTextBox.Text) < DateOnly.Parse(OperationStartDateTextBox.Text))
+                    {
+                        throw new Exception("Дата завершения операции не может быть раньше даты начала операции");
+                    }
+                    if (DateOnly.Parse(OperationStartDateTextBox.Text) > DateOnly.Parse(OperationEndDateTextBox.Text))
+                    {
+                        throw new Exception("Дата начала операции не может быть позднее даты окончания операции");
+                    }
+                    if (TimeOnly.Parse(OperationStartTimeTextBox.Text) < new TimeOnly(8, 00))
+                    {
+                        throw new Exception("Время начала операции не может быть раньше времени начала работы предприятия");
+                    }
+                    if (TimeOnly.Parse(OperationStartTimeTextBox.Text) > new TimeOnly(17, 00))
+                    {
+                        throw new Exception("Время начала операции не может быть позднее времени закрытия предприятия");
+                    }
+                    if (TimeOnly.Parse(OperationEndTimeTextBox.Text) < new TimeOnly(8, 00))
+                    {
+                        throw new Exception("Время завершения операции не может быть раньше времени начала работы предприятия");
+                    }
+                    if (TimeOnly.Parse(OperationEndTimeTextBox.Text) > new TimeOnly(17, 00))
+                    {
+                        throw new Exception("Время завершения операции не может быть позднее времени закрытия предприятия");
+                    }
                     _workOrder.EmployeeId = ((Employee)EmployeeSurnameComboBox.SelectedItem).EmployeeId;
                     _workOrder.ReservationCompilationDate = ((Reservation)ReservationIdComboBox.SelectedItem).ReservationCompilationDate;
-                    if (WorkOrderCloseCheckBox.IsChecked == true)
-                    {
-                        _workOrder.WorkOrderCloseDate = DateOnly.FromDateTime(DateTime.Now);
-                    }
-
                     _workOrderArea.WorkOrderId = Convert.ToInt32(WorkOrderIdTextBox.Text);
                     _workOrderArea.WorkOrderCompilationDate = DateOnly.FromDateTime(DateTime.Now);
                     _workOrderArea.AreaId = ((Area)AreaIdComboBox.SelectedItem).AreaId;
                     _workOrderArea.OperationId = ((Operation)OperationNameComboBox.SelectedItem).OperationId;
 
-                    using (NpgsqlConnection npgsqlConnection = new NpgsqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["Postgresql"].ToString()))
-                    {
-                        using (NpgsqlCommand npgsqlCommand = new NpgsqlCommand($"CALL add_work_order({_workOrder.WorkOrderId}, {_workOrder.PauId}, {_workOrder.ReservationId}, {_workOrder.ReservationCompilationDate}, {_workOrder.EmployeeId}, {_workOrder.WorkOrderCompleteDate}, " +
-                            $"{_workOrder.WorkOrderCloseDate}, {_workOrderArea.AreaId}, {_workOrderArea.OperationId}, {_workOrderArea.OperationStartDate}, {_workOrderArea.OperationStartTime}, {_workOrderArea.OperationEndDate}, {_workOrderArea.OperationEndTime});", npgsqlConnection))
-                        {
-                            npgsqlConnection.Open();
-                            npgsqlCommand.ExecuteNonQuery();
-                        }
-                    }
-                    //WorkOrdersDB.graduationContextMaster.Add(_workOrder);
-                    //WorkOrdersDB.graduationContextMaster.Add(_workOrderArea);
+                    WorkOrdersDB.graduationContextMaster.Add(_workOrder);
+                    WorkOrdersDB.graduationContextMaster.Add(_workOrderArea);
                     WorkOrdersDB.graduationContextMaster.SaveChanges();
                     MessageBox.Show("Заказ-наряд успешно добавлен", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
@@ -157,6 +182,39 @@ namespace Graduation.Pages.WorkOrdersPages
                 {
                     _workOrderArea.WorkOrder.ReservationId = ((Reservation)ReservationIdComboBox.SelectedItem).ReservationId;
                     _workOrderArea.WorkOrder.PauId = ((Pau)PauNameComboBox.SelectedItem).PauId;
+                    _workOrderArea.WorkOrder.WorkOrderCompleteDate = DateOnly.Parse(WorkOrderCompleteDateTextBox.Text);
+                    if (DateOnly.Parse(WorkOrderCompleteDateTextBox.Text) > DateOnly.FromDateTime(DateTime.Now))
+                    {
+                        throw new Exception("Дата выполнения заказ-наряда не может быть позднее текущей даты");
+                    }
+                    if (DateOnly.Parse(OperationEndDateTextBox.Text) > DateOnly.FromDateTime(DateTime.Now))
+                    {
+                        throw new Exception("Дата начала операции не может быть позднее текущей даты");
+                    }
+                    if (DateOnly.Parse(OperationEndDateTextBox.Text) < DateOnly.Parse(OperationStartDateTextBox.Text))
+                    {
+                        throw new Exception("Дата завершения операции не может быть раньше даты начала операции");
+                    }
+                    if (DateOnly.Parse(OperationStartDateTextBox.Text) > DateOnly.Parse(OperationEndDateTextBox.Text))
+                    {
+                        throw new Exception("Дата начала операции не может быть позднее даты окончания операции");
+                    }
+                    if (TimeOnly.Parse(OperationStartTimeTextBox.Text) < new TimeOnly(8, 00))
+                    {
+                        throw new Exception("Время начала операции не может быть раньше времени начала работы предприятия");
+                    }
+                    if (TimeOnly.Parse(OperationStartTimeTextBox.Text) > new TimeOnly(17, 00))
+                    {
+                        throw new Exception("Время начала операции не может быть позднее времени закрытия предприятия");
+                    }
+                    if (TimeOnly.Parse(OperationEndTimeTextBox.Text) < new TimeOnly(8, 00))
+                    {
+                        throw new Exception("Время завершения операции не может быть раньше времени начала работы предприятия");
+                    }
+                    if (TimeOnly.Parse(OperationEndTimeTextBox.Text) > new TimeOnly(17, 00))
+                    {
+                        throw new Exception("Время завершения операции не может быть позднее времени закрытия предприятия");
+                    }
                     _workOrderArea.WorkOrder.EmployeeId = ((Employee)EmployeeSurnameComboBox.SelectedItem).EmployeeId;
                     if (WorkOrderCloseCheckBox.IsChecked == true)
                     {
@@ -184,7 +242,7 @@ namespace Graduation.Pages.WorkOrdersPages
         {
             try
             {
-                NavigationService.Navigate(new WorkOrdersPage());
+                NavigationService.Navigate(new WorkOrdersPage(_employee));
             }
             catch (Exception ex)
             {
@@ -193,12 +251,6 @@ namespace Graduation.Pages.WorkOrdersPages
         }
 
         private void WorkOrderIdTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            if (Char.IsDigit(e.Text, 0)) return;
-            e.Handled = true;
-        }
-
-        private void PauCountTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (Char.IsDigit(e.Text, 0)) return;
             e.Handled = true;

@@ -27,6 +27,8 @@ public partial class Employee
 
     public virtual Class Class { get; set; } = null!;
 
+    public virtual ICollection<DeleteMark> DeleteMarks { get; set; } = new List<DeleteMark>();
+
     public virtual Position Position { get; set; } = null!;
 
     public virtual ICollection<Shift> Shifts { get; set; } = new List<Shift>();

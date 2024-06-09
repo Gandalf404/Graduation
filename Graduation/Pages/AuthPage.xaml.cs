@@ -22,10 +22,11 @@ namespace Graduation.Pages
         {
             try
             {
-                _dbAdmin = WorkOrdersDB.graduationContextMaster.Employees.FirstOrDefault(c => c.Login == Encryption.Encrypt(LoginTextBox.Text) && c.Password == Encryption.Encrypt(PasswordBox.Password) && c.PositionId == 2);
-                string login = Encryption.Encrypt(LoginTextBox.Text);
-                string password = Encryption.Encrypt(PasswordBox.Password);
+                if (String.IsNullOrWhiteSpace(LoginTextBox.Text) && String.IsNullOrWhiteSpace(PasswordBox.Password)) { throw new Exception(); }
+                if (String.IsNullOrWhiteSpace(PasswordBox.Password)) { throw new Exception(); }
+                if (String.IsNullOrWhiteSpace(LoginTextBox.Text)) { throw new Exception(); }
                 _master = WorkOrdersDB.graduationContextMaster.Employees.FirstOrDefault(c => c.Login == Encryption.Encrypt(LoginTextBox.Text) && c.Password == Encryption.Encrypt(PasswordBox.Password) && c.PositionId == 4);
+                _dbAdmin = WorkOrdersDB.graduationContextMaster.Employees.FirstOrDefault(c => c.Login == Encryption.Encrypt(LoginTextBox.Text) && c.Password == Encryption.Encrypt(PasswordBox.Password) && c.PositionId == 2);
                 if (_dbAdmin != null)
                 {
                     MessageBox.Show("Успешный вход", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -41,7 +42,6 @@ namespace Graduation.Pages
                     MessageBox.Show("Неверный логин или пароль", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            //UNDONE: Сделать проверки на поля логина и пароля.
             catch when (String.IsNullOrWhiteSpace(LoginTextBox.Text) && String.IsNullOrWhiteSpace(PasswordBox.Password))
             {
                 MessageBox.Show("Введите логин и пароль", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
