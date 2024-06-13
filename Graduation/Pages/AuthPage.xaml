@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Graduation.Pages"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       mc:Ignorable="d" 
-      d:DesignHeight="1040" d:DesignWidth="1390"
+      d:DesignHeight="840" d:DesignWidth="1380"
       Title="AuthPage">
 
     <Grid>

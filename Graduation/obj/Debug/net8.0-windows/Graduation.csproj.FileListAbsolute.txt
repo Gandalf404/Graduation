@@ -112,7 +112,6 @@ C:\Users\yegor\source\repos\Graduation\Graduation\obj\Debug\net8.0-windows\Gradu
 C:\Users\yegor\source\repos\Graduation\Graduation\obj\Debug\net8.0-windows\Pages\AuthPage.g.cs
 C:\Users\yegor\source\repos\Graduation\Graduation\obj\Debug\net8.0-windows\Pages\EmployeesPages\EmployeeCreatePage.g.cs
 C:\Users\yegor\source\repos\Graduation\Graduation\obj\Debug\net8.0-windows\Pages\EmployeesPages\EmployeesPage.g.cs
-C:\Users\yegor\source\repos\Graduation\Graduation\obj\Debug\net8.0-windows\Pages\InfoPages\ClosedWorkOrdersInfoPage.g.cs
 C:\Users\yegor\source\repos\Graduation\Graduation\obj\Debug\net8.0-windows\Pages\InvoicesPages\InvoiceCreatePage.g.cs
 C:\Users\yegor\source\repos\Graduation\Graduation\obj\Debug\net8.0-windows\Pages\InvoicesPages\InvoicesPage.g.cs
 C:\Users\yegor\source\repos\Graduation\Graduation\obj\Debug\net8.0-windows\Pages\PausPages\PauCreatePage.g.cs
@@ -127,7 +126,6 @@ C:\Users\yegor\source\repos\Graduation\Graduation\obj\Debug\net8.0-windows\App.b
 C:\Users\yegor\source\repos\Graduation\Graduation\obj\Debug\net8.0-windows\Pages\AuthPage.baml
 C:\Users\yegor\source\repos\Graduation\Graduation\obj\Debug\net8.0-windows\Pages\EmployeesPages\EmployeeCreatePage.baml
 C:\Users\yegor\source\repos\Graduation\Graduation\obj\Debug\net8.0-windows\Pages\EmployeesPages\EmployeesPage.baml
-C:\Users\yegor\source\repos\Graduation\Graduation\obj\Debug\net8.0-windows\Pages\InfoPages\ClosedWorkOrdersInfoPage.baml
 C:\Users\yegor\source\repos\Graduation\Graduation\obj\Debug\net8.0-windows\Pages\InvoicesPages\InvoiceCreatePage.baml
 C:\Users\yegor\source\repos\Graduation\Graduation\obj\Debug\net8.0-windows\Pages\InvoicesPages\InvoicesPage.baml
 C:\Users\yegor\source\repos\Graduation\Graduation\obj\Debug\net8.0-windows\Pages\PausPages\PauCreatePage.baml
@@ -147,3 +145,5 @@ C:\Users\yegor\source\repos\Graduation\Graduation\obj\Debug\net8.0-windows\refin
 C:\Users\yegor\source\repos\Graduation\Graduation\obj\Debug\net8.0-windows\Graduation.pdb
 C:\Users\yegor\source\repos\Graduation\Graduation\obj\Debug\net8.0-windows\Graduation.genruntimeconfig.cache
 C:\Users\yegor\source\repos\Graduation\Graduation\obj\Debug\net8.0-windows\ref\Graduation.dll
+C:\Users\yegor\source\repos\Graduation\Graduation\obj\Debug\net8.0-windows\Pages\InfoPages\StatisticsPage.g.cs
+C:\Users\yegor\source\repos\Graduation\Graduation\obj\Debug\net8.0-windows\Pages\InfoPages\StatisticsPage.baml

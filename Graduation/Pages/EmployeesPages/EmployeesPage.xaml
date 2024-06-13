@@ -7,7 +7,7 @@
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       Loaded="Page_Loaded"
       mc:Ignorable="d" 
-      d:DesignHeight="1040" d:DesignWidth="1420"
+      d:DesignHeight="840" d:DesignWidth="1380"
       Title="EmployeesPage">
 
     <Grid>
@@ -42,7 +42,8 @@
                 <ComboBox x:Name="PositionNameComboBox" Height="35" Width="200" Margin="0 15 0 0" SelectedIndex="0" DisplayMemberPath="PositionName" SelectionChanged="PositionNameComboBox_SelectionChanged"/>
             </StackPanel>
             <ui:Button x:Name="EmployeeCreateButton" Height="40" Width="120" Margin="20 0 0 0" Content="Добавить" Click="EmployeeCreateButton_Click"/>
-            <ui:Button x:Name="ClosedWorkOrdersInfoButton" Height="40" Width="280" Margin="20 0 0 0" Content="Информация о закрытых заказ-нарядах" Click="ClosedWorkOrdersInfoButton_Click"/>
+            <ui:Button x:Name="StatisticButton" Height="40" Width="120" Margin="20 0 0 0" Content="Статистика" Click="StatisticButton_Click"/>
+            <ui:Button x:Name="InfoButton" Height="40" Width="120" Margin="20 0 0 0" Content="Справка" Click="InfoButton_Click"/>
         </StackPanel>
         <ScrollViewer Grid.Row="2">
             <ui:DataGrid x:Name="EmployeesDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False">

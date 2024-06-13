@@ -304,11 +304,5 @@ namespace Graduation.Pages.InvoicesPages
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-        private void DispatcherTimer_Tick(object? sender, EventArgs e)
-        {
-            _invoicesPaus = WorkOrdersDB.graduationContextMaster.InvoicePaus.Include(c => c.Invoice).Include(c => c.Invoice.WorkOrder).OrderBy(c => c.InvoiceId).ToList();
-            InvoicesDataGrid.ItemsSource = _invoicesPaus;
-        }
     }
 }

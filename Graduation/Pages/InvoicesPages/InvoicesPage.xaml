@@ -7,7 +7,7 @@
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       Loaded="Page_Loaded"
       mc:Ignorable="d" 
-      d:DesignHeight="1040" d:DesignWidth="1420"
+      d:DesignHeight="840" d:DesignWidth="1380"
       Title="InvoicesPage">
 
     <Grid>

@@ -16,7 +16,7 @@
     <Compile Update="Pages\EmployeesPages\EmployeesPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\InfoPages\ClosedWorkOrdersInfoPage.xaml.cs">
+    <Compile Update="Pages\InfoPages\StatisticsPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Pages\InvoicesPages\InvoiceCreatePage.xaml.cs">
@@ -48,7 +48,7 @@
     <Page Update="Pages\EmployeesPages\EmployeesPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\InfoPages\ClosedWorkOrdersInfoPage.xaml">
+    <Page Update="Pages\InfoPages\StatisticsPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\InvoicesPages\InvoiceCreatePage.xaml">

@@ -14,7 +14,6 @@ namespace Graduation.Pages.WorkOrdersPages
 {
     public partial class WorkOrdersPage : Page
     {
-        private DispatcherTimer _dispatcherTimer;
         private Employee _employee;
         private List<WorkOrderArea> _workOrderAreas;
         private Pau _selectedPau;
@@ -323,7 +322,7 @@ namespace Graduation.Pages.WorkOrdersPages
                     _docX.ReplaceText("{11}", $"{_selectedWorkOrderArea.OperationStartTime}");
                     _docX.ReplaceText("{12}", $"{_selectedWorkOrderArea.OperationEndDate}");
                     _docX.ReplaceText("{13}", $"{_selectedWorkOrderArea.OperationEndTime}");
-                    //_docX.ReplaceText("{14}", $"{_employee.EmployeeSurname}");
+                    _docX.ReplaceText("{14}", $"{_employee.EmployeeSurname}");
                     _saveFileDialog = new SaveFileDialog() { InitialDirectory = @$"C:\Users\{Environment.UserName}\source\repos\Graduation\Graduation\Resources\WorkOrders" };
                     if (Directory.Exists(_saveFileDialog.InitialDirectory))
                     {
@@ -342,6 +341,22 @@ namespace Graduation.Pages.WorkOrdersPages
                 {
                     MessageBox.Show("Выберите заказ-наряд для печати", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void InfoButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MessageBox.Show(" При запуске программы открывается страница авторизации" +
+                    " на ней в соответствующие поля необходимо вести ваш логин и пароль. После нажать на кнопку «Войти».\n" +
+                    " При успешной авторизации откроется страница списка заказ-нарядов\n" +
+                    " на данной странице можно составить новый заказ-наряд, либо изменить его, сформировать печатную форму заказ-наряда, произвести поиск, произвести сортировки по дате составления заказ-наряда\n" +
+                    " Для составления/изменения заказ-наряда необходимо нажать кнопку «Добавить» и ввести необходимые данные.", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {

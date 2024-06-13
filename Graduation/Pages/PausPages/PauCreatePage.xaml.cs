@@ -128,17 +128,30 @@ namespace Graduation.Pages.PausPages
             {
                 if (_isCreating)
                 {
-                    _pau.StoragePlaceId = ((StoragePlace)StoragePlaceIdComboBox.SelectedItem).StoragePlaceId;
+                    if (_pau.PauBlueprint == null) { throw new Exception(); }
+                    if (!String.IsNullOrWhiteSpace(PauIdTextBox.Text)) { _pau.PauId = Convert.ToInt32(PauIdTextBox.Text); } else { throw new Exception(); }
+                    if (StoragePlaceIdComboBox.SelectedItem != null) { _pau.StoragePlaceId = ((StoragePlace)StoragePlaceIdComboBox.SelectedItem).StoragePlaceId; } else { throw new Exception(); }
+                    if (!String.IsNullOrWhiteSpace(PauNameTextBox.Text)) { _pau.PauName = PauNameTextBox.Text; } else { throw new Exception(); }
+                    if (!String.IsNullOrWhiteSpace(PauCountTextBox.Text)) { _pau.PauCount = Convert.ToInt32(PauCountTextBox.Text); } else { throw new Exception(); }
                     WorkOrdersDB.graduationContextAdmin.Add(_pau);
                     WorkOrdersDB.graduationContextAdmin.SaveChanges();
                     MessageBox.Show("ДСЕ успешно добавлена", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
-                    _pau.StoragePlaceId = ((StoragePlace)StoragePlaceIdComboBox.SelectedItem).StoragePlaceId;
+                    if (PauBlueprintImage.DataContext == null) { throw new Exception(); }
+                    if (!String.IsNullOrWhiteSpace(PauIdTextBox.Text)) { _pau.PauId = Convert.ToInt32(PauIdTextBox.Text); } else { throw new Exception(); }
+                    if (StoragePlaceIdComboBox.SelectedItem != null) { _pau.StoragePlaceId = ((StoragePlace)StoragePlaceIdComboBox.SelectedItem).StoragePlaceId; } else { throw new Exception(); }
+                    if (!String.IsNullOrWhiteSpace(PauNameTextBox.Text)) { _pau.PauName = PauNameTextBox.Text; } else { throw new Exception(); }
+                    if (!String.IsNullOrWhiteSpace(PauCountTextBox.Text)) { _pau.PauCount = Convert.ToInt32(PauCountTextBox.Text); } else { throw new Exception(); }
                     WorkOrdersDB.graduationContextAdmin.SaveChanges();
                     MessageBox.Show("ДСЕ успешно изменена", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
+            }
+            catch when (_pau.PauBlueprint == null || String.IsNullOrWhiteSpace(PauIdTextBox.Text) || StoragePlaceIdComboBox.SelectedItem == null || String.IsNullOrWhiteSpace(PauNameTextBox.Text)
+                        || String.IsNullOrWhiteSpace(PauCountTextBox.Text))
+            {
+                MessageBox.Show("Необходимо ввести все данные, а также добавить чертёж ДСЕ", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             catch (Exception ex)
             {

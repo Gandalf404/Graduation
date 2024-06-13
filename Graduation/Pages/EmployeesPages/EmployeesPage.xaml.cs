@@ -91,7 +91,7 @@ namespace Graduation.Pages.EmployeesPages
             {
                 if (String.IsNullOrWhiteSpace(SearchTextBox.Text))
                 {
-                    _employees = WorkOrdersDB.graduationContextAdmin.Employees.Include(c => c.Position).ToList();
+                    _employees = WorkOrdersDB.graduationContextAdmin.Employees.Include(c => c.Position).OrderBy(c => c.EmployeeId).ToList();
                     EmployeesDataGrid.ItemsSource = _employees;
                 }
                 else
@@ -184,7 +184,7 @@ namespace Graduation.Pages.EmployeesPages
                     AreaIdDescRadioButton.IsChecked = false;
                     ClassIdAscRadioButton.IsChecked = false;
                     ClassIdDescRadioButton.IsChecked = false;
-                    _employees = WorkOrdersDB.graduationContextAdmin.Employees.Include(c => c.Position).ToList();
+                    _employees = WorkOrdersDB.graduationContextAdmin.Employees.Include(c => c.Position).OrderBy(c => c.EmployeeId).ToList();
                     EmployeesDataGrid.ItemsSource = _employees;
                 }
             }
@@ -206,11 +206,26 @@ namespace Graduation.Pages.EmployeesPages
             }
         }
 
-        private void ClosedWorkOrdersInfoButton_Click(object sender, RoutedEventArgs e)
+        private void StatisticButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                NavigationService.Navigate(new ClosedWorkOrdersInfoPage());
+                NavigationService.Navigate(new StatisticsPage());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void InfoButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MessageBox.Show("При запуске программы открывается страница авторизации\n " +
+                    "На ней в соответствующие поля необходимо вести ваш логин и пароль. После нажать на кнопку «Войти».\n " +
+                    "При нажатии на кнопку «Добавить» открывается страница регистрации\n " +
+                    "Для регистрации/изменении сотрудника вводим данные в поля и нажимаем «Сохранить».", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
@@ -258,7 +273,6 @@ namespace Graduation.Pages.EmployeesPages
                                 IsDeleted = "Уволен"
                             };
                             WorkOrdersDB.graduationContextAdmin.DeleteMarks.Add(_deleteMark);
-                            //WorkOrdersDB.graduationContextAdmin.Employees.Remove(_selectedEmployee);
                             WorkOrdersDB.graduationContextAdmin.SaveChanges();
                             MessageBox.Show("Сотрудник уволен", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
                         }

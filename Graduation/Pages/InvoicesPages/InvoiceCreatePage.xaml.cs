@@ -53,13 +53,10 @@ namespace Graduation.Pages.InvoicesPages
                 _employee = employee;
                 _invoicePau = invoicePau;
                 _isCreating = false;
-                var a = WorkOrdersDB.graduationContextMaster.WorkOrders.Where(c => c.EmployeeId == _employee.EmployeeId && c.WorkOrderCloseDate == null)
-                    .GroupBy(c => c.WorkOrderId)
-                    .Select(c => c.Key)
-                    .ToList();
-                foreach (var item in a)
+                foreach (var item in WorkOrdersDB.graduationContextMaster.WorkOrders.Where(c => c.EmployeeId == _employee.EmployeeId && c.WorkOrderCloseDate == null)
+                    .OrderBy(c => c.WorkOrderId))
                 {
-                    WorkOrderIdComboBox.Items.Add(WorkOrdersDB.graduationContextMaster.WorkOrders.First(c => c.WorkOrderId == item));
+                    WorkOrderIdComboBox.Items.Add(item);
                 }
                 foreach (var item in WorkOrdersDB.graduationContextMaster.Departments.OrderBy(c => c.DepartmentId))
                 {
@@ -90,7 +87,6 @@ namespace Graduation.Pages.InvoicesPages
             }
         }
 
-        //UNDONE: Fix.
         private void WorkOrderIdComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -133,18 +129,18 @@ namespace Graduation.Pages.InvoicesPages
             {
                 if (_isCreating)
                 {
-                    _invoice.InvoiceId = Convert.ToInt32(InvoiceIdTextBox.Text);
+                    if (!String.IsNullOrWhiteSpace(InvoiceIdTextBox.Text)) { _invoice.InvoiceId = Convert.ToInt32(InvoiceIdTextBox.Text); } else { throw new Exception(); }
                     _invoice.InvoiceCompilationDate = DateOnly.FromDateTime(DateTime.Now);
-                    _invoice.WorkOrderId = ((WorkOrder)WorkOrderIdComboBox.SelectedItem).WorkOrderId;
-                    _invoice.WorkOrderCompilationDate = ((WorkOrder)WorkOrderCompilationDateComboBox.SelectedItem).WorkOrderCompilationDate;
-                    _invoice.DepartmentId = ((Department)DepartmentIdComboBox.SelectedItem).DepartmentId;
-                    _invoice.DepartmentReceiverId = ((Department)DepartmentReceiverIdComboBox.SelectedItem).DepartmentId;
-                    _invoice.WorkOrderCompilationDate = ((WorkOrder)WorkOrderIdComboBox.SelectedItem).WorkOrderCompilationDate;
+                    if (WorkOrderIdComboBox.SelectedItem != null) { _invoice.WorkOrderId = ((WorkOrder)WorkOrderIdComboBox.SelectedItem).WorkOrderId; } else { throw new Exception(); }
+                    if (WorkOrderCompilationDateComboBox.SelectedItem != null) { _invoice.WorkOrderCompilationDate = ((WorkOrder)WorkOrderCompilationDateComboBox.SelectedItem).WorkOrderCompilationDate; } else { throw new Exception(); }
+                    if (DepartmentIdComboBox.SelectedItem != null) { _invoice.DepartmentId = ((Department)DepartmentIdComboBox.SelectedItem).DepartmentId; } else { throw new Exception(); }
+                    if (DepartmentReceiverIdComboBox.SelectedItem != null) { _invoice.DepartmentReceiverId = ((Department)DepartmentReceiverIdComboBox.SelectedItem).DepartmentId; } else { throw new Exception(); }
+                    if (WorkOrderCompilationDateComboBox.SelectedItem != null) { _invoice.WorkOrderCompilationDate = ((WorkOrder)WorkOrderCompilationDateComboBox.SelectedItem).WorkOrderCompilationDate; } else { throw new Exception(); }
 
-                    _invoicePau.InvoiceId = Convert.ToInt32(InvoiceIdTextBox.Text);
+                    if (!String.IsNullOrWhiteSpace(InvoiceIdTextBox.Text)) { _invoicePau.InvoiceId = Convert.ToInt32(InvoiceIdTextBox.Text); } else { throw new Exception(); }
                     _invoicePau.InvoiceCompilationDate = DateOnly.FromDateTime(DateTime.Now);
-                    _invoicePau.PauId = ((Pau)PauNameComboBox.SelectedItem).PauId;
-                    _invoicePau.FactCount = Convert.ToInt32(FactCountTextBox.Text);
+                    if (PauNameComboBox.SelectedItem != null) { _invoicePau.PauId = ((Pau)PauNameComboBox.SelectedItem).PauId; } else { throw new Exception(); }
+                    if (!String.IsNullOrWhiteSpace(FactCountTextBox.Text)) { _invoicePau.FactCount = Convert.ToInt32(FactCountTextBox.Text); } else { throw new Exception(); }
 
                     WorkOrdersDB.graduationContextMaster.Add(_invoice);
                     WorkOrdersDB.graduationContextMaster.Add(_invoicePau);
@@ -153,12 +149,12 @@ namespace Graduation.Pages.InvoicesPages
                 }
                 else
                 {
-                    _invoicePau.Invoice.WorkOrderId = ((WorkOrder)WorkOrderIdComboBox.SelectedItem).WorkOrderId;
-                    _invoicePau.Invoice.WorkOrderCompilationDate = ((WorkOrder)WorkOrderCompilationDateComboBox.SelectedItem).WorkOrderCompilationDate;
-                    _invoicePau.PauId = ((Pau)PauNameComboBox.SelectedItem).PauId;
-                    _invoicePau.Invoice.DepartmentId = ((Department)DepartmentIdComboBox.SelectedItem).DepartmentId;
-                    _invoicePau.Invoice.DepartmentReceiverId = ((Department)DepartmentReceiverIdComboBox.SelectedItem).DepartmentId;
-                    _invoicePau.FactCount = Convert.ToInt32(FactCountTextBox.Text);
+                    if (WorkOrderIdComboBox.SelectedItem != null) { _invoicePau.Invoice.WorkOrderId = ((WorkOrder)WorkOrderIdComboBox.SelectedItem).WorkOrderId; } else { throw new Exception(); }
+                    if (WorkOrderCompilationDateComboBox.SelectedItem != null) { _invoicePau.Invoice.WorkOrderCompilationDate = ((WorkOrder)WorkOrderCompilationDateComboBox.SelectedItem).WorkOrderCompilationDate; } else { throw new Exception(); }
+                    if (PauNameComboBox.SelectedItem != null) { _invoicePau.PauId = ((Pau)PauNameComboBox.SelectedItem).PauId; } else { throw new Exception(); }
+                    if (DepartmentIdComboBox.SelectedItem != null) { _invoicePau.Invoice.DepartmentId = ((Department)DepartmentIdComboBox.SelectedItem).DepartmentId; } else { throw new Exception(); }
+                    if (DepartmentReceiverIdComboBox.SelectedItem != null) { _invoicePau.Invoice.DepartmentReceiverId = ((Department)DepartmentReceiverIdComboBox.SelectedItem).DepartmentId; } else { throw new Exception(); }
+                    if (!String.IsNullOrWhiteSpace(FactCountTextBox.Text)) { _invoicePau.FactCount = Convert.ToInt32(FactCountTextBox.Text); } else { throw new Exception(); }
                     WorkOrdersDB.graduationContextMaster.SaveChanges();
                     MessageBox.Show("Накладная успешно изменена", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
                 }

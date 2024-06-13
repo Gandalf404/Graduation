@@ -7,7 +7,7 @@
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       Loaded="Page_Loaded"
       mc:Ignorable="d" 
-      d:DesignHeight="1040" d:DesignWidth="1420"
+      d:DesignHeight="840" d:DesignWidth="1380"
       Title="WorkOrdersPage">
 
     <Grid>
@@ -52,6 +52,7 @@
                 <ComboBox x:Name="PauNameComboBox" Height="35" Width="200" Margin="0 15 0 0" SelectedIndex="0" DisplayMemberPath="PauName" SelectionChanged="PAUComboBox_SelectionChanged"/>
             </StackPanel>
             <ui:Button x:Name="WorkOrderCreateButton" Height="40" Width="120" Margin="20 0 0 0" Content="Добавить" Click="WorkOrderCreateButton_Click"/>
+            <ui:Button x:Name="InfoButton" Height="40" Width="120" Margin="20 0 0 0" Content="Справка" Click="InfoButton_Click"/>
         </StackPanel>
         <ScrollViewer Grid.Row="2">
             <ui:DataGrid x:Name="WorkOrdersDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False">
@@ -60,7 +61,6 @@
                     <DataGridTextColumn Header="Дата составления заказ-наряда" Binding="{Binding WorkOrder.WorkOrderCompilationDate, StringFormat=\{0:dd.MM.yyyy\}}"/>
                     <DataGridTextColumn Header="Номер заказа" Binding="{Binding WorkOrder.ReservationId}"/>
                     <DataGridTextColumn Header="Дата закрытия заказ-наряда" Binding="{Binding WorkOrder.WorkOrderCloseDate, StringFormat=\{0:dd.MM.yyyy\}}"/>
-                    <DataGridTextColumn Header="Сотрдуник" Binding="{Binding WorkOrder.Employee.EmployeeSurname}"/>
                     <DataGridTextColumn Header="Наименование ДСЕ" Binding="{Binding WorkOrder.Pau.PauName}"/>
                     <DataGridTextColumn Header="ДСЕ заказано" Binding="{Binding WorkOrder.Reservation.ReservationCount}"/>
                     <DataGridTextColumn Header="Код участка" Binding="{Binding AreaId}"/>

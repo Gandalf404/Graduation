@@ -31,10 +31,6 @@ namespace Graduation.Pages.WorkOrdersPages
                 {
                     PauNameComboBox.Items.Add(item);
                 }
-                foreach (var item in WorkOrdersDB.graduationContextMaster.Employees.OrderBy(c => c.EmployeeId))
-                {
-                    EmployeeSurnameComboBox.Items.Add(item);
-                }
                 WorkOrderCloseCheckBox.Visibility = Visibility.Collapsed;
                 foreach (var item in WorkOrdersDB.graduationContextMaster.Areas)
                 {
@@ -50,7 +46,6 @@ namespace Graduation.Pages.WorkOrdersPages
             {
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            _employee = employee;
         }
 
         public WorkOrderCreatePage(Employee employee, WorkOrderArea workOrderArea)
@@ -68,10 +63,6 @@ namespace Graduation.Pages.WorkOrdersPages
                 foreach (var item in WorkOrdersDB.graduationContextMaster.Paus.OrderBy(c => c.PauId))
                 {
                     PauNameComboBox.Items.Add(item);
-                }
-                foreach (var item in WorkOrdersDB.graduationContextMaster.Employees.OrderBy(c => c.EmployeeId))
-                {
-                    EmployeeSurnameComboBox.Items.Add(item);
                 }
                 foreach (var item in WorkOrdersDB.graduationContextMaster.Areas)
                 {
@@ -129,10 +120,10 @@ namespace Graduation.Pages.WorkOrdersPages
             {
                 if (_isCreating == true)
                 {
-                    _workOrder.WorkOrderId = Convert.ToInt32(WorkOrderIdTextBox.Text);
-                    _workOrder.ReservationId = ((Reservation)ReservationIdComboBox.SelectedItem).ReservationId;
+                    if (!String.IsNullOrWhiteSpace(WorkOrderIdTextBox.Text)) { _workOrder.WorkOrderId = Convert.ToInt32(WorkOrderIdTextBox.Text); } else { throw new Exception(); }
+                    if (ReservationIdComboBox.SelectedItem != null) { _workOrder.ReservationId = ((Reservation)ReservationIdComboBox.SelectedItem).ReservationId; } else { throw new Exception(); }
                     _workOrder.WorkOrderCompilationDate = DateOnly.FromDateTime(DateTime.Now);
-                    _workOrder.PauId = ((Pau)PauNameComboBox.SelectedItem).PauId;
+                    if (PauNameComboBox.SelectedItem != null) { _workOrder.PauId = ((Pau)PauNameComboBox.SelectedItem).PauId; } else { throw new Exception(); }
                     _workOrder.WorkOrderCompleteDate = DateOnly.Parse(WorkOrderCompleteDateTextBox.Text);
                     if (DateOnly.Parse(WorkOrderCompleteDateTextBox.Text) > DateOnly.FromDateTime(DateTime.Now))
                     {
@@ -166,12 +157,12 @@ namespace Graduation.Pages.WorkOrdersPages
                     {
                         throw new Exception("Время завершения операции не может быть позднее времени закрытия предприятия");
                     }
-                    _workOrder.EmployeeId = ((Employee)EmployeeSurnameComboBox.SelectedItem).EmployeeId;
-                    _workOrder.ReservationCompilationDate = ((Reservation)ReservationIdComboBox.SelectedItem).ReservationCompilationDate;
-                    _workOrderArea.WorkOrderId = Convert.ToInt32(WorkOrderIdTextBox.Text);
+                    _workOrder.EmployeeId = _employee.EmployeeId;
+                    if (ReservationIdComboBox.SelectedItem != null) { _workOrder.ReservationCompilationDate = ((Reservation)ReservationIdComboBox.SelectedItem).ReservationCompilationDate; } else { throw new Exception(); }
+                    if (!String.IsNullOrWhiteSpace(WorkOrderIdTextBox.Text)) { _workOrderArea.WorkOrderId = Convert.ToInt32(WorkOrderIdTextBox.Text); } else { throw new Exception(); }
                     _workOrderArea.WorkOrderCompilationDate = DateOnly.FromDateTime(DateTime.Now);
-                    _workOrderArea.AreaId = ((Area)AreaIdComboBox.SelectedItem).AreaId;
-                    _workOrderArea.OperationId = ((Operation)OperationNameComboBox.SelectedItem).OperationId;
+                    if (AreaIdComboBox.SelectedItem != null) { _workOrderArea.AreaId = ((Area)AreaIdComboBox.SelectedItem).AreaId; } else { throw new Exception(); }
+                    if (OperationNameComboBox.SelectedItem != null) { _workOrderArea.OperationId = ((Operation)OperationNameComboBox.SelectedItem).OperationId; } else { throw new Exception(); }
 
                     WorkOrdersDB.graduationContextMaster.Add(_workOrder);
                     WorkOrdersDB.graduationContextMaster.Add(_workOrderArea);
@@ -180,8 +171,8 @@ namespace Graduation.Pages.WorkOrdersPages
                 }
                 else
                 {
-                    _workOrderArea.WorkOrder.ReservationId = ((Reservation)ReservationIdComboBox.SelectedItem).ReservationId;
-                    _workOrderArea.WorkOrder.PauId = ((Pau)PauNameComboBox.SelectedItem).PauId;
+                    if (ReservationIdComboBox.SelectedItem != null) { _workOrderArea.WorkOrder.ReservationId = ((Reservation)ReservationIdComboBox.SelectedItem).ReservationId; } else { throw new Exception(); }
+                    if (PauNameComboBox.SelectedItem != null) { _workOrderArea.WorkOrder.PauId = ((Pau)PauNameComboBox.SelectedItem).PauId; } else { throw new Exception(); }
                     _workOrderArea.WorkOrder.WorkOrderCompleteDate = DateOnly.Parse(WorkOrderCompleteDateTextBox.Text);
                     if (DateOnly.Parse(WorkOrderCompleteDateTextBox.Text) > DateOnly.FromDateTime(DateTime.Now))
                     {
@@ -215,7 +206,7 @@ namespace Graduation.Pages.WorkOrdersPages
                     {
                         throw new Exception("Время завершения операции не может быть позднее времени закрытия предприятия");
                     }
-                    _workOrderArea.WorkOrder.EmployeeId = ((Employee)EmployeeSurnameComboBox.SelectedItem).EmployeeId;
+                    _workOrderArea.WorkOrder.EmployeeId = _employee.EmployeeId;
                     if (WorkOrderCloseCheckBox.IsChecked == true)
                     {
                         _workOrderArea.WorkOrder.WorkOrderCloseDate = DateOnly.FromDateTime(DateTime.Now);
@@ -225,8 +216,7 @@ namespace Graduation.Pages.WorkOrdersPages
                     MessageBox.Show("Заказ-наряд успешно изменен", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
-            catch when (String.IsNullOrWhiteSpace(WorkOrderIdTextBox.Text) || ReservationIdComboBox.SelectedItem == null
-                        || PauNameComboBox.SelectedItem == null || String.IsNullOrWhiteSpace(WorkOrderCompleteDateTextBox.Text) || EmployeeSurnameComboBox.SelectedItem == null
+            catch when (String.IsNullOrWhiteSpace(WorkOrderIdTextBox.Text) || ReservationIdComboBox.SelectedItem == null || PauNameComboBox.SelectedItem == null 
                         || AreaIdComboBox.SelectedItem == null || OperationNameComboBox.SelectedItem == null || String.IsNullOrWhiteSpace(OperationStartDateTextBox.Text)
                         || String.IsNullOrWhiteSpace(OperationStartTimeTextBox.Text) || String.IsNullOrWhiteSpace(OperationEndDateTextBox.Text) || String.IsNullOrWhiteSpace(OperationEndTimeTextBox.Text))
             {

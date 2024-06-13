@@ -137,9 +137,13 @@ namespace Graduation.Pages.EmployeesPages
             {
                 if (_isCreating)
                 {
-                    _employee.AreaId = ((Area)AreaIdComboBox.SelectedItem).AreaId;
-                    _employee.PositionId = ((Position)PositionNameComboBox.SelectedItem).PositionId;
-                    _employee.ClassId = ((Class)ClassComboBox.SelectedItem).ClassId;
+                    if (!String.IsNullOrWhiteSpace(EmployeeIdTextBox.Text)) { _employee.EmployeeId = Convert.ToInt32(EmployeeIdTextBox.Text); } else { throw new Exception(); }
+                    if (!String.IsNullOrWhiteSpace(EmployeeSurnameTextBox.Text)) { _employee.EmployeeSurname = EmployeeSurnameTextBox.Text; } else { throw new Exception(); }
+                    if (!String.IsNullOrWhiteSpace(EmployeeNameTextBox.Text)) { _employee.EmployeeName = EmployeeNameTextBox.Text; } else { throw new Exception(); }
+                    if (!String.IsNullOrWhiteSpace(EmployeePatronymicTextBox.Text)) { _employee.EmployeePatronymic = EmployeePatronymicTextBox.Text; } else { throw new Exception(); }
+                    if (AreaIdComboBox.SelectedItem != null) { _employee.AreaId = ((Area)AreaIdComboBox.SelectedItem).AreaId; } else { throw new Exception(); }
+                    if (PositionNameComboBox.SelectedItem != null) { _employee.PositionId = ((Position)PositionNameComboBox.SelectedItem).PositionId; } else { throw new Exception(); }
+                    if (ClassComboBox.SelectedItem != null) { _employee.ClassId = ((Class)ClassComboBox.SelectedItem).ClassId; } else { throw new Exception(); }
                     if (((Position)PositionNameComboBox.SelectedItem).PositionId == 2 || ((Position)PositionNameComboBox.SelectedItem).PositionId == 4)
                     {
                         if (!String.IsNullOrWhiteSpace(EmployeeLoginTextBox.Text) && !String.IsNullOrWhiteSpace(EmployeePasswordBox.Password))
@@ -164,9 +168,13 @@ namespace Graduation.Pages.EmployeesPages
                 }
                 else
                 {
-                    _employee.AreaId = ((Area)AreaIdComboBox.SelectedItem).AreaId;
-                    _employee.PositionId = ((Position)PositionNameComboBox.SelectedItem).PositionId;
-                    _employee.ClassId = ((Class)ClassComboBox.SelectedItem).ClassId;
+                    if (!String.IsNullOrWhiteSpace(EmployeeIdTextBox.Text)) { _employee.EmployeeId = Convert.ToInt32(EmployeeIdTextBox.Text); } else { throw new Exception(); }
+                    if (!String.IsNullOrWhiteSpace(EmployeeSurnameTextBox.Text)) { _employee.EmployeeSurname = EmployeeSurnameTextBox.Text; } else { throw new Exception(); }
+                    if (!String.IsNullOrWhiteSpace(EmployeeNameTextBox.Text)) { _employee.EmployeeName = EmployeeNameTextBox.Text; } else { throw new Exception(); }
+                    if (!String.IsNullOrWhiteSpace(EmployeePatronymicTextBox.Text)) { _employee.EmployeePatronymic = EmployeePatronymicTextBox.Text; } else { throw new Exception(); }
+                    if (AreaIdComboBox.SelectedItem != null) { _employee.AreaId = ((Area)AreaIdComboBox.SelectedItem).AreaId; } else { throw new Exception(); }
+                    if (PositionNameComboBox.SelectedItem != null) { _employee.PositionId = ((Position)PositionNameComboBox.SelectedItem).PositionId; } else { throw new Exception(); }
+                    if (ClassComboBox.SelectedItem != null) { _employee.ClassId = ((Class)ClassComboBox.SelectedItem).ClassId; } else { throw new Exception(); }
                     if (((Position)PositionNameComboBox.SelectedItem).PositionId == 2 || ((Position)PositionNameComboBox.SelectedItem).PositionId == 4)
                     {
                         if (!String.IsNullOrWhiteSpace(EmployeeLoginTextBox.Text) && !String.IsNullOrWhiteSpace(EmployeePasswordBox.Password))

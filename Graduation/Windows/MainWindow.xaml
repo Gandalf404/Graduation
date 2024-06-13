@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Graduation"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Title="MainWindow" Height="1040" Width="1420">
+        Title="MainWindow" Height="840" Width="1380">
     
     <Grid Background="SlateGray">
         <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
